@@ -1,0 +1,13 @@
+Package: intervals
+Type: Package
+Title: Tools for comparing points and intervals
+Version: 1.0.0
+Date: 2008-03-12
+Author: Richard Bourgon <bourgon@ebi.ac.uk>
+Maintainer: Richard Bourgon <bourgon@ebi.ac.uk>
+Depends: R (>=2.6.0), methods
+Suggests: 
+Description:
+  Tools for working with and comparing sets of points and intervals.
+License: Artistic 2.0
+LazyLoad: yes
