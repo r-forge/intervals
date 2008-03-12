@@ -1,36 +1,128 @@
-# We define a class for two-column interval endpoint matrices. The two
-# additional slots are for explicitly describing interval endpoint closure and
-# for stating whether intervals are to be interpreted as being on the integers
-# or the real line. Would could have just check
+# We define two classes for two-column interval endpoint matrices. The basic class
+# has a two-element boolean vector indicating whether endpoints are closed or
+# not. The full class caries a matrix with one boolean per endpoint, permitting
+# full control.
+
+
+
+
+######## Virtual
+
+# (R 2.6.2) If I add the "VIRTUAL" tag to the representation, I am not able to
+# extend this class! I believe this arises because I am already extending a base
+# class, but I am not sure. This tag would be more appropriate, but I leave it
+# off... 
 
 setClass(
-         "Intervals",
-         representation(
-                        closed = "matrix", # A matrix with 0 rows, or of the same dimension as .Data
-                        type = "character" # Either "Z" or "R"
-                        ),
+         "Intervals_virtual",
+         representation( type = "character" ),
          prototype(
-                   matrix( 0L, 0, 2 ),
-                   closed = matrix( TRUE, 0, 2 ),
-                   type = "Z"
+                   matrix( 0, 0, 2 ),
+                   type = "R"
                    ),
-         contains = "matrix",              # A two-column interval endpoint matrix
+         contains = "matrix",
          validity = function( object ) {
-           if ( !( is.numeric( object@.Data ) && ncol( object@.Data ) == 2 )  )
-             return( "An Intervals object should be a two-column numeric matrix." )
-           if ( !( object@type %in% c( "R", "Z" ) ) )
-             return( "The 'type' slot may only contain 'R' or 'Z', for the real line or the integers, respectively." )
-           if (
-               !(
-                 is.logical( object@closed ) &&
-                 ( nrow( object@closed ) == 0 || dim( object@.Data ) == dim( object@closed ) )
-                 )
-               )
-             return( "The 'closed' slot should be a logical matrix with either 0 rows, or with the same dimensions as the main Intervals matrix." )
+           # Check main matrix
+           if ( !is.numeric( object@.Data ) || ncol( object@.Data ) != 2  )
+             return( "The 'Intervals' classes are based on two-column, numeric matrices." )
+           # Check 'type' string
+           if ( length( object@type ) != 1 || !( object@type %in% c( "Z", "R" ) ) )
+             return( "The 'type' slot should be 'Z' or 'R'." )
+           # For type 'Z', check for integral endpoints
            if ( object@type == "Z" && !all( object@.Data %% 1 == 0 ) )
-             return( "Non-integer endpoints found, but 'type' set to 'Z'." )
-           # Passed
+             return( "Non-integer-valued endpoints not permitted for type 'Z'." )
            return( TRUE )
          }
          )
 
+
+
+
+######## Intevals
+
+# Common endpoint closure state for all intervals
+
+setClass(
+         "Intervals",
+         representation( closed = "logical" ),
+         prototype( closed = c( TRUE, TRUE ) ),
+         contains = "Intervals_virtual",
+         validity = function( object ) {
+           # Check 'closed' slot
+           if ( length( object@closed ) != 2 )
+             return( "The 'closed' slot should be a logical of length 2." )
+           return( TRUE )
+         }
+         )
+
+
+
+
+######## Intervals_full
+
+# Full control of endpoint closure. Note that if the 'closed' slot is omitted,
+# we use an 'initialize' method to create an appropriately sized matrix of TRUE
+# values. We also permit vector input, with recycling, for the 'closed' slot.
+
+setClass(
+         "Intervals_full",
+         representation( closed = "matrix" ),
+         prototype( closed = matrix( TRUE, 0, 2 ) ),
+         contains = "Intervals_virtual",
+         validity = function( object ) {
+           # Check 'closed' slot
+           if ( !is.logical( object@closed ) || dim( object@.Data ) != dim( object@closed ) )
+             return( "The 'closed' slot should be a logical matrix with the same dimensions as the main endpoints matrix." )
+           return( TRUE )
+         }
+         )
+
+setMethod(
+          "initialize",
+          signature( "Intervals_full" ),
+          function( .Object, .Data, type, closed ) {
+            if ( !missing( .Data ) ) .Object@.Data <- .Data
+            if ( !missing( type ) ) .Object@type <- type
+            .Object@closed <- matrix( TRUE, nrow( .Object ), 2 )
+            if ( !missing( closed ) )
+              # For recycling support...
+              .Object@closed[ 1:length( .Object@closed ) ] <- closed
+            if ( validObject( .Object ) ) return( .Object )
+          }
+          )
+
+
+
+
+######## Coercion
+
+setMethod(
+          "coerce",
+          signature( from = "Intervals", to = "Intervals_full" ),
+          function( from, to, strict ) {
+            new(
+                "Intervals_full",
+                from@.Data,
+                type = from@type,
+                closed = cbind(
+                  rep( from@closed[1], nrow( from ) ),
+                  from@closed[2]
+                  )
+                )
+          }
+          )
+
+setMethod(
+          "coerce",
+          signature( from = "Intervals_full", to = "Intervals" ),
+          function( from, to, strict ) {
+            if ( !all( t( from@closed ) == from@closed[1,] ) )
+              stop( "Intervals do not all have the same endpoint closure." )
+            new(
+                "Intervals",
+                from@.Data,
+                type = from@type,
+                closed = from@closed[1,]
+                )
+          }
+          )
