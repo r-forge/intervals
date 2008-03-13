@@ -31,6 +31,9 @@ setClass(
            # For type 'Z', check for integral endpoints
            if ( object@type == "Z" && !all( object@.Data %% 1 == 0 ) )
              return( "Non-integer-valued endpoints not permitted for type 'Z'." )
+           # Check for valid intervals
+           if ( any( object@.Data[,2] < object@.Data[,1] ) )
+             return( "One or more intervals with second endpoint before first." )
            return( TRUE )
          }
          )
@@ -54,6 +57,20 @@ setClass(
            return( TRUE )
          }
          )
+
+setMethod(
+          "[",
+          signature( "Intervals" ),
+          function( x, i, j, ..., drop ) {
+            if ( missing(i) ) i <- TRUE
+            if ( missing(j) ) {
+              # Preserve class. Note that both [i,] and [i] syntax subset rows.
+              x@.Data <- x@.Data[i,,drop=FALSE]
+              return( x )
+            }
+            else return( x@.Data[i,j] )
+          }
+          )
 
 
 
@@ -88,6 +105,22 @@ setMethod(
               # For recycling support...
               .Object@closed[ 1:length( .Object@closed ) ] <- closed
             if ( validObject( .Object ) ) return( .Object )
+          }
+          )
+
+setMethod(
+          "[",
+          signature( "Intervals_full" ),
+          function( x, i, j, ..., drop ) {
+            if ( missing(i) ) i <- TRUE
+            if ( missing(j) ) {
+              # Preserve class. Note that both [i,] and [i] syntax subset rows.
+              if ( is.character(i) ) i <- match( i, rownames( x ) )
+              x@.Data <- x@.Data[i,,drop=FALSE]
+              x@closed <- x@closed[i,,drop=FALSE]
+              return( x )
+            }
+            else return( x@.Data[i,j] )
           }
           )
 
