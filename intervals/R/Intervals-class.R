@@ -38,6 +38,25 @@ setClass(
          }
          )
 
+setGeneric( "closed", function(x) standardGeneric( "closed" ) )
+
+setMethod(
+          "closed",
+          signature( "Intervals_virtual" ),
+          function( x ) x@closed
+          )
+
+setGeneric( "closed<-", function( x, value ) standardGeneric( "closed<-" ) )
+
+setReplaceMethod(
+                 "closed", "Intervals_virtual",
+                 function( x, value ) {
+                   # For recycling
+                   x@closed[ 1:length(x@closed) ] <- value
+                   return(x)
+                 }
+                 )
+
 
 
 
@@ -100,10 +119,12 @@ setMethod(
           function( .Object, .Data, type, closed ) {
             if ( !missing( .Data ) ) .Object@.Data <- .Data
             if ( !missing( type ) ) .Object@type <- type
+            # Careful here. Since the closed slot initializes to 0 rows, we
+            # should not used the "closed<-" method yet.
             .Object@closed <- matrix( TRUE, nrow( .Object ), 2 )
             if ( !missing( closed ) )
-              # For recycling support...
-              .Object@closed[ 1:length( .Object@closed ) ] <- closed
+              # Now it's OK though, for recycling
+              closed( .Object ) <- closed
             if ( validObject( .Object ) ) return( .Object )
           }
           )
@@ -123,7 +144,7 @@ setMethod(
             else return( x@.Data[i,j] )
           }
           )
-
+                 
 
 
 
