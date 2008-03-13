@@ -38,6 +38,8 @@ setClass(
          }
          )
 
+# Accessors and replacement methods for virtual class
+
 setGeneric( "closed", function(x) standardGeneric( "closed" ) )
 
 setMethod(
@@ -53,6 +55,26 @@ setReplaceMethod(
                  function( x, value ) {
                    # For recycling
                    x@closed[ 1:length(x@closed) ] <- value
+                   return(x)
+                 }
+                 )
+
+setGeneric( "type", function(x) standardGeneric( "type" ) )
+
+setMethod(
+          "type",
+          signature( "Intervals_virtual" ),
+          function( x ) x@type
+          )
+
+setGeneric( "type<-", function( x, value ) standardGeneric( "type<-" ) )
+
+setReplaceMethod(
+                 "type", "Intervals_virtual",
+                 function( x, value ) {
+                   if ( length( value ) != 1 || !( value %in% c( "Z", "R" ) ) )
+                     stop( "The 'type' slot should be 'Z' or 'R'." )
+                   x@type <- value
                    return(x)
                  }
                  )
