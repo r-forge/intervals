@@ -113,6 +113,21 @@ setMethod(
           }
           )
 
+setGeneric(
+           "rbind",
+           function( x, ... ) standardGeneric( "rbind" ),
+           # We need a different generic argument set
+           useAsDefault = function( x, ... ) base::rbind( x, ... )
+           ) 
+
+setMethod(
+          "rbind",
+          signature( "Intervals" ),
+          function( x, ... ) {
+            ######## FINISH ME!
+          }
+          )
+
 
 
 
