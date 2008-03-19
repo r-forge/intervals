@@ -11,12 +11,18 @@ ordering_matrix <- matrix(
 
 setGeneric( "interval_union", def = function( x, y, ... ) standardGeneric( "interval_union" ) )
 
+# Note that if integer intervals are forced to double-open notation, then the
+# real-valued code works immediately, with no need for back-conversion
+# afterwards. This is because the open intervals corresponding to two
+# consecutive integers overlap one another.
+
 setMethod(
           "interval_union",
           signature( "Intervals_full", "missing" ),
           function( x ) {
             # TO DO: remove rows with NA values
-            # TO DO: remove empty rows
+            # TO DO: remove empty rows in result
+            # TO DO: revise/simplify handling of 'Z' data
             if ( type(x) == "Z" ) {
               #  We will work on Z intervals as closed only
               x[ !closed(x)[,1], 1 ] <- x[ !closed(x)[,1], 1 ] + 1
