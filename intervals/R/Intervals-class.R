@@ -116,15 +116,47 @@ setMethod(
 setGeneric(
            "rbind",
            function( x, ... ) standardGeneric( "rbind" ),
-           # We need a different generic argument set
+           # We need a different generic argument set. Note that this is
+           # currently throwning warnings on first execution. See if this
+           # persists once the package namespace is set up properly.
            useAsDefault = function( x, ... ) base::rbind( x, ... )
            ) 
 
 setMethod(
           "rbind",
+          signature( "Intervals_virtual" ),
+          function( x, ... ) {
+            args <- list(...)
+            if ( length( args ) > 0 ) {
+              if ( !all( sapply( args, function(y) class(x) == class(y) ) ) )
+                stop( "All argments should be of the same class." )
+              if ( !all( sapply( args, function(y) type(x) == type(y) ) ) )
+                stop( "All argments should have the same 'type' slot." )
+              x@.Data <- do.call( rbind, c( list(x@.Data), lapply( args, function(y) y@.Data ) ) )
+            }
+            return(x)
+          }
+          )
+
+setMethod(
+          "rbind",
           signature( "Intervals" ),
           function( x, ... ) {
-            ######## FINISH ME!
+            args <- list(...)
+            if ( length( args ) > 0 && !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
+              stop( "All argments should have the same 'closed' slot." )
+            callNextMethod( x, ... )
+          }
+          )
+
+setMethod(
+          "rbind",
+          signature( "Intervals_full" ),
+          function( x, ... ) {
+            args <- list(...)
+            if ( length( args ) > 0 )
+              x@closed <- rbind( closed(x), do.call( rbind, lapply( args, function(y) closed(y) ) ) )
+            callNextMethod( x, ... )
           }
           )
 
