@@ -51,7 +51,7 @@ size(r1)
 size(r2)
 size(r3)
 
-s1 <- new( "Intervals_full", matrix( 1, ncol=2, nrow=3 ), type = "Z" )
+s1 <- new( "Intervals_full", matrix( 1, 3, 2 ), type = "Z" )
 closed(s1)[2,2] <- FALSE
 closed(s1)[3,] <- FALSE
 
