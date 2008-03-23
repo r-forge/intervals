@@ -1,17 +1,20 @@
 exportClasses(
               "Intervals",
-              "Intervals_full"
+              "Intervals_full",
+              "Intervals_virtual" # Only for development, remove later
               )
 
-# Do I need to export the "[", "coerce", and "initialize" methods, for which
-# generics are defined elsewhere? Do I, as the NAMESPACE documentation suggests,
-# specifically need to import these generics?
+# Note that "initialize" methods do not seem necessary here, nor in
+# documentation. Note also that I am not currently importing generics for cases
+# when I don't define my own.
 
 exportMethods(
-              interval_union,
-              close_intervals,
-              open_intervals,
-              closed,
-              type,
-              rbind
+              "interval_union",
+              "close_intervals",
+              "open_intervals",
+              "closed", "closed<-",
+              "type", "type<-",
+              "rbind",
+              "coerce",
+              "["
               )
