@@ -244,7 +244,7 @@ setMethod(
             new(
                 "Intervals_full",
                 from@.Data,
-                type = from@type,
+                type = type( from ),
                 closed = cbind(
                   rep( closed(from)[1], nrow( from ) ),
                   rep( closed(from)[2], nrow( from ) )
@@ -257,13 +257,15 @@ setMethod(
           "coerce",
           signature( from = "Intervals_full", to = "Intervals" ),
           function( from, to, strict ) {
-            if ( !all( t( from@closed ) == from@closed[1,] ) )
+            if ( nrow( from ) == 0 ) new_closed <- rep( TRUE, 2 )
+            else new_closed <- closed( from )[1,]
+            if ( !all( t( closed( from ) ) == new_closed ) )
               stop( "Intervals do not all have the same endpoint closure." )
             new(
                 "Intervals",
                 from@.Data,
-                type = from@type,
-                closed = from@closed[1,]
+                type = type( from ),
+                closed = new_closed
                 )
           }
           )
