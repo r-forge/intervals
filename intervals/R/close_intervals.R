@@ -9,11 +9,9 @@ setMethod(
             if ( !closed(x)[1] ) x[,1] <- x[,1] + 1
             if ( !closed(x)[2] ) x[,2] <- x[,2] - 1
             closed(x) <- TRUE
-            # In case there were empty open intervals
-            empty <- x[,2] < x[,1]
-            if ( any( empty ) ) {
+            if ( any( empty(x) ) ) {
               warning( "Empty intervals encountered and removed." )
-              x <- x[ !empty, ]
+              x <- x[ !empty(x), ]
             }
             return( x )
           }
@@ -30,11 +28,9 @@ setMethod(
             x[!closed1,1] <- x[!closed1,1] + 1
             x[!closed2,2] <- x[!closed2,2] - 1
             closed(x) <- TRUE
-            # In case there were empty open intervals
-            empty <- x[,2] < x[,1]
-            if ( any( empty ) ) {
+            if ( any( empty(x) ) ) {
               warning( "Empty intervals encountered and removed." )
-              x <- x[ !empty, ]
+              x <- x[ !empty(x), ]
             }
             return( x )
           }
