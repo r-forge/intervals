@@ -184,12 +184,15 @@ setMethod(
 
 setGeneric(
            "rbind",
+           # We need a different generic argument set. This is, in my opinion,
+           # cleaner that the rbind2() approach of the "methods" package, but
+           # may not play nice with other packages that try the same trick. Note
+           # that we need to explicitly give the "package" argument to avoid
+           # warnings at startup.
            function( x, ... ) standardGeneric( "rbind" ),
-           # We need a different generic argument set. Note that this is
-           # currently throwning warnings on first execution. See if this
-           # persists once the package namespace is set up properly.
+           package = "intervals",
            useAsDefault = function( x, ... ) base::rbind( x, ... )
-           ) 
+           )
 
 setMethod(
           "rbind",
