@@ -46,8 +46,12 @@
     
     \item{\code{.Data}:}{
       Object of class \code{"matrix"}. A two-column, numeric format is
-      required. Only integral (though not \code{"integer"} class)
-      endpoints are permitted if \code{type} is \code{"Z"}.
+      required. For a valid object, no value in the first column may
+      exceed its partner in the second column. (Note that this
+      \emph{does} permit empty interval rows, when both endpoints are of
+      equal value and not both closed.) Only integral (though not
+      \code{"integer"} class) endpoints are permitted if \code{type} is
+      \code{"Z"}.
     }
     
     \item{\code{closed}:}{
@@ -96,7 +100,9 @@
 
     \item{\code{closed<-}:}{
       Replacement accessor for \code{closed} slot. See the example
-      below.
+      below. Recycling will be used if appropriate, making it easy, for
+      example, to set the full matrix for \code{"Intervals_full"}
+      objects to \code{TRUE} or \code{FALSE}.
     }
     
     \item{\code{coerce}:}{
@@ -122,6 +128,11 @@
     \item{\code{type<-}:}{ Replacement accessor for \code{type} slot.  }
     
   }
+}
+
+\note{
+  Recycling is supported for the \code{closed} slot when creating
+  new objects.
 }
 
 \section{Warning}{
@@ -163,6 +174,7 @@ print(i[,1:2])
 
 j <- as( i, "Intervals_full" )
 closed(j)[ 3:4, 2 ] <- FALSE
+closed(j)[ 4, 1 ] <- FALSE
 
 print(j)
 }
