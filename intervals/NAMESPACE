@@ -18,5 +18,6 @@ exportMethods(
               "coerce",
               "[",
               "size",
-              "empty"
+              "empty",
+              "initialize"
               )

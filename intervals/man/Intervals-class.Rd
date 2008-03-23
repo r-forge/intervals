@@ -14,6 +14,8 @@
 \alias{coerce,Intervals,Intervals_full-method}
 \alias{coerce,Intervals_full,Intervals-method}
 
+\alias{initialize,Intervals_full-method}
+
 \alias{rbind}
 \alias{rbind,Intervals-method}
 \alias{rbind,Intervals_full-method}
@@ -57,7 +59,9 @@
     \item{\code{closed}:}{
       For \code{"Intervals"} objects, a two-element logical vector. For
       \code{"Intervals_full"} objects, a two-column logical matrix with
-      the same dimensions as \code{.Data}. 
+      the same dimensions as \code{.Data}. If omitted in a \code{new}
+      call, the \code{closed} slot will be initialized to an object of
+      appropriate type and size, with all entries \code{TRUE}.
     }
 
     \item{\code{type}:}{
