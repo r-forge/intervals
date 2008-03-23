@@ -16,5 +16,7 @@ exportMethods(
               "type", "type<-",
               "rbind",
               "coerce",
-              "["
+              "[",
+              "size",
+              "empty"
               )
