@@ -246,8 +246,8 @@ setMethod(
                 from@.Data,
                 type = from@type,
                 closed = cbind(
-                  rep( from@closed[1], nrow( from ) ),
-                  from@closed[2]
+                  rep( closed(from)[1], nrow( from ) ),
+                  rep( closed(from)[2], nrow( from ) )
                   )
                 )
           }
