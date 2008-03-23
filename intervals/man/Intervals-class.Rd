@@ -33,11 +33,12 @@
 \title{Classes "Intervals" and "Intervals_full"}
 
 \description{
-  \code{"Intervals"} objects are two-column matrices which represent sets,
-  possibly non-disjoint, of intervals on either the integers or the real
-  line. All intervals in each object have the same endpoint closure
-  pattern. \code{"Intervals_full"} objects are similar, but permit
-  interval-by-interval endpoint closure specification.
+  \code{"Intervals"} objects are two-column matrices which represent
+  sets, possibly non-disjoint and in no particular order, of intervals
+  on either the integers or the real line. All intervals in each object
+  have the same endpoint closure pattern. \code{"Intervals_full"}
+  objects are similar, but permit interval-by-interval endpoint closure
+  specification.
 }
 
 \section{Slots}{
@@ -123,7 +124,14 @@
   }
 }
 
-\note{No notes at the moment.}
+\section{Warning}{
+  Validity checking takes place when, for example, using the
+  \code{type<-} replacement accessor: if one attempts to set type to
+  \code{"Z"} but the endpoint matrix contains non-integer values, an
+  error is generated. Because accessors are not used for the endpoint
+  matrix itself, though, it is possible to create invalid \code{"Z"}
+  objects by setting endpoints to inappropriate values.
+}
 
 \examples{
 # The "Intervals" class
