@@ -4,6 +4,31 @@
 
 \alias{Intervals-class}
 \alias{Intervals_full-class}
+\alias{Intervals_virtual-class}
+
+\alias{closed}
+\alias{closed,Intervals_virtual-method}
+\alias{closed<-}
+\alias{closed<-,Intervals_virtual-method}
+
+\alias{coerce,Intervals,Intervals_full-method}
+\alias{coerce,Intervals_full,Intervals-method}
+
+\alias{rbind}
+\alias{rbind,Intervals-method}
+\alias{rbind,Intervals_full-method}
+\alias{rbind,Intervals_virtual-method}
+
+\alias{type}
+\alias{type,Intervals_virtual-method}
+\alias{type<-}
+\alias{type<-,Intervals_virtual-method}
+
+\alias{[,Intervals-method}
+\alias{[,Intervals_full-method}
+
+
+
 
 \title{Classes "Intervals" and "Intervals_full"}
 
@@ -40,16 +65,62 @@
 
 \section{Extends}{
   
-  Class \code{"\linkS4class{Intervals_virtual}"}, directly.
+  Class \code{"Intervals_virtual"}, directly.
 
-  Class \code{"\linkS4class{matrix}"}, by class "Intervals_virtual", distance 2.
+  Class \code{"\linkS4class{matrix}"}, by class
+  \code{"Intervals_virtual"}, distance 2.
 
-  Class \code{"\linkS4class{array}"}, by class "Intervals_virtual", distance 3.
+  Class \code{"\linkS4class{array}"}, by class
+  \code{"Intervals_virtual"}, distance 3.
 
-  Class \code{"\linkS4class{structure}"}, by class "Intervals_virtual", distance 4.
+  Class \code{"\linkS4class{structure}"}, by class
+  \code{"Intervals_virtual"}, distance 4.
 
-  Class \code{"\linkS4class{vector}"}, by class "Intervals_virtual", distance 5, with explicit coerce.
+  Class \code{"\linkS4class{vector}"}, by class
+  \code{"Intervals_virtual"}, distance 5, with explicit coerce.
   
+}
+
+\section{Methods}{
+  \describe{
+    
+    \item{\code{[}:}{
+      When used to subset rows, class is preserved; when used to subset
+      columns, the \code{closed} and \code{type} slots are discarded and
+      an appropriately subset version of \code{.Data} is returned. See
+      example below.
+    }
+    
+    \item{\code{closed}:}{ Accessor for \code{closed} slot. }
+
+    \item{\code{closed<-}:}{
+      Replacement accessor for \code{closed} slot. See the example
+      below.
+    }
+    
+    \item{\code{coerce}:}{
+      Coercion methods are provided for converting back and forth
+      between \code{"Intervals"} and \code{"Intervals_full"}
+      objects. See example below. An error will be generated when
+      attemption to down-class a \code{"Intervals_full"} object which
+      does not have the same closure settings for every interval.
+    }
+    
+    \item{\code{rbind}:}{
+      The \pkg{intervals} package provides \code{rbind} methods for its
+      objects (which do exactly what you would expect), but to do so,
+      must redefine the \code{rbind} argument list to permit a valid
+      signature. The generic function so defined currently passes all
+      other argument types to \code{base::rbind}. This may not work well
+      with other packages that also attempt to define methods for
+      \code{rbind}.
+    }
+
+    \item{\code{type}:}{ Accessor for \code{type} slot.  }
+
+    \item{\code{type<-}:}{ Replacement accessor for \code{type} slot.  }
+    
+  }
 }
 
 \note{No notes at the moment.}
@@ -82,7 +153,7 @@ print(i[,1:2])
 
 # Full endpoint control
 
-j <- i
+j <- as( i, "Intervals_full" )
 closed(j)[ 3:4, 2 ] <- FALSE
 
 print(j)
