@@ -151,7 +151,7 @@ setMethod(
           "[",
           signature( "Intervals" ),
           function( x, i, j, ..., drop ) {
-            if ( missing(i) ) i <- TRUE
+            if ( missing(i) ) i <- rep( TRUE, nrow(x) )
             if ( missing(j) ) {
               # Preserve class. Note that both [i,] and [i] syntax subset rows.
               x@.Data <- x@.Data[i,,drop=FALSE]
@@ -165,7 +165,7 @@ setMethod(
           "[",
           signature( "Intervals_full" ),
           function( x, i, j, ..., drop ) {
-            if ( missing(i) ) i <- TRUE
+            if ( missing(i) ) i <- rep( TRUE, nrow(x) )
             if ( missing(j) ) {
               # Preserve class. Note that both [i,] and [i] syntax subset rows.
               if ( is.character(i) ) i <- match( i, rownames( x ) )
