@@ -22,28 +22,31 @@ setMethod(
             # then the real-valued code works immediately, with no need for
             # back-conversion afterwards. This is because the open intervals
             # corresponding to two consecutive integers overlap one another.
-            if ( type(x) == "Z" ) x <- open_intervals(x)
-            closed <- as.vector( t( closed(x) ) )
-            data <- data.frame(
-                               pos = as.vector( t( x@.Data ) ),
-                               ordering = ordering_matrix[ cbind( ifelse( closed, 2L, 1L ), rep( c(1L,2L), nrow( x ) ) ) ],
-                               closed = closed,
-                               score = rep( c( 1, -1 ), nrow( x ) )              
-                               )
-            data <- data[ with( data, order( pos, ordering ) ), ]
-            data$sum <- cumsum( data$score )
-            z <- which( data$sum == 0 )
-            first <- c( 1, z[ z < nrow(data) ] + 1 ) 
-            result <- with(
-                           data,
-                           new(
-                               "Intervals_full",
-                               cbind( pos[ first ], pos[ z ] ),
-                               closed = cbind( closed[ first ], closed[ z ] ),
-                               type = type( x )
-                               )
-                           )
-            colnames( result ) <- colnames( x )
+            if ( nrow(x) == 0 ) result <- x
+            else {
+              if ( type(x) == "Z" ) x <- open_intervals(x)
+              closed <- as.vector( t( closed(x) ) )
+              data <- data.frame(
+                                 pos = as.vector( t( x@.Data ) ),
+                                 ordering = ordering_matrix[ cbind( ifelse( closed, 2L, 1L ), rep( c(1L,2L), nrow( x ) ) ) ],
+                                 closed = closed,
+                                 score = rep( c( 1, -1 ), nrow( x ) )              
+                                 )
+              data <- data[ with( data, order( pos, ordering ) ), ]
+              data$sum <- cumsum( data$score )
+              z <- which( data$sum == 0 )
+              first <- c( 1, z[ z < nrow(data) ] + 1 ) 
+              result <- with(
+                             data,
+                             new(
+                                 "Intervals_full",
+                                 cbind( pos[ first ], pos[ z ] ),
+                                 closed = cbind( closed[ first ], closed[ z ] ),
+                                 type = type( x )
+                                 )
+                             )
+              colnames( result ) <- colnames( x )
+            }
             return( result )
           }
           )
