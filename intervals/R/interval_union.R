@@ -16,7 +16,6 @@ setMethod(
           signature( "Intervals_full", "missing" ),
           function( x ) {
             # TO DO: remove rows with NA values
-            # TO DO: remove empty rows in result
             #
             # Note that if integer intervals are forced to double-open notation,
             # then the real-valued code works immediately, with no need for
@@ -47,7 +46,7 @@ setMethod(
                              )
               colnames( result ) <- colnames( x )
             }
-            return( result )
+            return( result[ !empty( result ), ] )
           }
           )
 
