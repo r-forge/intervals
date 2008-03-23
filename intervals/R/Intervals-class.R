@@ -6,7 +6,9 @@
 
 
 
-######## Virtual
+######## Class definitions
+
+#### Virtual
 
 # (R 2.6.2) If I add the "VIRTUAL" tag to the representation, I am not able to
 # extend this class! I believe this arises because I am already extending a base
@@ -38,7 +40,64 @@ setClass(
          }
          )
 
-# Accessors and replacement methods for virtual class
+#### Intevals
+
+# Common endpoint closure state for all intervals
+
+setClass(
+         "Intervals",
+         representation( closed = "logical" ),
+         prototype( closed = c( TRUE, TRUE ) ),
+         contains = "Intervals_virtual",
+         validity = function( object ) {
+           # Check 'closed' slot
+           if ( length( object@closed ) != 2 )
+             return( "The 'closed' slot should be a logical of length 2." )
+           return( TRUE )
+         }
+         )
+
+#### Intervals_full
+
+# Full control of endpoint closure. Note that if the 'closed' slot is omitted,
+# we use an 'initialize' method to create an appropriately sized matrix of TRUE
+# values. We also permit vector input, with recycling, for the 'closed' slot.
+
+setClass(
+         "Intervals_full",
+         representation( closed = "matrix" ),
+         prototype( closed = matrix( TRUE, 0, 2 ) ),
+         contains = "Intervals_virtual",
+         validity = function( object ) {
+           # Check 'closed' slot
+           if ( !is.logical( object@closed ) || dim( object@.Data ) != dim( object@closed ) )
+             return( "The 'closed' slot should be a logical matrix with the same dimensions as the main endpoints matrix." )
+           return( TRUE )
+         }
+         )
+
+setMethod(
+          "initialize",
+          signature( "Intervals_full" ),
+          function( .Object, .Data, type, closed ) {
+            if ( !missing( .Data ) ) .Object@.Data <- .Data
+            if ( !missing( type ) ) .Object@type <- type
+            # Careful here. Since the closed slot initializes to 0 rows, we
+            # should not used the "closed<-" method yet.
+            .Object@closed <- matrix( TRUE, nrow( .Object ), 2 )
+            if ( !missing( closed ) )
+              # Now it's OK though, for recycling
+              closed( .Object ) <- closed
+            if ( validObject( .Object ) ) return( .Object )
+          }
+          )
+
+
+
+
+######## Accessors and replacement methods
+
+#### closed
 
 setGeneric( "closed", function(x) standardGeneric( "closed" ) )
 
@@ -58,6 +117,8 @@ setReplaceMethod(
                    return(x)
                  }
                  )
+
+#### type
 
 setGeneric( "type", function(x) standardGeneric( "type" ) )
 
@@ -84,22 +145,7 @@ setReplaceMethod(
 
 
 
-######## Intevals
-
-# Common endpoint closure state for all intervals
-
-setClass(
-         "Intervals",
-         representation( closed = "logical" ),
-         prototype( closed = c( TRUE, TRUE ) ),
-         contains = "Intervals_virtual",
-         validity = function( object ) {
-           # Check 'closed' slot
-           if ( length( object@closed ) != 2 )
-             return( "The 'closed' slot should be a logical of length 2." )
-           return( TRUE )
-         }
-         )
+######## Subsetting
 
 setMethod(
           "[",
@@ -114,6 +160,27 @@ setMethod(
             else return( x@.Data[i,j] )
           }
           )
+
+setMethod(
+          "[",
+          signature( "Intervals_full" ),
+          function( x, i, j, ..., drop ) {
+            if ( missing(i) ) i <- TRUE
+            if ( missing(j) ) {
+              # Preserve class. Note that both [i,] and [i] syntax subset rows.
+              if ( is.character(i) ) i <- match( i, rownames( x ) )
+              x@.Data <- x@.Data[i,,drop=FALSE]
+              x@closed <- x@closed[i,,drop=FALSE]
+              return( x )
+            }
+            else return( x@.Data[i,j] )
+          }
+          )
+
+
+
+
+######## rbind
 
 setGeneric(
            "rbind",
@@ -162,60 +229,6 @@ setMethod(
           }
           )
 
-
-
-
-######## Intervals_full
-
-# Full control of endpoint closure. Note that if the 'closed' slot is omitted,
-# we use an 'initialize' method to create an appropriately sized matrix of TRUE
-# values. We also permit vector input, with recycling, for the 'closed' slot.
-
-setClass(
-         "Intervals_full",
-         representation( closed = "matrix" ),
-         prototype( closed = matrix( TRUE, 0, 2 ) ),
-         contains = "Intervals_virtual",
-         validity = function( object ) {
-           # Check 'closed' slot
-           if ( !is.logical( object@closed ) || dim( object@.Data ) != dim( object@closed ) )
-             return( "The 'closed' slot should be a logical matrix with the same dimensions as the main endpoints matrix." )
-           return( TRUE )
-         }
-         )
-
-setMethod(
-          "initialize",
-          signature( "Intervals_full" ),
-          function( .Object, .Data, type, closed ) {
-            if ( !missing( .Data ) ) .Object@.Data <- .Data
-            if ( !missing( type ) ) .Object@type <- type
-            # Careful here. Since the closed slot initializes to 0 rows, we
-            # should not used the "closed<-" method yet.
-            .Object@closed <- matrix( TRUE, nrow( .Object ), 2 )
-            if ( !missing( closed ) )
-              # Now it's OK though, for recycling
-              closed( .Object ) <- closed
-            if ( validObject( .Object ) ) return( .Object )
-          }
-          )
-
-setMethod(
-          "[",
-          signature( "Intervals_full" ),
-          function( x, i, j, ..., drop ) {
-            if ( missing(i) ) i <- TRUE
-            if ( missing(j) ) {
-              # Preserve class. Note that both [i,] and [i] syntax subset rows.
-              if ( is.character(i) ) i <- match( i, rownames( x ) )
-              x@.Data <- x@.Data[i,,drop=FALSE]
-              x@closed <- x@closed[i,,drop=FALSE]
-              return( x )
-            }
-            else return( x@.Data[i,j] )
-          }
-          )
-                 
 
 
 
