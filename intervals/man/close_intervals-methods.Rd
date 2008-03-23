@@ -33,11 +33,12 @@ open_intervals(x)
   \code{FALSE}, as appropriate.
 }
 
-\section{Methods}{
-  \describe{
-    \item{x = \code{"Intervals"}:}{See above.}
-    \item{x = \code{"Intervals_full"}:}{See above.}
-  }
+\note{
+  The \code{x} object may contain empty intervals, with at least one
+  open endpoint, and still be valid. (Intervals are invalid if their
+  second endpoint is less than their first.) The \code{close_intervals}
+  method would, in such cases, create an invalid result; to prevent
+  this, empty intervals are detected and removed, with a warning.
 }
 
 \keyword{}
