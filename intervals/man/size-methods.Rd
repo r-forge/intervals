@@ -21,7 +21,9 @@ size(x)
 
 \details{
   For type \code{"Z"} objects, counting measure; for type \code{"R"}
-  objects, Lebesgue measure.
+  objects, Lebesgue measure. For type \code{"Z"} objects, intervals of
+  form (\emph{a},\emph{a}] and (\emph{a},\emph{a}) are both of length
+  0.
 }
 
 \value{
