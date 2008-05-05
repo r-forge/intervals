@@ -1,0 +1,101 @@
+\documentclass[a4paper]{article}
+
+\usepackage{Sweave, amssymb, amsmath}
+
+\title{Technical overview of algorithms\\ 
+for the \emph{intervals} package}
+\author{Richard Bourgon}
+\date{5 May 2008}
+
+% The is for R CMD check, which finds it in spite of the "%"
+% \VignetteIndexEntry{Technical overview of algorithms.}
+
+
+
+
+\begin{document}
+
+% Size for figures
+\setkeys{Gin}{width=.6\textwidth}
+
+% Make title
+\maketitle
+
+% Typesetting commands
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+
+
+
+\section{Introduction}
+
+\subsection{Purpose of this document}
+
+This document describes technical details of the classes and algorithms used in
+the \emph{intervals} package. The contents are largely intended for the package
+developers and will typically not be of interest to end users. Through
+
+
+
+
+\subsection{Conventions}
+
+Throughout, the symbols $a$ and $b$ refer to the left and right endpoints of a
+single interval over $\Z$, and $x$ and $y$, to a single interval over $\R$.
+
+
+
+
+\section{Class definitions}
+
+Three classes are defined:
+
+\begin{itemize}
+
+  \item \texttt{Intervals\_virtual}: A virtual class extending \texttt{matrix}
+  with (i) a \texttt{type} slot, plus (ii) validity checking common to both
+  non-virtual classes.
+
+  \item \texttt{Intervals}: The main class for intervals which all have common
+  endpoint closure.
+
+  \item \texttt{Intervals\_full}: A more general class which permits endpoint
+  closure specification on an interval-by-interval basis.  
+
+\end{itemize}
+
+Both non-virtual classes inherit from the virtual class. Objects of these
+classes may be of type \texttt{Z} or \texttt{R}, and intervals size, contiguity,
+etc. depend on whether they are construed as being over the integers or the real
+line. Type is currently (1.2.0) implemented by an explicit \texttt{type} slot
+--- for which accessor and replacement methods are defined --- but it might make
+more sense later to base interval type on the data type of the matrix itself,
+and to provide arguments for neatly handling \texttt{numeric} matrices which
+nonetheless have integral endpoints and which the user wants interpretted over
+$\Z$.
+
+
+
+
+\section{Interval size}
+
+Size is Lebesgue measure for intervals over $\R$, i.e., $y - x$
+regardless of endpoint closure. For intervals over $\Z$,
+
+\begin{itemize}
+
+  \item When $a = b$, a size of 1 is assigned if both endpoints are closed; a
+  size of 0 is assigned otherwise.
+  
+  \item When $a < b$, size is defined as $b - a - 1$ plus the number of closed
+  endpoints. I.e., $|[a,b]| \equiv b - a + 1$, but $|[a,b)| = |(a,b]| \equiv b -
+  a$ and $|(a,b)| \equiv b - a - 1$. 
+
+\end{itemize}
+
+
+
+
+\end{document}
