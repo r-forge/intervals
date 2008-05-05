@@ -1,0 +1,34 @@
+- (6 April 2008) For real-valued interval endpoints, we may have some serious
+  problems with floating point precision and assessing whether different
+  endpoints are "equal". This is especially important when one interval ends
+  where another begins, or when query and target begin at the same location for
+  an interval_overlap() call -- since the algorithm requires us to get queries
+  and targets handled in the proper order when the endpoints are identical.
+
+  One solution will be to use a tolerance argument as all.equal() does. I still
+  need to work out just how I want to go about this. This might be as simple as
+  using round(), with the appropriate precision, before doing sorting. The
+  resulting ordering could then optionally be compared to what would have
+  resulted with a straight order() call, and a warning could be generated if the
+  results do not agree.
+
+- (6 April 2008) If we force an integer data type for "Z" interval matrices,
+  perhaps this will keep users from inserting invalid endpoints into an existing
+  object. Although perhaps not... R will just update the matrix data type on the
+  fly, and will probably not call the validity function for the containing
+  object. 
+
+  (5 May 2008) An alternative here -- one which is probably more natural -- is
+  to just determine endpoint type on the basis of the data types of the
+  matrices. One or more real-valued matrices causes real-line
+  computation. Possibly provide a utility L(), to make numeric matrices
+  integral, generating a warning if rounding is required. Also add a switch to
+  all functions which behaves in the same way.
+
+  It should be the case that we ALWAYS use the type() accessor for checking and
+  setting matrix types -- except in class definitions, initialize methods, and
+  the definition of the type() accessors themselves. If so, it will be simple to
+  drop the explicit slot and do as described in the preceeding paragraphs.
+
+- (5 April 2008) Add print methods with nice "(" and "[" notation, plus a
+  summary line like "n intervals in Z with common endpoint closure".
