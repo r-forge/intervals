@@ -61,7 +61,11 @@
       \code{"Intervals_full"} objects, a two-column logical matrix with
       the same dimensions as \code{.Data}. If omitted in a \code{new}
       call, the \code{closed} slot will be initialized to an object of
-      appropriate type and size, with all entries \code{TRUE}.
+      appropriate type and size, with all entries \code{TRUE}. If
+      \code{closed} is a vector of length 1, or a vector of length 2 for
+      the \code{"Intervals_full"} class, an appropriate object will be
+      made by reusing the supplied values row-wise. See the example
+      below.
     }
 
     \item{\code{type}:}{
@@ -181,6 +185,8 @@ closed(j)[ 3:4, 2 ] <- FALSE
 closed(j)[ 4, 1 ] <- FALSE
 
 print(j)
+
+k <- new( "Intervals_full", matrix( 1:6, 3 ), closed = c( TRUE, FALSE ) )
 }
 
 \keyword{classes}

@@ -79,16 +79,20 @@ setClass(
 setMethod(
           "initialize",
           signature( "Intervals_full" ),
-          function( .Object, .Data, type, closed ) {
-            if ( !missing( .Data ) ) .Object@.Data <- .Data
-            if ( !missing( type ) ) .Object@type <- type
-            # Careful here. Since the closed slot initializes to 0 rows, we
-            # should not used the "closed<-" method yet.
-            .Object@closed <- matrix( TRUE, nrow( .Object ), 2 )
-            if ( !missing( closed ) )
-              # Now it's OK though, for recycling
-              closed( .Object ) <- closed
-            if ( validObject( .Object ) ) return( .Object )
+          function( .Object, .Data, closed, ... ) {
+            if ( !missing( .Data ) ) {
+              if ( !is.matrix( .Data ) )
+                stop( "Expecting a matrix argument." )
+              if ( missing( closed ) )
+                closed <- matrix( TRUE, nrow( .Data ), 2 )
+              if ( is.vector( closed ) ) {
+                if ( length( closed ) > 2 )
+                  stop( "The 'closed' argument should be a matrix, or a vector of length 1 or 2." )
+                closed <- matrix( closed, nrow( .Data ), 2, byrow = TRUE )
+              }
+              callNextMethod( .Object, .Data, closed = closed, ... )
+            }
+            else callNextMethod( .Object, ... )
           }
           )
 
