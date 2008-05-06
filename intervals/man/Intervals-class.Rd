@@ -108,9 +108,8 @@
 
     \item{\code{closed<-}:}{
       Replacement accessor for \code{closed} slot. See the example
-      below. Recycling will be used if appropriate, making it easy, for
-      example, to set the full matrix for \code{"Intervals_full"}
-      objects to \code{TRUE} or \code{FALSE}.
+      below. See description of the \code{closed} slot above for details
+      on how one- or two-element logical vectors are interpreted.
     }
     
     \item{\code{coerce}:}{

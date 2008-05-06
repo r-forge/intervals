@@ -114,10 +114,27 @@ setMethod(
 setGeneric( "closed<-", function( x, value ) standardGeneric( "closed<-" ) )
 
 setReplaceMethod(
-                 "closed", "Intervals_virtual",
+                 "closed", "Intervals",
                  function( x, value ) {
-                   # For recycling
-                   x@closed[ 1:length(x@closed) ] <- value
+                   if ( !is.vector( value ) || !( length( value ) %in% 1:2 ) )
+                     stop( "The 'closed' argument should be a vector of length 1 or 2." )
+                   x@closed[ 1:2 ] <- value
+                   return(x)
+                 }
+                 )
+
+setReplaceMethod(
+                 "closed", "Intervals_full",
+                 function( x, value ) {                   
+                   error_msg <- "The 'value' argument should be a matrix, or a vector of length 1 or 2." 
+                   if ( is.vector( value ) ) {
+                     if ( length( value ) > 2 )
+                       stop( error_msg )
+                     value <- matrix( value, nrow( x ), 2, byrow = TRUE )
+                   }
+                   if ( !is.matrix( value ) || nrow( value ) != nrow( x ) || ncol( value ) != 2 )
+                     stop( error_msg )
+                   x@closed <- value
                    return(x)
                  }
                  )
