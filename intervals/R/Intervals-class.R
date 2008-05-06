@@ -156,7 +156,7 @@ setReplaceMethod(
                  function( x, value ) {
                    if ( length( value ) != 1 || !( value %in% c( "Z", "R" ) ) )
                      stop( "The 'type' slot should be 'Z' or 'R'." )
-                   if ( value == "Z" && !all( x@.Data %% 1 == 0 ) )
+                   if ( value == "Z" && !all( x@.Data %% 1 == 0, na.rm = TRUE ) )
                      stop( "Non-integer-valued endpoints not permitted for type 'Z'." )
                    x@type <- value
                    return(x)
