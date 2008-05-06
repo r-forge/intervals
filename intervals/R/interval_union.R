@@ -1,7 +1,9 @@
 # Unions are constructed by ordering endpoints. When first and last endpoints
 # coincide, correct ordering -- on the basis of whether they are open or closed,
 # and first or last for their respective interval -- is required for correct
-# results. This matrix establishes the correct ordering, as is used below.
+# results. This matrix establishes the correct ordering, as is used below. It's
+# cute to do this in all R, but we need C for iterval_overlap anyway, so we may
+# eventually want to handle this in C as well.
 
 ordering_matrix <- matrix(
                           c( 3L, 1L, 2L, 4L ),
@@ -15,12 +17,13 @@ setMethod(
           "interval_union",
           signature( "Intervals_full", "missing" ),
           function( x ) {
-            # TO DO: remove rows with NA values
-            #
             # Note that if integer intervals are forced to double-open notation,
             # then the real-valued code works immediately, with no need for
             # back-conversion afterwards. This is because the open intervals
             # corresponding to two consecutive integers overlap one another.
+            has_na <- is.na( x[,1] ) | is.na( x[,2] )
+            if ( any( has_na ) )
+              x <- x[ !has_na, ]
             if ( nrow(x) == 0 ) result <- x
             else {
               if ( type(x) == "Z" ) x <- open_intervals(x)
@@ -47,6 +50,22 @@ setMethod(
               colnames( result ) <- colnames( x )
             }
             return( result[ !empty( result ), ] )
+          }
+          )
+
+setMethod(
+          "interval_union",
+          signature( "Intervals_full", "Intervals_full" ),
+          function( x, y, ... ) {
+            # TO DO: test this more fully.
+            if ( !all( sapply( ..., is, "Intervals_full" ) ) )
+              stop( "Arugments should be one or more Intervals_full objects." )
+            interval_union(
+                           do.call(
+                                   rbind,
+                                   c( list(x, y), ... )
+                                   )
+                           )
           }
           )
 
