@@ -12,11 +12,20 @@
 }
 
 \usage{
-size(x)
+size(x, as = type(x))
 }
 
 \arguments{
+  
   \item{x}{An \code{"Intervals"} or \code{"Intervals_full"} object.}
+
+  \item{as}{
+    Should the intervals be thought of as in Z or R? This is usually
+    determined automatically from the \code{type} slot, but because
+    changing type may cause object copying, it is sometimes convenient
+    to temporarily override this slot without actually resetting it.
+  }
+  
 }
 
 \details{
