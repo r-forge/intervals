@@ -40,7 +40,7 @@ setClass(
          }
          )
 
-#### Intevals
+#### Intervals
 
 # Common endpoint closure state for all intervals
 
