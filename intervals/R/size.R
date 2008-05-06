@@ -1,5 +1,8 @@
 # For R, size is Lebesgue measure, so closure is irrelevant.
 
+# TO DO: this currently crashes, due to the "ties" logical vector when there are
+# NAs in the endpoint matrix.
+
 setGeneric( "size", def = function( x, ... ) standardGeneric( "size" ) )
 
 setMethod(
