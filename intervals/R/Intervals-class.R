@@ -203,57 +203,49 @@ setMethod(
 
 ######## rbind
 
-# TO-DO: we don't always get error messages in the order we would like. If you
-# feed rbind and Intervals and an Intervals_full object, you get an error based
-# on the closed slot rather than the type mismatch...
+# Match the Biobase combine argument list.
 
-setGeneric(
-           "rbind",
-           # We need a different generic argument set. This is, in my opinion,
-           # cleaner that the rbind2() approach of the "methods" package, but
-           # may not play nice with other packages that try the same trick. Note
-           # that we need to explicitly give the "package" argument to avoid
-           # warnings at startup.
-           function( x, ... ) standardGeneric( "rbind" ),
-           package = "intervals",
-           useAsDefault = function( x, ... ) base::rbind( x, ... )
-           )
+setGeneric( "combine", function( x, y, ... ) standardGeneric( "combine" ) )
 
 setMethod(
-          "rbind",
-          signature( "Intervals_virtual" ),
-          function( x, ... ) {
-            args <- list(...)
+          "combine",
+          signature( "Intervals" ),
+          function( x, y, ... ) {
+            args <- c( if ( missing(y) ) list() else list(y), list(...) )
             if ( length( args ) > 0 ) {
-              if ( !all( sapply( args, function(y) class(x) == class(y) ) ) )
-                stop( "All argments should be of the same class." )
-              if ( !all( sapply( args, function(y) type(x) == type(y) ) ) )
+              if ( !all( sapply( args, is, "Intervals" ) ) )
+                stop( "All argments should be of the same class." )              
+              if ( !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
+                stop( "All argments should have the same 'closed' slot." )
+              if ( !all( sapply( args, type ) == type(x) ) )
                 stop( "All argments should have the same 'type' slot." )
-              x@.Data <- do.call( rbind, c( list(x@.Data), lapply( args, function(y) y@.Data ) ) )
+              x@.Data <- do.call( rbind, c( list(x), args ) )
             }
             return(x)
           }
           )
 
 setMethod(
-          "rbind",
-          signature( "Intervals" ),
-          function( x, ... ) {
-            args <- list(...)
-            if ( length( args ) > 0 && !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
-              stop( "All argments should have the same 'closed' slot." )
-            callNextMethod( x, ... )
-          }
-          )
-
-setMethod(
-          "rbind",
+          "combine",
           signature( "Intervals_full" ),
-          function( x, ... ) {
-            args <- list(...)
-            if ( length( args ) > 0 )
-              x@closed <- rbind( closed(x), do.call( rbind, lapply( args, function(y) closed(y) ) ) )
-            callNextMethod( x, ... )
+          function( x, y, ... ) {
+            # TO-DO: coerce Intervals objects up if required.
+            args <- c( if ( missing(y) ) list() else list(y), list(...) )
+            if ( length( args ) > 0 ) {
+              if ( !all( sapply( args, is, "Intervals_full" ) ) )
+                stop( "All argments should be of the same class." )              
+              if ( !all( sapply( args, type ) == type(x) ) )
+                stop( "All argments should have the same 'type' slot." )
+              x@.Data <- do.call( rbind, c( list(x), args ) )
+              closed(x) <- do.call(
+                                   rbind,
+                                   c(
+                                     list( closed(x) ),
+                                     lapply( args, closed )
+                                     )
+                                   )
+            }
+            return(x)
           }
           )
 
@@ -325,6 +317,8 @@ setMethod(
           }
           )
 
+setGeneric( "head", function( x, ... ) standardGeneric( "head" ) )
+
 setMethod(
           "head",
           signature( "Intervals_virtual" ),
@@ -332,6 +326,8 @@ setMethod(
             x[ 1:min( n, nrow(x) ), ]
           }
           )
+
+setGeneric( "tail", function( x, ... ) standardGeneric( "tail" ) )
 
 setMethod(
           "tail",
