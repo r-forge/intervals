@@ -9,15 +9,18 @@ exportClasses(
 # when I don't define my own.
 
 exportMethods(
-              "interval_union",
-              "close_intervals",
-              "open_intervals",
-              "closed", "closed<-",
-              "type", "type<-",
-              "rbind",
-              "coerce",
               "[",
-              "size",
+              "close_intervals",
+              "closed", "closed<-",
+              "coerce",
+              "combine",
               "empty",
-              "initialize"
+              "head",
+              "initialize",
+              "interval_union",
+              "open_intervals",
+              "show",
+              "size",
+              "tail",
+              "type", "type<-"
               )
