@@ -30,5 +30,6 @@
   the definition of the type() accessors themselves. If so, it will be simple to
   drop the explicit slot and do as described in the preceeding paragraphs.
 
-- (5 April 2008) Add print methods with nice "(" and "[" notation, plus a
-  summary line like "n intervals in Z with common endpoint closure".
+- (7 May 2008) In the end, I should probably leave accessors intact but NOT use
+  replacement methods in my own code -- since these create efficiency problems
+  due to copying.
