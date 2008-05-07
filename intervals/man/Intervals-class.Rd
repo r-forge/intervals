@@ -13,6 +13,9 @@
 
 \alias{coerce,Intervals,Intervals_full-method}
 \alias{coerce,Intervals_full,Intervals-method}
+\alias{coerce,Intervals_virtual,character-method}
+
+\alias{head,Intervals_virtual-method}
 
 \alias{initialize,Intervals_full-method}
 
@@ -20,6 +23,10 @@
 \alias{rbind,Intervals-method}
 \alias{rbind,Intervals_full-method}
 \alias{rbind,Intervals_virtual-method}
+
+\alias{show,Intervals_virtual-method}
+
+\alias{tail,Intervals_virtual-method}
 
 \alias{type}
 \alias{type,Intervals_virtual-method}
@@ -118,7 +125,11 @@
       objects. See example below. An error will be generated when
       attemption to down-class a \code{"Intervals_full"} object which
       does not have the same closure settings for every interval.
+      
+      A coercion method is also provided for pretty character strings.
     }
+    
+    \item{\code{head}:}{ A method for \code{\link{head}}. }
     
     \item{\code{rbind}:}{
       The \pkg{intervals} package provides \code{rbind} methods for its
@@ -129,8 +140,12 @@
       with other packages that also attempt to define methods for
       \code{rbind}.
     }
-
-    \item{\code{type}:}{ Accessor for \code{type} slot.  }
+    
+    \item{\code{show}:}{ For pretty display of objects. }
+    
+    \item{\code{tail}:}{ A method for \code{\link{tail}}. }
+    
+    \item{\code{type}:}{ Accessor for \code{type} slot. }
 
     \item{\code{type<-}:}{ Replacement accessor for \code{type} slot.  }
     

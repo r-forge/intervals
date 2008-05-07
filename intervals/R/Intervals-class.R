@@ -314,14 +314,29 @@ setMethod(
 
 
 
-######## show
+######## show, head, tail
 
 setMethod(
           "show",
           signature( "Intervals_virtual" ),
           function( object ) {
-            cat( "Intervals over ", type(object), ":\n", sep = "" )
+            cat( nrow( object ), " intervals over ", type(object), ":\n", sep = "" )
             cat( as( object, "character"), sep = "\n" )
-            cat( "\n" )
+          }
+          )
+
+setMethod(
+          "head",
+          signature( "Intervals_virtual" ),
+          function( x, n = 6 ) {
+            x[ 1:min( n, nrow(x) ), ]
+          }
+          )
+
+setMethod(
+          "tail",
+          signature( "Intervals_virtual" ),
+          function( x, n = 6 ) {
+            x[ max( 1, nrow(x) - n + 1 ):nrow(x), ]
           }
           )
