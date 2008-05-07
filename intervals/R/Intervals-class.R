@@ -203,6 +203,10 @@ setMethod(
 
 ######## rbind
 
+# TO-DO: we don't always get error messages in the order we would like. If you
+# feed rbind and Intervals and an Intervals_full object, you get an error based
+# on the closed slot rather than the type mismatch...
+
 setGeneric(
            "rbind",
            # We need a different generic argument set. This is, in my opinion,
@@ -288,5 +292,36 @@ setMethod(
                 type = type( from ),
                 closed = new_closed
                 )
+          }
+          )
+
+setMethod(
+          "coerce",
+          signature( from = "Intervals_virtual", to = "character" ),
+          function( from, to, strict ) {
+            cl <- closed( from )
+            # So we only write main code once
+            if ( is( from, "Intervals" ) ) cl <- matrix( cl, nrow(from), 2, byrow = TRUE )
+            paste(
+                  ifelse( cl[,1], "[", "(" ),
+                  from[,1], ", ", from[,2],
+                  ifelse( cl[,2], "]", ")" ),
+                  sep = ""
+                  )                  
+          }
+          )
+
+
+
+
+######## show
+
+setMethod(
+          "show",
+          signature( "Intervals_virtual" ),
+          function( object ) {
+            cat( "Intervals over ", type(object), ":\n", sep = "" )
+            cat( as( object, "character"), sep = "\n" )
+            cat( "\n" )
           }
           )

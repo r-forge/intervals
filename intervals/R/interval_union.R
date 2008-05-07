@@ -55,22 +55,6 @@ setMethod(
 
 setMethod(
           "interval_union",
-          signature( "Intervals_full", "Intervals_full" ),
-          function( x, y, ... ) {
-            # TO DO: test this more fully.
-            if ( !all( sapply( ..., is, "Intervals_full" ) ) )
-              stop( "Arugments should be one or more Intervals_full objects." )
-            interval_union(
-                           do.call(
-                                   rbind,
-                                   c( list(x, y), ... )
-                                   )
-                           )
-          }
-          )
-
-setMethod(
-          "interval_union",
           signature( "Intervals", "missing" ),
           # TO DO: make this more efficient (but less clean) by not coercing
           function( x ) {
@@ -84,3 +68,18 @@ setMethod(
             return( result )
           }
           )
+
+setMethod(
+          "interval_union",
+          signature( "Intervals_virtual", "Intervals_virtual" ),
+          function( x, y, ... ) {
+            # Note that the rbind call will do type checking on x, y, and ...
+            interval_union(
+                           do.call(
+                                   rbind,
+                                   c( list(x, y), ... )
+                                   )
+                           )
+          }
+          )
+
