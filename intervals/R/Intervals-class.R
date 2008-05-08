@@ -249,6 +249,19 @@ setMethod(
           }
           )
 
+setMethod(
+          "combine",
+          signature( "missing" ),
+          function( x, y, ... ) {
+            # Permitting do.call use with named lists, since do.call will put
+            # elements whose names are not "x" or "y" into the ... argument.            
+            args <- c( if ( missing(y) ) list() else list(y), list(...) )
+            names( args ) <- NULL
+            if ( length( args ) == 0 ) return ( NULL )
+            else return( do.call( combine, args ) )
+          }
+          )
+
 
 
 
