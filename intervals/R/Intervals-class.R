@@ -214,11 +214,11 @@ setMethod(
             args <- c( if ( missing(y) ) list() else list(y), list(...) )
             if ( length( args ) > 0 ) {
               if ( !all( sapply( args, is, "Intervals" ) ) )
-                stop( "All argments should be of the same class." )              
+                stop( "All arguments should be of the same class." )              
               if ( !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
-                stop( "All argments should have the same 'closed' slot." )
+                stop( "All arguments should have the same 'closed' slot." )
               if ( !all( sapply( args, type ) == type(x) ) )
-                stop( "All argments should have the same 'type' slot." )
+                stop( "All arguments should have the same 'type' slot." )
               x@.Data <- do.call( rbind, c( list(x), args ) )
             }
             return(x)
@@ -233,9 +233,9 @@ setMethod(
             args <- c( if ( missing(y) ) list() else list(y), list(...) )
             if ( length( args ) > 0 ) {
               if ( !all( sapply( args, is, "Intervals_full" ) ) )
-                stop( "All argments should be of the same class." )              
+                stop( "All arguments should be of the same class." )              
               if ( !all( sapply( args, type ) == type(x) ) )
-                stop( "All argments should have the same 'type' slot." )
+                stop( "All arguments should have the same 'type' slot." )
               x@.Data <- do.call( rbind, c( list(x), args ) )
               closed(x) <- do.call(
                                    rbind,
