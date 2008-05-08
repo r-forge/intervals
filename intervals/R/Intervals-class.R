@@ -307,12 +307,17 @@ setMethod(
             cl <- closed( from )
             # So we only write main code once
             if ( is( from, "Intervals" ) ) cl <- matrix( cl, nrow(from), 2, byrow = TRUE )
-            paste(
-                  ifelse( cl[,1], "[", "(" ),
-                  from[,1], ", ", from[,2],
-                  ifelse( cl[,2], "]", ")" ),
-                  sep = ""
-                  )                  
+            if ( nrow( from ) == 0 )
+              return( character() )
+            else
+              return(
+                     paste(
+                           ifelse( cl[,1], "[", "(" ),
+                           from[,1], ", ", from[,2],
+                           ifelse( cl[,2], "]", ")" ),
+                           sep = ""
+                           )
+                     )
           }
           )
 
