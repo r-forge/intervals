@@ -9,7 +9,8 @@
 \alias{closed}
 \alias{closed,Intervals_virtual-method}
 \alias{closed<-}
-\alias{closed<-,Intervals_virtual-method}
+\alias{closed<-,Intervals-method}
+\alias{closed<-,Intervals_full-method}
 
 \alias{coerce,Intervals,Intervals_full-method}
 \alias{coerce,Intervals_full,Intervals-method}

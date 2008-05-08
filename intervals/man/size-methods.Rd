@@ -12,7 +12,9 @@
 }
 
 \usage{
-size(x, as = type(x))
+\S4method{size}{Intervals}(x, as = type(x))
+
+\S4method{size}{Intervals_full}(x, as = type(x))
 }
 
 \arguments{

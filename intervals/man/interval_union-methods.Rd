@@ -1,10 +1,9 @@
 \name{interval_union}
 
 \alias{interval_union}
-\alias{interval_union,Intervals_full,missing-method}
-\alias{interval_union,Intervals_full,Intervals_full-method}
 \alias{interval_union,Intervals,missing-method}
-\alias{interval_union,Intervals,Intervals-method}
+\alias{interval_union,Intervals_full,missing-method}
+\alias{interval_union,Intervals_virtual,Intervals_virtual-method}
 
 \title{Compute the union of intervals in one or more interval matrices}
 
