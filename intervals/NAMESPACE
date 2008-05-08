@@ -4,9 +4,10 @@ exportClasses(
               "Intervals_virtual" # Only for development, remove later
               )
 
+importFrom( utils, head, tail )
+
 # Note that "initialize" methods do not seem necessary here, nor in
-# documentation. Note also that I am not currently importing generics for cases
-# when I don't define my own.
+# documentation.
 
 exportMethods(
               "[",
