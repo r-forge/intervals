@@ -201,7 +201,7 @@ setMethod(
 
 
 
-######## rbind
+######## combine
 
 # Match the Biobase combine argument list.
 
