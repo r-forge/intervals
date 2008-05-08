@@ -73,13 +73,8 @@ setMethod(
           "interval_union",
           signature( "Intervals_virtual", "Intervals_virtual" ),
           function( x, y, ... ) {
-            # Note that the rbind call will do type checking on x, y, and ...
-            interval_union(
-                           do.call(
-                                   rbind,
-                                   c( list(x, y), ... )
-                                   )
-                           )
+            # Note that the combine call will do type checking on x, y, and ...
+            interval_union( combine( x, y, ... ) )
           }
           )
 
