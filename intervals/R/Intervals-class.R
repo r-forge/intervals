@@ -31,7 +31,7 @@ setClass(
            if ( length( object@type ) != 1 || !( object@type %in% c( "Z", "R" ) ) )
              return( "The 'type' slot should be 'Z' or 'R'." )
            # For type 'Z', check for integral endpoints
-           if ( object@type == "Z" && !all( object@.Data %% 1 == 0 ) )
+           if ( object@type == "Z" && !all( object@.Data[ is.finite( object@.Data ) ] %% 1 == 0 ) )
              return( "Non-integer-valued endpoints not permitted for type 'Z'." )
            # Check for valid intervals
            if ( any( object@.Data[,2] < object@.Data[,1] ) )
@@ -351,7 +351,15 @@ setMethod(
           "show",
           signature( "Intervals_virtual" ),
           function( object ) {
-            cat( nrow( object ), " intervals over ", type(object), ":\n", sep = "" )
+            cat(
+                nrow( object ),
+                " interval",
+                ifelse( nrow( object ) == 1, "", "s" ),
+                " over ",
+                type(object),
+                ":\n",
+                sep = ""
+                )
             cat( as( object, "character"), sep = "\n" )
           }
           )
