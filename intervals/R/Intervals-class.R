@@ -345,7 +345,7 @@ setMethod(
 
 
 
-######## show, head, tail
+######## show, head, tail, t
 
 setMethod(
           "show",
@@ -374,4 +374,12 @@ setMethod(
           function( x, n = 6 ) {
             x[ max( 1, nrow(x) - n + 1 ):nrow(x), ]
           }
+          )
+
+setGeneric( "t", function(x) standardGeneric( "t" ) )
+
+setMethod(
+          "t",
+          signature( "Intervals_virtual" ),
+          function(x) t( x@.Data )
           )

@@ -27,6 +27,8 @@
 
 \alias{show,Intervals_virtual-method}
 
+\alias{t,Intervals_virtual-method}
+
 \alias{tail,Intervals_virtual-method}
 
 \alias{type}
@@ -143,6 +145,8 @@
     }
     
     \item{\code{show}:}{ For pretty display of objects. }
+    
+    \item{\code{t}:}{ A method for \code{\link{t}}. }
     
     \item{\code{tail}:}{ A method for \code{\link{tail}}. }
     
