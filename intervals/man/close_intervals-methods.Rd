@@ -41,4 +41,3 @@ open_intervals(x)
   this, empty intervals are detected and removed, with a warning.
 }
 
-\keyword{}

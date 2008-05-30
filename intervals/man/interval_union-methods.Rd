@@ -39,4 +39,3 @@ interval_union(x, y, ...)
 \examples{
 }
 
-\keyword{}

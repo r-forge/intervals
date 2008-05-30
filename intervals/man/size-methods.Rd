@@ -71,4 +71,3 @@ closed(s1)[3,] <- FALSE
 size(s1)
 }
 
-\keyword{}

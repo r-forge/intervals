@@ -62,4 +62,3 @@ closed(s1)[3,] <- FALSE
 empty(s1)
 }
 
-\keyword{}
