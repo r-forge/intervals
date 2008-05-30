@@ -33,3 +33,10 @@
 - (7 May 2008) In the end, I should probably leave accessors intact but NOT use
   replacement methods in my own code -- since these create efficiency problems
   due to copying.
+
+- (30 May 2008) The ordering_matrix approach currently used in interval_union is
+  a bit awkward (though efficient), and should probably be replaced with
+  something in C++ which is consistent with how intervalsOverlap is implemented.
+
+- (30 May 2008) Consider replacing coerce methods with setAs. In particular,
+  it's disappointing to see that as.matrix doesn't work currently.
