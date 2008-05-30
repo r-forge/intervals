@@ -304,12 +304,13 @@ setMethod(
           "coerce",
           signature( from = "Intervals_virtual", to = "character" ),
           function( from, to, strict ) {
-            cl <- closed( from )
-            # So we only write main code once
-            if ( is( from, "Intervals" ) ) cl <- matrix( cl, nrow(from), 2, byrow = TRUE )
             if ( nrow( from ) == 0 )
               return( character() )
-            else
+            else {
+              cl <- closed( from )
+              # So we only write main code once
+              if ( is( from, "Intervals" ) )
+                cl <- matrix( cl, nrow(from), 2, byrow = TRUE )
               return(
                      paste(
                            ifelse( cl[,1], "[", "(" ),
@@ -318,6 +319,7 @@ setMethod(
                            sep = ""
                            )
                      )
+            }
           }
           )
 
