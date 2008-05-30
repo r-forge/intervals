@@ -213,6 +213,7 @@ setMethod(
           function( x, y, ... ) {
             args <- c( if ( missing(y) ) list() else list(y), list(...) )
             if ( length( args ) > 0 ) {
+              args <- args[ !sapply( args, is.null ) ]
               if ( !all( sapply( args, is, "Intervals" ) ) )
                 stop( "All arguments should be of the same class." )              
               if ( !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
@@ -232,6 +233,7 @@ setMethod(
             # TO-DO: coerce Intervals objects up if required.
             args <- c( if ( missing(y) ) list() else list(y), list(...) )
             if ( length( args ) > 0 ) {
+              args <- args[ !sapply( args, is.null ) ]
               if ( !all( sapply( args, is, "Intervals_full" ) ) )
                 stop( "All arguments should be of the same class." )              
               if ( !all( sapply( args, type ) == type(x) ) )

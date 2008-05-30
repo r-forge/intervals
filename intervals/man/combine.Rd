@@ -29,7 +29,8 @@ combine(x, y, ...)
 
 \details{
   All objects are expected to have the same class, and to have the same
-  value in the \code{type} slot.
+  value in the \code{type} slot. A \code{NULL} in any argument is
+  ignored.
 }
 
 \value{
@@ -51,4 +52,3 @@ combine(x, y, ...)
   reordering before combining.
 }
 
-\keyword{}
