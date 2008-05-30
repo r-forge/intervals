@@ -220,7 +220,9 @@ setMethod(
 
 ######## combine
 
-# Match the Biobase combine argument list.
+# Match the Biobase combine argument list. Note that my own code would be much
+# cleaner without the unnecessary y argument, but we have to have it to match
+# Biobase.
 
 setGeneric( "combine", function( x, y, ... ) standardGeneric( "combine" ) )
 
