@@ -40,3 +40,8 @@
 
 - (30 May 2008) Consider replacing coerce methods with setAs. In particular,
   it's disappointing to see that as.matrix doesn't work currently.
+
+- (30 May 2008) When combining or working with mixed objects, automatically move
+  up to Intervals_full if any of the objects are of this class. We may be able
+  to do this in the combine method only: all other methods working on more than
+  one object probably use this at some point to put things together.
