@@ -18,10 +18,12 @@ exportMethods(
               "empty",
               "head",
               "initialize",
+              "interval_complement",
               "interval_union",
               "open_intervals",
               "show",
               "size",
+              "t",
               "tail",
               "type", "type<-"
               )
