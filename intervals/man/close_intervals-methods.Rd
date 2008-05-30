@@ -12,19 +12,29 @@
 
 \description{
   Given an integer interval matrix, adjust endpoints so that all
-  intervals are closed at both ends.
+  intervals are closed at the requested ends.
 }
 
 \usage{
-close_intervals(x)
-open_intervals(x)
+close_intervals(x, left = TRUE, right = TRUE)
+open_intervals(x, left = TRUE, right = TRUE)
 }
 
 \arguments{
+  
   \item{x}{
     An object of appropriate class, and for which \code{x@type ==
     "Z"}. If \code{x@type == "R"}, an error is generated.
   }
+  
+  \item{left}{
+    Should the left endpoints be closed?
+  }
+
+  \item{right}{
+    Should the right endpoints be closed?
+  }
+  
 }
 
 \value{

@@ -1,14 +1,14 @@
-setGeneric( "close_intervals", def = function(x) standardGeneric( "close_intervals" ) )
+setGeneric( "close_intervals", def = function(x, ...) standardGeneric( "close_intervals" ) )
 
 setMethod(
           "close_intervals",
           signature( "Intervals" ),
-          function(x) {
+          function(x, left = TRUE, right = TRUE) {
             if ( type(x) == "R" )
               stop( "Only applicable to type 'Z'." )
-            if ( !closed(x)[1] ) x[,1] <- x[,1] + 1
-            if ( !closed(x)[2] ) x[,2] <- x[,2] - 1
-            closed(x) <- TRUE
+            if ( !closed(x)[1] && left ) x[,1] <- x[,1] + 1
+            if ( !closed(x)[2] && right ) x[,2] <- x[,2] - 1
+            closed(x) <- c( left, right )
             if ( any( empty(x) ) ) {
               warning( "Empty intervals encountered and removed." )
               x <- x[ !empty(x), ]
@@ -20,14 +20,14 @@ setMethod(
 setMethod(
           "close_intervals",
           signature( "Intervals_full" ),
-          function(x) {
+          function(x, left = TRUE, right = TRUE) {
             if ( type(x) == "R" )
               stop( "Only applicable to type 'Z'." )
-            closed1 <- closed(x)[,1]
-            closed2 <- closed(x)[,2]
-            x[!closed1,1] <- x[!closed1,1] + 1
-            x[!closed2,2] <- x[!closed2,2] - 1
-            closed(x) <- TRUE
+            if ( left )
+              x[!closed(x)[,1],1] <- x[!closed(x)[,1],1] + 1
+            if ( right )
+              x[!closed(x)[,2],2] <- x[!closed(x)[,2],2] - 1
+            closed(x) <- c( left, right )
             if ( any( empty(x) ) ) {
               warning( "Empty intervals encountered and removed." )
               x <- x[ !empty(x), ]
@@ -36,17 +36,17 @@ setMethod(
           }
           )
 
-setGeneric( "open_intervals", def = function(x) standardGeneric( "open_intervals" ) )
+setGeneric( "open_intervals", def = function(x, ...) standardGeneric( "open_intervals" ) )
 
 setMethod(
           "open_intervals",
           signature( "Intervals" ),
-          function(x) {
+          function(x, left = TRUE, right = TRUE) {
             if ( type(x) == "R" )
               stop( "Only applicable to type 'Z'." )
-            if ( closed(x)[1] ) x[,1] <- x[,1] - 1
-            if ( closed(x)[2] ) x[,2] <- x[,2] + 1
-            closed(x) <- FALSE
+            if ( closed(x)[1] && left ) x[,1] <- x[,1] - 1
+            if ( closed(x)[2] && right ) x[,2] <- x[,2] + 1
+            closed(x) <- c( !left, !right )
             return( x )
           }
           )
@@ -54,14 +54,14 @@ setMethod(
 setMethod(
           "open_intervals",
           signature( "Intervals_full" ),
-          function(x) {
+          function(x, left = TRUE, right = TRUE) {
             if ( type(x) == "R" )
               stop( "Only applicable to type 'Z'." )
-            closed1 <- closed(x)[,1]
-            closed2 <- closed(x)[,2]
-            x[closed1,1] <- x[closed1,1] - 1
-            x[closed2,2] <- x[closed2,2] + 1
-            closed(x) <- FALSE
+            if ( left )
+              x[closed(x)[,1],1] <- x[closed(x)[,1],1] - 1
+            if ( right )
+              x[closed(x)[,2],2] <- x[closed(x)[,2],2] + 1
+            closed(x) <- c( !left, !right )
             return( x )
           }
           )
