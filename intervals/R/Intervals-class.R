@@ -25,7 +25,7 @@ setClass(
          contains = "matrix",
          validity = function( object ) {
            # Check main matrix
-           if ( !is.numeric( object@.Data ) || ncol( object@.Data ) != 2  )
+           if ( !is.double( object@.Data ) || ncol( object@.Data ) != 2  )
              return( "The 'Intervals' classes are based on two-column, numeric matrices." )
            # Check 'type' string
            if ( length( object@type ) != 1 || !( object@type %in% c( "Z", "R" ) ) )
@@ -39,6 +39,23 @@ setClass(
            return( TRUE )
          }
          )
+
+setMethod(
+          "initialize",
+          signature( "Intervals_virtual" ),
+          function( .Object, .Data, ... ) {
+            if ( !missing( .Data ) ) {
+              if ( is.integer( .Data ) ) {
+                if ( !is.matrix( .Data ) )
+                  stop( "Expecting a matrix argument." )
+                warning( "Converting endpoints from 'integer' to 'numeric' data type. See class documentation." )
+                .Data <- matrix( as.numeric( .Data ), nrow( .Data ), ncol( .Data ) )
+              }
+              callNextMethod( .Object, .Data, ... )
+            }
+            else callNextMethod( .Object, ... )
+          }
+          )
 
 #### Intervals
 

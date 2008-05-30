@@ -43,10 +43,10 @@
 \title{Classes "Intervals" and "Intervals_full"}
 
 \description{
-  \code{"Intervals"} objects are two-column matrices which represent
+  \code{Intervals} objects are two-column matrices which represent
   sets, possibly non-disjoint and in no particular order, of intervals
   on either the integers or the real line. All intervals in each object
-  have the same endpoint closure pattern. \code{"Intervals_full"}
+  have the same endpoint closure pattern. \code{Intervals_full}
   objects are similar, but permit interval-by-interval endpoint closure
   specification.
 }
@@ -55,29 +55,29 @@
   \describe{
     
     \item{\code{.Data}:}{
-      Object of class \code{"matrix"}. A two-column, numeric format is
-      required. For a valid object, no value in the first column may
-      exceed its partner in the second column. (Note that this
-      \emph{does} permit empty interval rows, when both endpoints are of
-      equal value and not both closed.) Only integral (though not
-      \code{"integer"} class) endpoints are permitted if \code{type} is
+      Object of class \code{matrix}. A two-column, numeric (see below)
+      format is required. For a valid object, no value in the first
+      column may exceed its partner in the second column. (Note that
+      this \emph{does} permit empty interval rows, when both endpoints
+      are of equal value and not both closed.) Only integral (though not
+      \code{integer} class) endpoints are permitted if \code{type} is
       \code{"Z"}.
     }
     
     \item{\code{closed}:}{
-      For \code{"Intervals"} objects, a two-element logical vector. For
-      \code{"Intervals_full"} objects, a two-column logical matrix with
+      For \code{Intervals} objects, a two-element logical vector. For
+      \code{Intervals_full} objects, a two-column logical matrix with
       the same dimensions as \code{.Data}. If omitted in a \code{new}
       call, the \code{closed} slot will be initialized to an object of
       appropriate type and size, with all entries \code{TRUE}. If
       \code{closed} is a vector of length 1, or a vector of length 2 for
-      the \code{"Intervals_full"} class, an appropriate object will be
+      the \code{Intervals_full} class, an appropriate object will be
       made by reusing the supplied values row-wise. See the example
       below.
     }
 
     \item{\code{type}:}{
-      Object of class \code{"character"}. A one-element character vector
+      Object of class \code{character}. A one-element character vector
       with either \code{"Z"} or \code{"R"} is required.
     }
     
@@ -86,19 +86,19 @@
 
 \section{Extends}{
   
-  Class \code{"Intervals_virtual"}, directly.
+  Class \code{Intervals_virtual}, directly.
 
-  Class \code{"\linkS4class{matrix}"}, by class
-  \code{"Intervals_virtual"}, distance 2.
+  Class \code{\linkS4class{matrix}}, by class
+  \code{Intervals_virtual}, distance 2.
 
-  Class \code{"\linkS4class{array}"}, by class
-  \code{"Intervals_virtual"}, distance 3.
+  Class \code{\linkS4class{array}}, by class
+  \code{Intervals_virtual}, distance 3.
 
-  Class \code{"\linkS4class{structure}"}, by class
-  \code{"Intervals_virtual"}, distance 4.
+  Class \code{\linkS4class{structure}}, by class
+  \code{Intervals_virtual}, distance 4.
 
-  Class \code{"\linkS4class{vector}"}, by class
-  \code{"Intervals_virtual"}, distance 5, with explicit coerce.
+  Class \code{\linkS4class{vector}}, by class
+  \code{Intervals_virtual}, distance 5, with explicit coerce.
   
 }
 
@@ -122,9 +122,9 @@
     
     \item{\code{coerce}:}{
       Coercion methods are provided for converting back and forth
-      between \code{"Intervals"} and \code{"Intervals_full"}
+      between \code{Intervals} and \code{Intervals_full}
       objects. See example below. An error will be generated when
-      attemption to down-class a \code{"Intervals_full"} object which
+      attemption to down-class a \code{Intervals_full} object which
       does not have the same closure settings for every interval.
       
       A coercion method is also provided for pretty character strings.
@@ -154,6 +154,14 @@
 }
 
 \note{
+  We do not currently permit an integer data type for the endpoints
+  matrix, even when \code{type = "Z"}, because this creates
+  complications when taking complements -- which is most easily handled
+  through the use of \code{-Inf} and \code{Inf}. This is particularly
+  awkward for objects of class \code{Intervals}, since current endpoint
+  closure settings may not permit inclusion of the minimal/maximal
+  integer. This issue may be addressed, however, in future updates.
+
   Recycling is supported for the \code{closed} slot when creating
   new objects. Note also that we do not require endpoints which are of
   data type \code{integer} for objects with \code{type = "Z"}, nor of
