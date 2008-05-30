@@ -155,7 +155,11 @@
 
 \note{
   Recycling is supported for the \code{closed} slot when creating
-  new objects.
+  new objects. Note also that we do not require endpoints which are of
+  data type \code{integer} for objects with \code{type = "Z"}, nor of
+  data type \code{numeric} for objects with \code{type = "R"}. We do
+  not, however, permit non-integral values for \code{numeric} endpoints
+  if \code{type = "Z"}.
 }
 
 \section{Warning}{
