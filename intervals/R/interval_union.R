@@ -11,12 +11,14 @@ ordering_matrix <- matrix(
                           dimnames = list( c( "open", "closed" ), c( "first", "last" ) )
                           )
 
-setGeneric( "interval_union", def = function( x, y, ... ) standardGeneric( "interval_union" ) )
+setGeneric( "interval_union", def = function( x, ... ) standardGeneric( "interval_union" ) )
 
 setMethod(
           "interval_union",
-          signature( "Intervals_full", "missing" ),
-          function( x ) {
+          signature( "Intervals_full" ),
+          function( x, ... ) {
+            # Note that the combine call will do type checking on x and ...
+            x <- combine( x, ... )
             # Note that if integer intervals are forced to double-open notation,
             # then the real-valued code works immediately, with no need for
             # back-conversion afterwards. This is because the open intervals
@@ -55,9 +57,11 @@ setMethod(
 
 setMethod(
           "interval_union",
-          signature( "Intervals", "missing" ),
+          signature( "Intervals" ),
           # TO DO: make this more efficient (but less clean) by not coercing
-          function( x ) {
+          # Note that the combine call will do type checking on x and ...
+          function( x, ... ) {
+            x <- combine( x, ... )
             result <- as( interval_union( as( x, "Intervals_full" ) ), "Intervals" )
             if ( type( x ) == "Z" ) {
               # We always get, but may not want, double-open results for type Z
@@ -71,10 +75,15 @@ setMethod(
 
 setMethod(
           "interval_union",
-          signature( "Intervals_virtual", "Intervals_virtual" ),
-          function( x, y, ... ) {
-            # Note that the combine call will do type checking on x, y, and ...
-            interval_union( combine( x, y, ... ) )
+          signature( "missing" ),
+          function( x, ... ) {
+            # Permitting do.call use with named lists, since do.call will put
+            # elements whose names are not "x" into the ... argument. Stripping
+            # names, however, puts arguments in place positionally.
+            args <- list(...)
+            names( args ) <- NULL
+            if ( length( args ) == 0 ) return ( NULL )
+            else return( do.call( interval_union, args ) )
           }
           )
 
