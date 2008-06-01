@@ -45,3 +45,31 @@
   up to Intervals_full if any of the objects are of this class. We may be able
   to do this in the combine method only: all other methods working on more than
   one object probably use this at some point to put things together.
+
+- (1 June 2008) Can we use R's all.equal for equality checking? This would make
+  for consistent results, whereas implementing our own verison in the C code
+  would (i) be more work and (ii) likely be inconsistent in some cases. Note
+  that this is required for BOTH interval_overlap and for interval_union.
+
+  PSEUDO-CODE FOR R all.equal.numeric
+
+  - Set tolerance = .Machine$double.eps^0.5.
+
+  - Only check non-NA pairs for which == fails.
+
+  - Set xy to the mean absolute difference (along the vectors).
+
+  - Set xn to the mean absolue target.
+
+  - If xn > tolerance, make a relative comparison and set xy to
+    xy/xn. Otherwise, make an absolute comparison and leave xy as it is.
+
+  - Return equality iff xy <= tolerance.
+
+Note: dropping entries for which == holds is important, as it affects the means
+below. We will, however most likely apply our procedure to single pairs of
+numbers, so it won't matter: if == holds, then the relative difference is 0 in
+any case. An important issue: R's relative difference is abs( tar - cur )  /
+tar. The traditional definition, however, is abs( tar - cur ) / max( tar, cur
+). On the other hand, the comp.lang.c FAQ first uses R's version, then the
+traditional relative difference.
