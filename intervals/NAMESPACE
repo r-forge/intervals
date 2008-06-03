@@ -1,3 +1,5 @@
+useDynLib( "intervals" )
+
 exportClasses(
               "Intervals",
               "Intervals_full",

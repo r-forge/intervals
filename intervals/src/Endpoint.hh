@@ -1,20 +1,11 @@
+#ifndef ENDPOINT_H
+
+#define ENDPOINT_H
+
+#include <R.h>
+#include <Rinternals.h>
 #include <vector>
 #include <algorithm> // For max
-#include <sstream>
-
-
-//////// enums
-
-enum type_enum { query, target };
-enum side_enum { left, right };
-enum closure_enum { open, closed };
-
-
-
-
-//////// index type
-
-typedef unsigned long ind_t;
 
 
 
@@ -25,22 +16,20 @@ class Endpoint{
   
 private:
   
-  ind_t index;
-  double pos;
-  type_enum type;
-  side_enum side;
-  closure_enum closure;
-
   static int state_array[2][2][2];
 
-  int state() const { return( state_array[type][side][closure] ); }
+  int state() const { return( state_array[query][left][closed] ); }
   
 public:
 
   static double tol;
   
-  Endpoint(ind_t i, double p, type_enum t, side_enum s, closure_enum c) { 
-     index = i; pos = p; type = t; side = s; closure = c; 
+  int index;
+  double pos;
+  bool query, left, closed;
+
+  Endpoint(int i, double p, bool q, bool l, bool c) { 
+     index = i; pos = p; query = q; left = l; closed = c; 
   }
 
   bool operator< (const Endpoint& other) const {
@@ -56,16 +45,14 @@ public:
     return( this->state() < other.state() );
   }
 
-  std::string str() const {
-    std::stringstream ss;
-    ss << 
-      "index = " << index <<
-      ", pos = " << pos <<
-      " (" << ( type ? "target" : "query" ) <<
-      ", " << ( side ? "right" : "left" ) <<
-      ", " << ( closure ? "closed" : "open" ) <<
-      ")";
-    return( ss.str() );
+  void R_print() const {
+  Rprintf(
+	  "index = %i, pos = %f (%s, %s, %s)\n",
+	  index, pos,
+	  query ? "query" : "target",
+	  left ? "left" : "right",
+	  closed ? "closed" : "open"
+	  );
   }
 
 };
@@ -76,20 +63,36 @@ public:
 //////// Endpoints class
 
 class Endpoints : public std::vector< Endpoint > {
+
 public:
-  Endpoints( const double * pos, const bool * closure, ind_t n, type_enum type, bool is_full ) {
+
+  Endpoints( const double * pos, const int * closed, int n, bool query, bool is_full ) {
     /*
-      The pos pointer should point to an nx2 array of endpoints, and the closure
+      The pos pointer should point to an nx2 array of endpoints, and the closed
       pointer, to either an array of booleans of the same size (if full = true)
-      or an array of two booleans (if full = false).
-     */
-    ind_t i;
+      or an array of two booleans (if full = false). Note that R uses int, not
+      bool, for logicals.
+    */
+    int i;
+    bool na_warning = false;
     this->reserve( 2 * n );
     for ( i = 0; i < n; i++ ) {
-      this->push_back( Endpoint( i, pos[i], type, left, (closure_enum) closure[ is_full ? i : 0 ] ) );
-      this->push_back( Endpoint( i, pos[i+n], type, right, (closure_enum) closure[ is_full ? i+n : 1] ) );
+      if ( ISNA( pos[i] ) || ISNA( pos[i+n] ) ) {
+	na_warning = true; 
+	continue;
+      }
+      this->push_back( Endpoint( i, pos[i], query, true, (bool) closed[ is_full ? i : 0 ] ) );
+      this->push_back( Endpoint( i, pos[i+n], query, false, (bool) closed[ is_full ? i+n : 1 ] ) );
     }
+    if ( na_warning ) warning( "Some NA endpoints encountered." );
   }
+
+  void R_print() const {
+    Endpoints::const_iterator it;
+    for ( it = this->begin(); it < this->end(); it++ ) 
+      it->R_print();
+  }
+
 };
 
 
@@ -120,8 +123,10 @@ double Endpoint::tol = 1.490116e-08;
 */
 
 int Endpoint::state_array[2][2][2] = {
-  // Query {{LO, LC}, {RO, RC}}
-  {{7,3},{0,4}},
-  // Target {{LO, LC}, {RO, RC}}
-  {{6,2},{1,5}}
+  // Target {{RO, RC}, {LO, LC}}
+  {{1,5},{6,2}},
+  // Query {{RO, RC}, {LO, LC}}
+  {{0,4},{7,3}}
 };
+
+#endif
