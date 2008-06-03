@@ -12,11 +12,11 @@
 extern "C"
 {
 
-  SEXP interval_overlap(SEXP qe, SEXP te, SEXP qc, SEXP tc, SEXP q_full, SEXP t_full, SEXP tol) {
+  SEXP _interval_overlap(SEXP qe, SEXP te, SEXP qc, SEXP tc, SEXP q_full, SEXP t_full, SEXP tol) {
     
     // Load data, combine
-    int tn = nrows(qe);
-    Endpoints q ( REAL(qe), LOGICAL(qc), tn, true, *LOGICAL(q_full) );
+    int tn = nrows(te);
+    Endpoints q ( REAL(qe), LOGICAL(qc), nrows(qe), true, *LOGICAL(q_full) );
     Endpoints t ( REAL(te), LOGICAL(tc), tn, false, *LOGICAL(t_full) );
     q.insert( q.end(), t.begin(), t.end() );
 
@@ -36,7 +36,7 @@ extern "C"
     	if ( it->left ) {
     	  q_active.insert( it->index );
     	  for( it_active = t_active.begin(); it_active != t_active.end(); it_active++ )
-    	    indices[ *it_active ].push_back( it->index );
+    	    indices[ *it_active ].push_back( it->index + 1 );
     	}
     	else q_active.erase( it->index );
       }
@@ -44,13 +44,14 @@ extern "C"
     	// Target Endpoint
     	if ( it->left ) {
     	  t_active.insert( it->index );	  
-	  indices[ it->index ].insert( indices[ it->index ].end(), q_active.begin(), q_active.end() );
+	  for( it_active = q_active.begin(); it_active != q_active.end(); it_active++ )
+	    indices[ it->index ].push_back( *it_active + 1 );
     	}
     	else t_active.erase( it->index );      
       }
     }
     
-    // Prepare and return result. Remember to add 1 to everything here!
+    // Prepare and return result.
     SEXP result;
     int i;
 

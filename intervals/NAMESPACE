@@ -6,7 +6,7 @@ exportClasses(
               "Intervals_virtual" # Only for development, remove later
               )
 
-importFrom( utils, head, tail )
+importFrom( "utils", "head", "tail" )
 
 # Note that "initialize" methods do not seem necessary here, nor in
 # documentation.
@@ -21,6 +21,7 @@ exportMethods(
               "head",
               "initialize",
               "interval_complement",
+              "interval_overlap",
               "interval_union",
               "open_intervals",
               "show",
