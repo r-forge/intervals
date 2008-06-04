@@ -28,9 +28,7 @@ public:
   double pos;
   bool query, left, closed;
 
-  Endpoint(int i, double p, bool q, bool l, bool c) { 
-     index = i; pos = p; query = q; left = l; closed = c; 
-  }
+  Endpoint(int i, double p, bool q, bool l, bool c) { index = i; pos = p; query = q; left = l; closed = c; }
 
   bool operator< (const Endpoint& other) const {
     // We use relative difference for assessing equality of pos, and compare on
@@ -45,15 +43,7 @@ public:
     return( this->state() < other.state() );
   }
 
-  void R_print() const {
-  Rprintf(
-	  "index = %i, pos = %f (%s, %s, %s)\n",
-	  index, pos,
-	  query ? "query" : "target",
-	  left ? "left" : "right",
-	  closed ? "closed" : "open"
-	  );
-  }
+  void R_print() const;
 
 };
 
@@ -68,10 +58,11 @@ public:
 
   Endpoints( const double * pos, const int * closed, int n, bool query, bool is_full ) {
     /*
-      The pos pointer should point to an nx2 array of endpoints, and the closed
+      The pos pointer should point to an n x 2 array of endpoints, and the closed
       pointer, to either an array of booleans of the same size (if full = true)
       or an array of two booleans (if full = false). Note that R uses int, not
-      bool, for logicals.
+      bool, for logicals. Intervals with R numeric NA in either slot are
+      dropped, with a warning. 
     */
     int i;
     bool na_warning = false;
@@ -87,11 +78,7 @@ public:
     if ( na_warning ) warning( "Some NA endpoints encountered." );
   }
 
-  void R_print() const {
-    Endpoints::const_iterator it;
-    for ( it = this->begin(); it < this->end(); it++ ) 
-      it->R_print();
-  }
+  void R_print() const;
 
 };
 
@@ -129,4 +116,28 @@ int Endpoint::state_array[2][2][2] = {
   {{0,4},{7,3}}
 };
 
-#endif
+
+
+
+//////// R_print methods, for debugging
+
+void Endpoint::R_print() const {
+  Rprintf(
+	  "index = %i, pos = %f (%s, %s, %s)\n",
+	  index, pos,
+	  query ? "query" : "target",
+	  left ? "left" : "right",
+	  closed ? "closed" : "open"
+	  );
+}
+
+void Endpoints::R_print() const {
+  Endpoints::const_iterator it;
+  for ( it = this->begin(); it < this->end(); it++ ) 
+    it->R_print();
+}
+
+
+
+
+#endif // #ifndef ENDPOINT_H
