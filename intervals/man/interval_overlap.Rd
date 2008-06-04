@@ -71,6 +71,12 @@ interval_overlap(
   overlapping query intervals.
 }
 
+\note{
+  If you want real (\code{type = "R"}) intervals that overlap in a set
+  of positive measure -- not just at endpoints -- set all endpoints to
+  open (\code{closed(query) <- FALSE}). 
+}
+
 \examples{
 # Note that t contains a valid but empty interval.
 
