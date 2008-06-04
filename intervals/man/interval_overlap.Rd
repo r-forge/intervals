@@ -22,8 +22,12 @@ interval_overlap(
   
   \item{query}{An \code{"Intervals"} or \code{"Intervals_full"} object.}
 
-  \item{target}{An \code{"Intervals"} or \code{"Intervals_full"} object.}
-
+  \item{target}{
+    An \code{"Intervals"} or \code{"Intervals_full"} object. The
+    \code{target} object must have the same \code{\link{type}} as
+    \code{query}. 
+  }
+  
   \item{tolerance}{
     Assessing overlap with floating point endpoints requires an
     approximate definition of equality. In this function, we compare
@@ -47,9 +51,17 @@ interval_overlap(
 
 \details{
   Intervals which meet at endpoints (up to a relative difference of
-  \code{tolerance}) overlap only if both endpoints are closed. Intervals
-  in \code{query} with \code{NA} endpoints are ignored, with a warning; in
-  \code{target}, such interval produce no matches.
+  \code{tolerance}) overlap only if both endpoints are closed. Thus,
+  increasing \code{tolerance} will \emph{not} automatically cause nearby
+  intervals to overlap; it will, instead, affect which endpoints pairs
+  are deemed to coincide -- and which are then assessed on the basis of
+  closure rather than position.
+
+  Intervals in \code{query} with \code{NA} endpoints are ignored, with a
+  warning; in \code{target}, such interval produce no matches. Intervals
+  in either \code{query} or \code{target} which are actually empty have
+  their endpoints set to \code{NA} before proceeding, with
+  warning, and so do not generate matches.
 }
 
 \value{
@@ -60,6 +72,8 @@ interval_overlap(
 }
 
 \examples{
+# Note that t contains a valid but empty interval.
+
 q <- new(
          "Intervals",
          matrix(
@@ -89,9 +103,36 @@ t <- new(
          closed = c( TRUE, FALSE ),
          type = "Z"
          )
+rownames(t) <- letters[1:nrow(t)]
 
-names(t) <- letters[1:nrow(t)]
+empty(q)
+empty(t)
 
 interval_overlap(q, t)
-}
 
+# Non-empty real intevals of size 0 can overlap other intervals.
+
+u <- q
+type(u) <- "R"
+
+v <- new("Intervals_full", rep(3,4))
+closed(v)[2,] <- FALSE
+v
+empty(v)
+size(v)
+
+interval_overlap( u, v )
+
+# Approximate endpoint equality: comparison by closure
+
+eps <- .0001
+
+x <- new("Intervals", c(0,1))
+y <- x + 1
+x <- combine(x, x - c(0,eps))
+
+interval_overlap( x, y )
+interval_overlap( x, y, tolerance = 2 * eps )
+closed(y)[1] <- FALSE
+interval_overlap( x, y, tolerance = 2 * eps )
+}
