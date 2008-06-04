@@ -6,12 +6,14 @@ setMethod(
           function( query, target, tolerance = .Machine$double.eps^0.5, check_valid = TRUE ) {
             if ( check_valid && !( validObject(query) && validObject(target) ) )
               stop( "The 'query' and/or 'target' objects are invalid." )
-            .Call(
-                  "_interval_overlap",
-                  query@.Data, target@.Data,
-                  closed(query), closed(target),
-                  class(query) == "Intervals_full", class(target) == "Intervals_full",
-                  tolerance
-                  )
+            result <- .Call(
+                            "_interval_overlap",
+                            query@.Data, target@.Data,
+                            closed(query), closed(target),
+                            class(query) == "Intervals_full", class(target) == "Intervals_full",
+                            tolerance
+                            )
+            names( result ) <- rownames( target )
+            return( result )
           }
           )
