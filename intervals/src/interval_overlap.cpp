@@ -6,6 +6,19 @@
 #include <algorithm>
 
 /*
+  What we require to prevent segfaults:
+
+    1. For Intervals_full objects, the endpoint and closure matrices must be of
+       the same dimension, and have two columns each. For Intervals objects, we
+       expect a closure vector of length 2.
+
+    2. Endpoints must be type double, and closure must be R logical, which ends
+       up as int in C++.
+
+  The validity function for the classes should verify both of these properties,
+  so we do no additional checks here, i.e., we assume that we've been passed
+  valid objects.
+
   TO DO: Try hash_set instead of set, if it compiles OK.
 */
 
