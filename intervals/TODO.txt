@@ -66,10 +66,13 @@
 
   - Return equality iff xy <= tolerance.
 
-Note: dropping entries for which == holds is important, as it affects the means
-below. We will, however most likely apply our procedure to single pairs of
-numbers, so it won't matter: if == holds, then the relative difference is 0 in
-any case. An important issue: R's relative difference is abs( tar - cur )  /
-tar. The traditional definition, however, is abs( tar - cur ) / max( tar, cur
-). On the other hand, the comp.lang.c FAQ first uses R's version, then the
-traditional relative difference.
+  Note: dropping entries for which == holds is important, as it affects the means
+  below. We will, however most likely apply our procedure to single pairs of
+  numbers, so it won't matter: if == holds, then the relative difference is 0 in
+  any case. An important issue: R's relative difference is abs( tar - cur )  /
+  tar. The traditional definition, however, is abs( tar - cur ) / max( tar, cur
+  ). On the other hand, the comp.lang.c FAQ first uses R's version, then the
+  traditional relative difference.
+
+  THIS IS NOW FINISHED FOR INTERVAL_OVERLAP, BUT STILL NEEDS TO BE DONE FOR
+  INTERVAL_UNION, WHICH WILL PROBABLY MOVE TO C++ IN ANY CASE.
