@@ -200,14 +200,13 @@ i <- new(
 	 closed = c( TRUE, TRUE ),
 	 type = "Z"
 	 )
-colnames(i) <- c( "first", "last" )
 
 # Row subsetting preserves class. Column subsetting causes coercion to
 # "matrix" class. 
 
-print(i)
-print(i[1:2,])
-print(i[,1:2])
+i
+i[1:2,]
+i[,1:2]
 
 # Full endpoint control
 
@@ -215,9 +214,12 @@ j <- as( i, "Intervals_full" )
 closed(j)[ 3:4, 2 ] <- FALSE
 closed(j)[ 4, 1 ] <- FALSE
 
-print(j)
+j
 
-k <- new( "Intervals_full", matrix( 1:6, 3 ), closed = c( TRUE, FALSE ) )
+# Rownames may be used
+
+rownames(j) <- c( "apple", "banana", "cherry", "date" )
+j
 }
 
 \keyword{classes}

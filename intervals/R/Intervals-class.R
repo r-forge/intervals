@@ -332,14 +332,14 @@ setMethod(
               # So we only write main code once
               if ( is( from, "Intervals" ) )
                 cl <- matrix( cl, nrow(from), 2, byrow = TRUE )
-              return(
-                     paste(
-                           ifelse( cl[,1], "[", "(" ),
-                           from[,1], ", ", from[,2],
-                           ifelse( cl[,2], "]", ")" ),
-                           sep = ""
-                           )
-                     )
+              result <- paste(
+                              ifelse( cl[,1], "[", "(" ),
+                              from[,1], ", ", from[,2],
+                              ifelse( cl[,2], "]", ")" ),
+                              sep = ""
+                              )
+              names( result ) <- rownames( from )
+              return( result )
             }
           }
           )
@@ -362,7 +362,12 @@ setMethod(
                 ":\n",
                 sep = ""
                 )
-            cat( as( object, "character"), sep = "\n" )
+            ints <- as( object, "character")
+            if ( !is.null( rownames( object ) ) ) {
+              fmt <- sprintf( "%%%is", max( nchar( rownames( object ) ) ) )
+              ints <- paste( sprintf( fmt, rownames( object ) ), ints )
+            }
+            cat( ints, sep = "\n" )
           }
           )
 
