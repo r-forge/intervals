@@ -44,16 +44,16 @@ setMethod(
           "initialize",
           signature( "Intervals_virtual" ),
           function( .Object, .Data, ... ) {
-            if ( !missing( .Data ) ) {
+            if ( missing( .Data ) ) callNextMethod( .Object, ... )
+            else {
+              if ( !is.matrix( .Data ) )
+                .Data <- matrix( .Data, ncol = 2 )
               if ( is.integer( .Data ) ) {
-                if ( !is.matrix( .Data ) )
-                  stop( "Expecting a matrix argument." )
                 warning( "Converting endpoints from 'integer' to 'numeric' data type. See class documentation." )
                 .Data <- matrix( as.numeric( .Data ), nrow( .Data ), ncol( .Data ) )
               }
               callNextMethod( .Object, .Data, ... )
             }
-            else callNextMethod( .Object, ... )
           }
           )
 
@@ -99,7 +99,7 @@ setMethod(
           function( .Object, .Data, closed, ... ) {
             if ( !missing( .Data ) ) {
               if ( !is.matrix( .Data ) )
-                stop( "Expecting a matrix argument." )
+                .Data <- matrix( .Data, ncol = 2 )
               if ( missing( closed ) )
                 closed <- matrix( TRUE, nrow( .Data ), 2 )
               if ( is.vector( closed ) ) {

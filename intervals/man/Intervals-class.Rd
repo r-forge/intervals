@@ -164,14 +164,13 @@
   through the use of \code{-Inf} and \code{Inf}. This is particularly
   awkward for objects of class \code{Intervals}, since current endpoint
   closure settings may not permit inclusion of the minimal/maximal
-  integer. This issue may be addressed, however, in future updates.
+  integer. This issue may be addressed, however, in future updates. (We
+  do, however, check that endpoints are congruent to 0 mod 1 when
+  \code{type = "Z"}.)
 
-  Recycling is supported for the \code{closed} slot when creating
-  new objects. Note also that we do not require endpoints which are of
-  data type \code{integer} for objects with \code{type = "Z"}, nor of
-  data type \code{numeric} for objects with \code{type = "R"}. We do
-  not, however, permit non-integral values for \code{numeric} endpoints
-  if \code{type = "Z"}.
+  When creating object, non-matrix endpoint sources will be converted to
+  a two-column matrix, for convenience. Recycling is supported for the
+  \code{closed} slot when creating new objects.
 }
 
 \section{Warning}{
