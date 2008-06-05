@@ -16,8 +16,13 @@
 }
 
 \usage{
-close_intervals(x, left = TRUE, right = TRUE)
-open_intervals(x, left = TRUE, right = TRUE)
+\S4method{close_intervals}{Intervals}(x, left = TRUE, right = TRUE)
+
+\S4method{close_intervals}{Intervals_full}(x, left = TRUE, right = TRUE)
+
+\S4method{open_intervals}{Intervals}(x, left = TRUE, right = TRUE)
+
+\S4method{open_intervals}{Intervals_full}(x, left = TRUE, right = TRUE)
 }
 
 \arguments{

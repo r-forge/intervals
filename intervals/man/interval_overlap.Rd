@@ -11,7 +11,7 @@
 }
 
 \usage{
-interval_overlap(
+\S4method{interval_overlap}{Intervals_virtual,Intervals_virtual}(
                  query, target,
                  tolerance = .Machine$double.eps^0.5,
                  check_valid = TRUE

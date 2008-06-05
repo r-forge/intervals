@@ -13,7 +13,9 @@
 }
 
 \usage{
-empty(x, tolerance = .Machine$double.eps^0.5)
+\S4method{empty}{Intervals}(x, tolerance = .Machine$double.eps^0.5)
+
+\S4method{empty}{Intervals_full}(x, tolerance = .Machine$double.eps^0.5)
 }
 
 \arguments{
