@@ -1,8 +1,7 @@
 \name{interval_complement}
 
 \alias{interval_complement}
-\alias{interval_complement,Intervals-method}
-\alias{interval_complement,Intervals_full-method}
+\alias{interval_complement,Intervals_virtual-method}
 
 \title{Compute the complement of a set of intervals}
 
