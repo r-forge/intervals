@@ -74,6 +74,18 @@ setClass(
          }
          )
 
+setMethod(
+          "initialize",
+          signature( "Intervals" ),
+          function( .Object, .Data, closed, ... ) {
+            if ( missing( closed ) ) callNextMethod( .Object, .Data, ... )
+            else {
+              if ( length( closed ) == 1 ) closed <- c( closed, closed )
+              callNextMethod( .Object, .Data, closed = closed, ... )
+            }
+          }
+          )
+
 #### Intervals_full
 
 # Full control of endpoint closure. Note that if the 'closed' slot is omitted,
