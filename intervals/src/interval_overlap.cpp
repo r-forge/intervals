@@ -22,6 +22,11 @@
   TO DO: Try hash_set instead of set, if it compiles OK.
 */
 
+const int overlap_order[2][2][2] = {
+  {{1,5},{6,2}}, // Target: {{ ), ] }, { (, [ }}      
+  {{0,4},{7,3}}  // Query:  {{ ), ] }, { (, [ }}
+};
+
 extern "C"
 {
 
@@ -33,9 +38,10 @@ extern "C"
     Endpoints t ( REAL(te), LOGICAL(tc), tn, false, *LOGICAL(t_full) );
     q.insert( q.end(), t.begin(), t.end() );
 
-    // Set equality tolerance and sort
+    // Set equality tolerance and sorting order, then sort
     Endpoint::tol = *REAL(tol);
-    sort( q.begin(), q.end() );
+    Endpoint::set_state_array( overlap_order );
+    sort(q.begin(), q.end());
 
     // Process overlaps
     Endpoints::const_iterator it;
