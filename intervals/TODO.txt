@@ -20,24 +20,16 @@
   replacement methods in my own code -- since these create efficiency problems
   due to copying.
 
-- (30 May 2008) The ordering_matrix approach currently used in interval_union is
-  a bit awkward (though efficient), and should probably be replaced with
-  something in C++ which is consistent with how intervalsOverlap is implemented.
-
 - (30 May 2008) Consider replacing coerce methods with setAs. In particular,
   it's disappointing to see that as.matrix doesn't work currently.
 
 - (30 May 2008) When combining or working with mixed objects, automatically move
   up to Intervals_full if any of the objects are of this class. We may be able
   to do this in the combine method only: all other methods working on more than
-  one object probably use this at some point to put things together.
+  one object probably use this at some point to put things together. On the
+  other hand, forcing the user to do this explicitly isn't such a bad idea.
 
-- (1 June 2008) Can we use R's all.equal for equality checking? This would make
-  for consistent results, whereas implementing our own verison in the C code
-  would (i) be more work and (ii) likely be inconsistent in some cases. Note
-  that this is required for BOTH interval_overlap and for interval_union.
-
-  PSEUDO-CODE FOR R all.equal.numeric
+- (1 June 2008) PSEUDO-CODE FOR R all.equal.numeric
 
   - Set tolerance = .Machine$double.eps^0.5.
 
@@ -60,5 +52,30 @@
   ). On the other hand, the comp.lang.c FAQ first uses R's version, then the
   traditional relative difference.
 
-  THIS IS NOW FINISHED FOR INTERVAL_OVERLAP, BUT STILL NEEDS TO BE DONE FOR
-  INTERVAL_UNION, WHICH WILL PROBABLY MOVE TO C++ IN ANY CASE.
+  THIS IS NOW FINISHED FOR BOTH INTERVAL_UNION AND INTERVAL_OVERLAP.
+
+- (10 June 2008) More functions to implement (based largely on the e-mail from
+  Julien on 12 February 2008):
+
+  - The subset version of interval_overlap: interval_included.
+
+  - A set difference.
+
+  - Distance to nearest and which nearest. These might return functions rather
+    than/in addition to just values.
+
+  - Another class for points? Or do we just let the user do this on their own,
+    with closed-endpoint real intervals of size 0? Probably best not to bother
+    with this one. We should, for example, make a new interval_overlap method
+    where the query set is points -- a vector of positions -- rather than an
+    inteval object.
+
+  - The iapply idea: given a vector of positions, and a vector of values,
+    compute intersections then and apply a function to the appropriate subset
+    vector. 
+
+  - Julien's "density" idea: a function which, for any position and window size,
+    tells you the portion of the window overlapping intervals in the set of
+    interest.  
+
+  - A thresholding function like hit.intervals in intervaltools.
