@@ -4,6 +4,12 @@
 #include <vector>
 #include <algorithm>
 
+/*
+  What we require to prevent segfaults is the same as for
+  interval_overlap.cpp. See details there. Everything should be checked by the
+  calling code in R.
+*/
+
 
 
 
@@ -61,6 +67,7 @@ extern "C"
     SEXP result;
 
     PROTECT( result = allocVector( VECSXP, 2 ) );    
+
     SET_VECTOR_ELT( result, 0, allocMatrix( REALSXP, start.size(), 2 ) );
     copy( 
 	 start.begin(), start.end(),
@@ -70,6 +77,7 @@ extern "C"
 	 end.begin(), end.end(),
 	 std::vector<double>::iterator ( REAL( VECTOR_ELT( result, 0 ) ) + start.size() )
 	  );
+
     if ( full_bool ) {
       SET_VECTOR_ELT( result, 1, allocMatrix( LGLSXP, start.size(), 2 ) );
       copy( 
@@ -80,6 +88,11 @@ extern "C"
     	   end_c.begin(), end_c.end(),
     	   std::vector<int>::iterator ( LOGICAL( VECTOR_ELT( result, 1 ) ) + start.size() )
     	    );
+    }
+    else {
+      SET_VECTOR_ELT( result, 1, allocVector( LGLSXP, 2 ) );
+      LOGICAL( VECTOR_ELT( result, 1 ) )[0] = LOGICAL(c)[0];
+      LOGICAL( VECTOR_ELT( result, 1 ) )[1] = LOGICAL(c)[1];
     }
     
     UNPROTECT(1);
