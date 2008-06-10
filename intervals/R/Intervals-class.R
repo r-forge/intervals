@@ -366,6 +366,9 @@ setMethod(
           signature( "Intervals_virtual" ),
           function( object ) {
             cat(
+                "Object of class ",
+                class( object ),
+                "\n",
                 nrow( object ),
                 " interval",
                 ifelse( nrow( object ) == 1, "", "s" ),
