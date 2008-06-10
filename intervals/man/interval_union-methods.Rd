@@ -1,8 +1,7 @@
 \name{interval_union}
 
 \alias{interval_union}
-\alias{interval_union,Intervals-method}
-\alias{interval_union,Intervals_full-method}
+\alias{interval_union,Intervals_virtual-method}
 \alias{interval_union,missing-method}
 
 \title{Compute the union of intervals in one or more interval matrices}
@@ -15,12 +14,26 @@
 }
 
 \usage{
-interval_union(x, ...)
+interval_union(x, ..., tolerance = .Machine$double.eps^0.5, check_valid = TRUE)
 }
 
 \arguments{
+
   \item{x}{ An \code{"Intervals"} or \code{"Intervals_full"} object.}
+  
   \item{\dots}{Optionally, additional objects of the same class as \code{x}.}
+  
+  \item{tolerance}{
+    Assessing overlap with floating point endpoints requires an
+    approximate definition of equality. See comments for the
+    \code{tolerance} argument of \code{\link{interval_overlap}}. 
+  }
+  
+  \item{check_valid}{
+    Should \code{\link{validObject}} be called before passing to
+    compiled code? Also see \code{\link{interval_overlap}}.
+  }
+  
 }
 
 \value{
