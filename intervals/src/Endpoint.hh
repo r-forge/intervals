@@ -33,7 +33,7 @@ public:
     // We use relative difference for assessing equality of pos, and compare on
     // the basis of state in case of (effective) ties.
     double max_abs, rd;
-    max_abs = std::max( abs( other.pos ), abs( this->pos ) );
+    max_abs = std::max( fabs( other.pos ), fabs( this->pos ) );
     if ( max_abs > 0. ) {
       rd = ( this->pos - other.pos ) / max_abs;
       if ( rd > tol ) return( false );
