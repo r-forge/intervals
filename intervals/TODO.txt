@@ -37,7 +37,7 @@
 
   - Set xy to the mean absolute difference (along the vectors).
 
-  - Set xn to the mean absolue target.
+  - Set xn to the mean absolute target.
 
   - If xn > tolerance, make a relative comparison and set xy to
     xy/xn. Otherwise, make an absolute comparison and leave xy as it is.
