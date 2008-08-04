@@ -1,5 +1,8 @@
 useDynLib( "intervals" )
 
+
+export( "rd_equal" )
+
 exportClasses(
               "Intervals",
               "Intervals_full",
