@@ -14,7 +14,7 @@
 }
 
 \usage{
-interval_union(x, ..., tolerance = .Machine$double.eps^0.5, check_valid = TRUE)
+\S4method{interval_union}{Intervals_virtual}(x, ..., tolerance = .Machine$double.eps^0.5, check_valid = TRUE)
 }
 
 \arguments{
