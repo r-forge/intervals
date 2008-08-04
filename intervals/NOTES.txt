@@ -1,0 +1,4 @@
+- (4 August 2008) Methods not explictily document in their own -methods.Rd file
+  should have an alias in the appropriate class documentation file. In the
+  Methods section of the class documentation, ALL methods should be listed, even
+  those for which no alias is included in the class documentation file.
