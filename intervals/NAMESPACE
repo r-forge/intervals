@@ -20,6 +20,7 @@ exportMethods(
               "closed", "closed<-",
               "coerce",
               "combine",
+              "distance_to_nearest",
               "empty",
               "head",
               "initialize",
