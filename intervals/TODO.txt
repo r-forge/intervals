@@ -79,3 +79,13 @@
     interest.  
 
   - A thresholding function like hit.intervals in intervaltools.
+
+- (18 August 2008)
+
+  - Currently, over Z, [1, 1) is valid, but applying close_intervals to this
+    interval gives [1,0], which is not valid. Check for this and delete such
+    intervals. 
+
+  - The presence of such intervals over R actually screws up sorting and causes
+    interval_union, if not other things, to give incorrect answers. Check the
+    following: x <- new( "Intervals", c( 1, 1, 1, 2 ) ); closed(x)[2] <- FALSE.
