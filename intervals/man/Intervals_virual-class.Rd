@@ -36,7 +36,8 @@
       this \emph{does} permit empty interval rows, when both endpoints
       are of equal value and not both closed.) Only integral (though not
       \code{integer} class) endpoints are permitted if \code{type} is
-      \code{"Z"}.
+      \code{"Z"}. See the note on this point in documentation for
+      \code{\linkS4class{Intervals}}.
     }
     
     \item{\code{type}:}{
