@@ -5,6 +5,7 @@
 #include <Rinternals.h>
 #include <vector>
 #include <algorithm> // For max
+#include <math.h> // For isinf, which I expect to catch both -inf and inf
 
 
 
@@ -33,12 +34,15 @@ public:
     // We use relative difference for assessing equality of pos, and compare on
     // the basis of state in case of (effective) ties.
     double max_abs, rd;
+    if ( isinf( this->pos ) || isinf( other.pos ) ) return( this->pos < other.pos );
+    // Check approximate equality (for finite values only)
     max_abs = std::max( fabs( other.pos ), fabs( this->pos ) );
     if ( max_abs > 0. ) {
       rd = ( this->pos - other.pos ) / max_abs;
       if ( rd > tol ) return( false );
       if ( rd < -1. * tol ) return( true );
     }
+    // Approximate equality: assess by query/target, left/right, closed/open.
     return( this->state() < other.state() );
   }
 
