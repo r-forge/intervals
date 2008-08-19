@@ -25,7 +25,12 @@ setReplaceMethod(
                    if ( is.vector( value ) ) {
                      if ( length( value ) > 2 )
                        stop( error_msg )
-                     value <- matrix( value, nrow( x ), 2, byrow = TRUE )
+                     value <- matrix(
+                                     if ( nrow( x ) == 0 ) logical() else value,
+                                     nrow( x ),
+                                     2,
+                                     byrow = TRUE
+                                     )
                    }
                    if ( !is.matrix( value ) || nrow( value ) != nrow( x ) || ncol( value ) != 2 )
                      stop( error_msg )
