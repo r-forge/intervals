@@ -12,11 +12,14 @@ setMethod(
             if ( length( args ) > 0 ) {
               args <- args[ !sapply( args, is.null ) ]
               if ( !all( sapply( args, is, "Intervals" ) ) )
-                stop( "All arguments should be of the same class." )              
-              if ( !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
-                stop( "All arguments should have the same 'closed' slot." )
+                stop( "All arguments should be of the same class." )
               if ( !all( sapply( args, type ) == type(x) ) )
                 stop( "All arguments should have the same 'type' slot." )
+              if ( !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
+                if( type(x) == "Z" )
+                  args <- lapply( args, close_intervals, left = closed(x)[1], right = closed(x)[2] )
+                else
+                  stop( "All arguments should have the same 'closed' slot." )
               x@.Data <- do.call( rbind, c( list(x), args ) )
             }
             return(x)

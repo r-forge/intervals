@@ -29,7 +29,11 @@ combine(x, y, ...)
 
 \details{
   All objects are expected to have the same class, and to have the same
-  value in the \code{type} slot. A \code{NULL} in any argument is
+  value in the \code{type} slot. If the \code{closed} slots differ for
+  \code{\linkS4class{Intervals}} objects and \code{type == "Z"}, the
+  objects will be adjusted to have \code{closed} values matching that of
+  \code{x}; if \code{type == "R"}, however, no such adjustment is
+  possible and an error is generated. A \code{NULL} in any argument is
   ignored.
 }
 
