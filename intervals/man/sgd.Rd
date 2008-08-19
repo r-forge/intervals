@@ -41,9 +41,4 @@
   }
 }
 
-\examples{
-data(sgd)
-## maybe str(sgd) ; plot(sgd) ...
-}
-
 \keyword{datasets}
