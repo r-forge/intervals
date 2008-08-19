@@ -46,6 +46,8 @@ setMethod(
           function( .Object, .Data, ... ) {
             if ( missing( .Data ) ) callNextMethod( .Object, ... )
             else {
+              if ( is.data.frame( .Data ) )
+                .Data <- as.matrix( .Data )
               if ( !is.matrix( .Data ) )
                 .Data <- matrix( .Data, ncol = 2 )
               if ( is.integer( .Data ) ) {
@@ -117,7 +119,12 @@ setMethod(
               if ( is.vector( closed ) ) {
                 if ( length( closed ) > 2 )
                   stop( "The 'closed' argument should be a matrix, or a vector of length 1 or 2." )
-                closed <- matrix( closed, nrow( .Data ), 2, byrow = TRUE )
+                closed <- matrix(
+                                 if ( nrow( .Data ) == 0 ) logical() else closed,
+                                 nrow( .Data ),
+                                 2,
+                                 byrow = TRUE
+                                 )
               }
               callNextMethod( .Object, .Data, closed = closed, ... )
             }
