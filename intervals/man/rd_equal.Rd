@@ -28,7 +28,9 @@ rd_equal(x, y, tolerance = .Machine$double.eps^0.5)
   For each component in \code{x} and its partner in \code{y}, the
   absolute value of difference is compared to the larger of the two
   individual absolute values. The values are deemed to be equal if the
-  ratio is less than \code{tolerance}.
+  ratio is less than \code{tolerance}. When one or both values are
+  infinite, a simple comparison with \code{==} is made; when one or both
+  are \code{NA}, a \code{NA} is returned.
 }
 
 \value{
@@ -55,4 +57,13 @@ rd_equal(x, y)
 
 rd_equal(x, y, tolerance = eps)
 all.equal(x, y, tolerance = eps)
+
+# Handling non-finite values
+
+rd_equal(
+         c( .8, .9, NA, Inf, -Inf ),
+         c(  1,  1,  1, Inf,  Inf ),
+         tol = .1
+         )
+
 }
