@@ -1,4 +1,7 @@
-# For R, size is Lebesgue measure, so closure is irrelevant.
+# For R, size is Lebesgue measure, so closure is irrelevant. Note that we don't
+# use the close_intervals method here, which is important since this method
+# requires empty, and empty currently uses size. We need to avoid circular
+# dependency. 
 
 setGeneric( "size", def = function( x, ... ) standardGeneric( "size" ) )
 
