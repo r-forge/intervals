@@ -27,11 +27,13 @@ setMethod(
                 # Note that we ignore closure for non-finite endpoints.
                 !closed(x)[2:1]
               else
-                !rbind(
-                       if ( is.finite( x[1,1] ) ) c( TRUE, closed(x)[1,1] ) else NULL,
-                       cbind( closed(x)[-nrow(x),2], closed(x)[-1,1] ),
-                       if ( is.finite( x[nrow(x),2] ) ) c( closed(x)[nrow(x),2], TRUE ) else NULL
-                       )
+                if ( nrow(x) == 0 ) TRUE                  
+                else                    
+                  !rbind(
+                         if ( is.finite( x[1,1] ) ) c( TRUE, closed(x)[1,1] ) else NULL,
+                         cbind( closed(x)[-nrow(x),2], closed(x)[-1,1] ),
+                         if ( is.finite( x[nrow(x),2] ) ) c( closed(x)[nrow(x),2], TRUE ) else NULL
+                         )
             new(
                 class(x),
                 endpoints,
