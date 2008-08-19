@@ -25,6 +25,7 @@ exportMethods(
               "head",
               "initialize",
               "interval_complement",
+              "interval_intersection",
               "interval_overlap",
               "interval_union",
               "open_intervals",
