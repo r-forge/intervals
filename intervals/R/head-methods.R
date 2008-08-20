@@ -4,7 +4,7 @@ setMethod(
           "head",
           signature( "Intervals_virtual" ),
           function( x, n = 6 ) {
-            x[ 1:min( n, nrow(x) ), ]
+            if ( nrow(x) > 0 ) x[ 1:min( n, nrow(x) ), ] else x
           }
           )
 
@@ -14,7 +14,7 @@ setMethod(
           "tail",
           signature( "Intervals_virtual" ),
           function( x, n = 6 ) {
-            x[ max( 1, nrow(x) - n + 1 ):nrow(x), ]
+            if ( nrow(x) > 0 ) x[ max( 1, nrow(x) - n + 1 ):nrow(x), ] else x
           }
           )
 
