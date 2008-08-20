@@ -1,28 +1,31 @@
 \name{close_intervals}
 
 \alias{close_intervals}
-\alias{close_intervals,Intervals-method}
-\alias{close_intervals,Intervals_full-method}
+\alias{close_intervals,Intervals_virtual-method}
 
 \alias{open_intervals}
-\alias{open_intervals,Intervals-method}
-\alias{open_intervals,Intervals_full-method}
+\alias{open_intervals,Intervals_virtual-method}
 
-\title{Represent integer intervals with open or closed endpoints}
+\alias{adjust_closure}
+\alias{adjust_closure,Intervals-method}
+\alias{adjust_closure,Intervals_full-method}
+
+
+\title{Re-represent integer intervals with open or closed endpoints}
 
 \description{
   Given an integer interval matrix, adjust endpoints so that all
-  intervals are closed at the requested ends.
+  intervals have the requested closure status.
 }
 
 \usage{
-\S4method{close_intervals}{Intervals}(x, left = TRUE, right = TRUE)
+\S4method{close_intervals}{Intervals_virtual}(x)
 
-\S4method{close_intervals}{Intervals_full}(x, left = TRUE, right = TRUE)
+\S4method{open_intervals}{Intervals_virtual}(x)
 
-\S4method{open_intervals}{Intervals}(x, left = TRUE, right = TRUE)
+\S4method{adjust_closure}{Intervals}(x, close_left = TRUE, close_right = TRUE)
 
-\S4method{open_intervals}{Intervals_full}(x, left = TRUE, right = TRUE)
+\S4method{adjust_closure}{Intervals_full}(x, close_left = TRUE, close_right = TRUE)
 }
 
 \arguments{
@@ -32,12 +35,12 @@
     "Z"}. If \code{x@type == "R"}, an error is generated.
   }
   
-  \item{left}{
-    Should the left endpoints be closed?
+  \item{close_left}{
+    Should the left endpoints be closed or open?
   }
 
-  \item{right}{
-    Should the right endpoints be closed?
+  \item{close_right}{
+    Should the right endpoints be closed or open?
   }
   
 }
@@ -49,6 +52,10 @@
 }
 
 \note{
+  The \code{close_intervals} and \code{open_intervals} are for
+  convenience, and just call \code{adjust_closure} with the approriate
+  arguments.
+  
   The \code{x} object may contain empty intervals, with at least one
   open endpoint, and still be valid. (Intervals are invalid if their
   second endpoint is less than their first.) The \code{close_intervals}
@@ -56,3 +63,20 @@
   this, empty intervals are detected and removed, with a warning.
 }
 
+\examples{
+x <- new(
+         "Intervals",
+         c( 1, 5, 10, 1, 6, 20 ),
+         closed = c( TRUE, FALSE ),
+         type = "Z"
+         )
+
+# Empties are dropped
+close_intervals(x)
+adjust_closure(x, FALSE, TRUE)
+
+# Intervals_full
+y <- as( x, "Intervals_full" )
+closed(y)[1,2] <- TRUE
+open_intervals(y)
+}
