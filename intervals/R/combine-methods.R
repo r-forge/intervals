@@ -17,7 +17,7 @@ setMethod(
                 stop( "All arguments should have the same 'type' slot." )
               if ( !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
                 if( type(x) == "Z" )
-                  args <- lapply( args, close_intervals, left = closed(x)[1], right = closed(x)[2] )
+                  args <- lapply( args, adjust_closure, close_left = closed(x)[1], close_right = closed(x)[2] )
                 else
                   stop( "All arguments should have the same 'closed' slot." )
               x@.Data <- do.call( rbind, c( list(x), args ) )
