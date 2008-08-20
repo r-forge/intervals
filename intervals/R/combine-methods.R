@@ -10,16 +10,24 @@ setMethod(
           function( x, y, ... ) {
             args <- c( if ( missing(y) ) list() else list(y), list(...) )
             if ( length( args ) > 0 ) {
-              args <- args[ !sapply( args, is.null ) ]
-              if ( !all( sapply( args, is, "Intervals" ) ) )
-                stop( "All arguments should be of the same class." )
+              if ( any( sapply( args, is.null ) ) )
+                args <- args[ !sapply( args, is.null ) ]
               if ( !all( sapply( args, type ) == type(x) ) )
                 stop( "All arguments should have the same 'type' slot." )
-              if ( !all( sapply( args, function(y) identical( closed(x), closed(y) ) ) ) )
-                if( type(x) == "Z" )
-                  args <- lapply( args, adjust_closure, close_left = closed(x)[1], close_right = closed(x)[2] )
-                else
-                  stop( "All arguments should have the same 'closed' slot." )
+              same_class <- all( sapply( args, is, "Intervals" ) )
+              same_closed <- all( sapply( args, function(y) identical( closed(x), closed(y) ) ) )
+              if ( !same_class || ( type(x) == "R" & !same_closed ) ) {
+                warning( "Coercion to 'Intervals_full' required.", call. = FALSE )
+                args <- lapply( args, as, "Intervals_full" )
+                return( do.call( combine, c( list( as( x, "Intervals_full" ) ), args ) ) )
+              }
+              if ( type(x) == "Z" & !same_closed )
+                args <- lapply(
+                               args,
+                               adjust_closure,
+                               close_left = closed(x)[1],
+                               close_right = closed(x)[2]
+                               )              
               x@.Data <- do.call( rbind, c( list(x), args ) )
             }
             return(x)
@@ -33,11 +41,12 @@ setMethod(
             # TO-DO: coerce Intervals objects up if required.
             args <- c( if ( missing(y) ) list() else list(y), list(...) )
             if ( length( args ) > 0 ) {
-              args <- args[ !sapply( args, is.null ) ]
-              if ( !all( sapply( args, is, "Intervals_full" ) ) )
-                stop( "All arguments should be of the same class." )              
+              if ( any( sapply( args, is.null ) ) )
+                args <- args[ !sapply( args, is.null ) ]
               if ( !all( sapply( args, type ) == type(x) ) )
                 stop( "All arguments should have the same 'type' slot." )
+              if ( !all( sapply( args, is, "Intervals_full" ) ) )
+                args <- lapply( args, as, "Intervals_full" )
               x@.Data <- do.call( rbind, c( list(x), args ) )
               closed(x) <- do.call(
                                    rbind,
