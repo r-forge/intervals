@@ -23,26 +23,20 @@
 - (30 May 2008) Consider replacing coerce methods with setAs. In particular,
   it's disappointing to see that as.matrix doesn't work currently.
 
-- (30 May 2008) When combining or working with mixed objects, automatically move
-  up to Intervals_full if any of the objects are of this class. We may be able
-  to do this in the combine method only: all other methods working on more than
-  one object probably use this at some point to put things together. On the
-  other hand, forcing the user to do this explicitly isn't such a bad idea.
-
 - (1 June 2008) PSEUDO-CODE FOR R all.equal.numeric
 
-  - Set tolerance = .Machine$double.eps^0.5.
+    - Set tolerance = .Machine$double.eps^0.5.
 
-  - Only check non-NA pairs for which == fails.
+    - Only check non-NA pairs for which == fails.
 
-  - Set xy to the mean absolute difference (along the vectors).
+    - Set xy to the mean absolute difference (along the vectors).
 
-  - Set xn to the mean absolute target.
+    - Set xn to the mean absolute target.
 
-  - If xn > tolerance, make a relative comparison and set xy to
-    xy/xn. Otherwise, make an absolute comparison and leave xy as it is.
+    - If xn > tolerance, make a relative comparison and set xy to
+      xy/xn. Otherwise, make an absolute comparison and leave xy as it is.
 
-  - Return equality iff xy <= tolerance.
+    - Return equality iff xy <= tolerance.
 
   Note: dropping entries for which == holds is important, as it affects the means
   below. We will, however most likely apply our procedure to single pairs of
@@ -57,35 +51,36 @@
 - (10 June 2008) More functions to implement (based largely on the e-mail from
   Julien on 12 February 2008):
 
-  - The subset version of interval_overlap: interval_included.
+    - The subset version of interval_overlap: interval_included.
 
-  - A set difference.
+    - A set difference.
 
-  - Distance to nearest and which nearest. These might return functions rather
-    than/in addition to just values.
+    - Distance to nearest and which nearest. These might return functions rather
+      than/in addition to just values.
 
-  - Another class for points? Or do we just let the user do this on their own,
-    with closed-endpoint real intervals of size 0? Probably best not to bother
-    with this one. We should, for example, make a new interval_overlap method
-    where the query set is points -- a vector of positions -- rather than an
-    inteval object.
+    - Another class for points? Or do we just let the user do this on their own,
+      with closed-endpoint real intervals of size 0? Probably best not to bother
+      with this one. We should, for example, make a new interval_overlap method
+      where the query set is points -- a vector of positions -- rather than an
+      inteval object.
 
-  - The iapply idea: given a vector of positions, and a vector of values,
-    compute intersections then and apply a function to the appropriate subset
-    vector. 
+    - The iapply idea: given a vector of positions, and a vector of values,
+      compute intersections then and apply a function to the appropriate subset
+      vector. 
 
-  - Julien's "density" idea: a function which, for any position and window size,
-    tells you the portion of the window overlapping intervals in the set of
-    interest.  
+    - Julien's "density" idea: a function which, for any position and window size,
+      tells you the portion of the window overlapping intervals in the set of
+      interest.  
 
-  - A thresholding function like hit.intervals in intervaltools.
+    - A thresholding function like hit.intervals in intervaltools.
 
-- (18 August 2008)
+- (19 August 2008)
 
-  - Currently, over Z, [1, 1) is valid, but applying close_intervals to this
-    interval gives [1,0], which is not valid. Check for this and delete such
-    intervals. 
+    - A sort method. Do we use sorting anywhere else in our code? If so, it would
+      be good to replace ad hoc sorting with the standard method.
 
-  - The presence of such intervals over R actually screws up sorting and causes
-    interval_union, if not other things, to give incorrect answers. Check the
-    following: x <- new( "Intervals", c( 1, 1, 1, 2 ) ); closed(x)[2] <- FALSE.
+    - A good summary() method for large objects.
+
+    - Note that we can put a manually manipulated version of index.html in
+      inst/doc and this will be used instead of the automatically generated
+      one. 
