@@ -18,7 +18,7 @@ setMethod(
           function(x, tolerance = .Machine$double.eps^0.5 ) {
             result <- rd_equal( size(x), rep( 0, nrow(x) ), tolerance )
             if ( type(x) == "R" )
-              result[ !is_na( result ) & closed(x)[,1] & closed(x)[,2] ] <- FALSE
+              result[ !is.na( result ) & closed(x)[,1] & closed(x)[,2] ] <- FALSE
             return( result )
           }
           )
