@@ -11,7 +11,12 @@ setMethod(
             n <- nrow(to)
             gap_x <- ( to[ -1, 1 ] + to[ -n, 2 ] ) / 2
             gap_y <- ( to[ -1, 1 ] - to[ -n, 2 ] ) / 2
-            f <- approxfun( c( to, gap_x ), c( rep( 0, n*2 ), gap_y ) )
+            use <- !duplicated( gap_x )
+            # Note that approxfun requires at least two distinct x values
+            if( sum( use ) > 1 )
+              f <- approxfun( c( to, gap_x[ use ] ), c( rep( 0, n*2 ), gap_y[ use ] ) )
+            else
+              f <- function(x) 0              
             # Compute results
             below <- from < to[1,1]
             above <- from > to[n,2]
