@@ -12,8 +12,10 @@ setMethod(
             x_comb <- combine( x, ... )
             if ( check_valid ) validObject( x_comb )
             has_na <- is.na( x_comb[,1] ) | is.na( x_comb[,2] )
-            if ( any( has_na ) )
+            if ( any( has_na ) ) {
+              warning( "Intervals with NA endpoints removed.", call. = FALSE )
               x_comb <- x_comb[ !has_na, ]
+            }
             if ( type(x) == "Z" ) x_comb <- open_intervals( x_comb )
             result <- .Call(
                             "_interval_union",
