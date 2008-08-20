@@ -51,7 +51,7 @@ setMethod(
               if ( !is.matrix( .Data ) )
                 .Data <- matrix( .Data, ncol = 2 )
               if ( is.integer( .Data ) ) {
-                warning( "Converting endpoints from 'integer' to 'numeric' data type. See class documentation." )
+                warning( "Converting endpoints from 'integer' to 'numeric' data type. See class documentation.", call. = FALSE )
                 .Data <- matrix( as.numeric( .Data ), nrow( .Data ), ncol( .Data ) )
               }
               callNextMethod( .Object, .Data, ... )

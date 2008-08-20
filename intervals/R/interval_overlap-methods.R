@@ -15,11 +15,11 @@ setMethod(
             if ( type(query) != type(target) )
               stop( "Both 'query' and 'target' should have the same type." )
             if ( any( empty( query ) ) ) {
-              warning( "Some empty query intervals encountered. Setting to NA..." )
+              warning( "Some empty query intervals encountered. Setting to NA...", call. = FALSE )
               query[ empty(query), ] <- NA
             }
             if ( any( empty( target ) ) ) {
-              warning( "Some empty target intervals encountered. Setting to NA..." )
+              warning( "Some empty target intervals encountered. Setting to NA...", call. = FALSE )
               target[ empty(target), ] <- NA
             }
             result <- .Call(
