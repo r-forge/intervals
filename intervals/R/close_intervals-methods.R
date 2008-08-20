@@ -22,7 +22,7 @@ setMethod(
           function(x, close_left = TRUE, close_right = TRUE) {
             if ( type(x) == "R" )
               stop( "Only applicable to type 'Z'." )
-            if ( any( empty(x) ) ) {
+            if ( any( empty(x), na.rm = TRUE ) ) {
               warning( "Empty intervals encountered and removed.", call. = FALSE )
               x <- x[ !empty(x), ]
             }
@@ -41,7 +41,7 @@ setMethod(
           function(x, close_left = TRUE, close_right = TRUE) {
             if ( type(x) == "R" )
               stop( "Only applicable to type 'Z'." )
-            if ( any( empty(x) ) ) {
+            if ( any( empty(x), na.rm = TRUE ) ) {
               warning( "Empty intervals encountered and removed.", call. = FALSE )
               x <- x[ !empty(x), ]
             }

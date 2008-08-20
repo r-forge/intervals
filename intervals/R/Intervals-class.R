@@ -34,7 +34,7 @@ setClass(
            if ( object@type == "Z" && !all( object@.Data[ is.finite( object@.Data ) ] %% 1 == 0 ) )
              return( "Non-integer-valued endpoints not permitted for type 'Z'." )
            # Check for valid intervals
-           if ( any( object@.Data[,2] < object@.Data[,1] ) )
+           if ( any( object@.Data[,2] < object@.Data[,1], na.rm = TRUE ) )
              return( "One or more intervals with second endpoint before first." )
            return( TRUE )
          }
