@@ -15,13 +15,19 @@
 
 \usage{
 \S4method{interval_union}{Intervals_virtual}(x, ..., tolerance = .Machine$double.eps^0.5, check_valid = TRUE)
+
+\S4method{interval_union}{missing}(x, ..., tolerance = .Machine$double.eps^0.5, check_valid = TRUE)
 }
 
 \arguments{
 
   \item{x}{ An \code{"Intervals"} or \code{"Intervals_full"} object.}
   
-  \item{\dots}{Optionally, additional objects of the same class as \code{x}.}
+  \item{\dots}{
+    Optionally, additional objects which can be combined with
+    \code{x}. See \code{\link{combine}} for details on mixing different
+    types of objects.
+  }
   
   \item{tolerance}{
     Assessing overlap with floating point endpoints requires an
@@ -36,9 +42,20 @@
   
 }
 
+\details{
+  All supplied objects are combined using \code{\link{combine}} and then
+  then passed to \code{\link{reduce}}. The \code{missing} method is only
+  to permit use of \code{\link{do.call}} with named list, since no named
+  element will typically match \code{x}.
+}
+
 \value{
   A single object of appropriate class, compactly representing the union
   of all intervals in \code{x}, and optionally, in \code{...} as
   well. For class \code{"Intervals"}, the result will have the same
   \code{closed} values as \code{x}.
+}
+
+\seealso{
+ See \code{\link{reduce}}, which is used to produce the results. 
 }

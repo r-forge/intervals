@@ -30,6 +30,7 @@ exportMethods(
               "interval_overlap",
               "interval_union",
               "open_intervals",
+              "reduce",
               "show",
               "size",
               "t",

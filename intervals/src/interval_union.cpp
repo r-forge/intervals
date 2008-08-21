@@ -13,7 +13,7 @@
 
 
 
-const int union_order[2][2][2] = {
+const int reduce_order[2][2][2] = {
   {{2,4},{3,1}}, // Target: {{ ), ] }, { (, [ }}      
   {{0,0},{0,0}}  // Query:  {{ ), ] }, { (, [ }}
 };
@@ -24,7 +24,7 @@ const int union_order[2][2][2] = {
 extern "C"
 {
 
-  SEXP _interval_union(SEXP e, SEXP c, SEXP full, SEXP tol) {
+  SEXP _reduce(SEXP e, SEXP c, SEXP full, SEXP tol) {
 
     // Load data and sort
     int n = nrows(e);
@@ -33,7 +33,7 @@ extern "C"
 
     // Set equality tolerance and sorting order, then sort
     Endpoint::tol = *REAL(tol);
-    Endpoint::set_state_array( union_order );
+    Endpoint::set_state_array( reduce_order );
     sort( ep.begin(), ep.end() );
 
     // Process
@@ -58,7 +58,7 @@ extern "C"
       }
     }
 
-    int union_size = start.size();
+    int reduce_size = start.size();
 
     if ( start.size() != end.size() )
       error("Internal error: mismatched start and end endpoint sets.");

@@ -15,10 +15,10 @@ double Endpoint::tol = 1.490116e-08;
 //////// Ordering for tied endpoints
 
 /*
-  We use two different tied endpoint orderings, one for interval_union, and a
-  different one for interval_overlap. These should be set by any code that uses
-  sorting, so we initialize to -1, and have the sort method check this and throw
-  an error if it's still found.
+  We use two different tied endpoint orderings, one for reduce, and a different
+  one for interval_overlap. These should be set by any code that uses sorting,
+  so we initialize to -1, and have the sort method check this and throw an error
+  if it's still found.
 
   Let Q/T be query/target, L/R be left/right, and O/C be open/closed. Our
   ordering, when pos is effectively tied, is then:
