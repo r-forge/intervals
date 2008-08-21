@@ -77,10 +77,30 @@
 - (19 August 2008)
 
     - A sort method. Do we use sorting anywhere else in our code? If so, it would
-      be good to replace ad hoc sorting with the standard method.
+      be good to replace ad hoc sorting with the standard method. Note that
+      reduce (and thus interval_union) already do sorting, but it would be nice
+      to have another form of sorting that respects the set-of-intervals
+      interpretation of a given object.
 
     - A good summary() method for large objects.
 
     - Note that we can put a manually manipulated version of index.html in
       inst/doc and this will be used instead of the automatically generated
       one. 
+
+- (21 August 2008)
+
+   - Be very clear in the documentation/vignette that objects can be thought of
+     either as a set of possibly non-disjoint intervals -- whose composition is
+     respected by things link interval_overlap, which_nearest, empty, size,
+     etc. -- or as representations of subsets of the integers or the real line
+     -- a conceptualization more consistent with distance_to_nearest,
+     interval_union, interval_intersection, interval_complement, sets. In fact,
+     I need to make a vignette.
+
+   - From Julien, it would be good to have one-sided distance_to_nearest,
+     which_nearest, etc. Due to discontinuity, these are a bit trickier to
+     implement. 
+
+   - Implement sort and is_sorted, which work in set-of-intervals mode rather
+     than subset of Z/R mode.
