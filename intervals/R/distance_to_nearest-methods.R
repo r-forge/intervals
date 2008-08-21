@@ -6,7 +6,7 @@ setMethod(
           function( from, to ) {
             if ( nrow(to) == 0 ) return( rep( as.numeric( NA ), length( from ) ) )
             # Close, collapse and sort
-            to <- interval_union( if ( type(to) == "Z" ) close_intervals(to) else to )
+            to <- reduce( if ( type(to) == "Z" ) close_intervals(to) else to )
             # Create interpolating function
             n <- nrow(to)
             gap_x <- ( to[ -1, 1 ] + to[ -n, 2 ] ) / 2

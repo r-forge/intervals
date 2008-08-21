@@ -5,7 +5,7 @@ setMethod(
           signature( "Intervals_virtual" ),
           function(x) {
             # Sort and clean up
-            x <- interval_union(x)
+            x <- reduce(x)
             # When the data type of the endpoints matrix is integer,
             # complications arise from maximum/minimum representable integer
             # values. For Intervals objects, the complement will often
