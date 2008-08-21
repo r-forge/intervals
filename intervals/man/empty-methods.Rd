@@ -24,22 +24,17 @@
 
     \item{tolerance}{
     Assessing endpoint equality with floating point endpoints requires
-    an approximation. In this function, we compare relative difference
-    (difference divided by maximum absolute value) to \code{tolerance}
-    to decide if two endpoints are in fact at the same position. The
-    default tolerance here is the same as is used in
-    \code{\link{all.equal.numeric}}, although
-    \code{\link{all.equal.numeric}} uses an \emph{asymmetic} relative
-    difference, with \code{target} in the denominator, not a maximum.
+    an approximation. See \code{\link{rd_equal}} in this package.
   }
   
 }
 
 \details{
   Intervals are deemed to be empty when their endpoints are equal (up to
-  a relative difference of \code{tolerance}) and not both closed. The
-  matrices \code{x} and \code{x[!empty(x),]} represent the same subset
-  of the integers or the real line.
+  a relative difference of \code{tolerance}) and not both closed, or for
+  \code{type = "Z"}, when their endpoints differ by 1 and both are
+  open. The matrices \code{x} and \code{x[!empty(x),]} represent the
+  same subset of the integers or the real line.
 }
 
 \value{
@@ -80,7 +75,9 @@ closed(s1)[3,] <- FALSE
 
 empty(s1)
 
-# Floating point and tolerance
+# Floating point and tolerance. With closed endpoints over R,
+# approximate equality of endpoints still does not imply an empty
+# interval.
 
 x <- new("Intervals", c( .99, 1 ), closed = FALSE)
 empty(x)
