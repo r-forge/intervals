@@ -10,7 +10,7 @@
   This data set contains a data frame describing a subset of
   the chromosome feature data represented in Fall 2007 version of
   \code{saccharomyces_cerevisiae.gff}, available for download from the
-  \emph{Saccharomyces} Genome Database (\url{www.yeastgenome.org}). 
+  \emph{Saccharomyces} Genome Database (\url{http://www.yeastgenome.org}). 
 }
 
 \usage{data(sgd)}
