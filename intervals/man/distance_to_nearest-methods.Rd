@@ -21,7 +21,7 @@
   
   \item{from}{An object of appropriate type.}
 
-  \item{target}{An object of appropriate type.}
+  \item{to}{An object of appropriate type.}
   
 }
 
