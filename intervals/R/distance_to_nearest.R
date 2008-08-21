@@ -11,12 +11,17 @@ setMethod(
             n <- nrow(to)
             gap_x <- ( to[ -1, 1 ] + to[ -n, 2 ] ) / 2
             gap_y <- ( to[ -1, 1 ] - to[ -n, 2 ] ) / 2
-            use <- !duplicated( gap_x )
-            # Note that approxfun requires at least two distinct x values
+            x <- c( to, gap_x )
+            y <- c( rep( 0, n*2 ), gap_y )
+            use <- !duplicated( x ) & is.finite( x )
+            # Note that approxfun requires at least two distinct x values. We
+            # use "rule = 2" to handle infinite endpoints properly: in the
+            # preceding line they are dropped, but "rule = 2" causes extension
+            # of the preceding 0 out to infinity, as desired.
             if( sum( use ) > 1 )
-              f <- approxfun( c( to, gap_x[ use ] ), c( rep( 0, n*2 ), gap_y[ use ] ) )
+              f <- approxfun( x[ use ], y[ use ], rule = 2 )
             else
-              f <- function(x) 0              
+              f <- function(x) 0
             # Compute results
             below <- from < to[1,1]
             above <- from > to[n,2]
