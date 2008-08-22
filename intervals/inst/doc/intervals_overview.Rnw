@@ -1,0 +1,167 @@
+\documentclass[a4paper]{article}
+
+\usepackage{Sweave, amssymb, amsmath}
+
+\title{Overview the \emph{intervals} package}
+\author{Richard Bourgon}
+\date{22 August 2008}
+
+% The is for R CMD check, which finds it in spite of the "%", and also for
+% automatic creation of links in the HTML documentation for the package:
+% \VignetteIndexEntry{Overview of the intervals package.}
+
+
+
+
+\begin{document}
+
+
+
+%%%%%%%% Setup
+
+% Size for figures
+\setkeys{Gin}{width=.6\textwidth}
+
+% Reduce characers per line in R output
+@ 
+<<set_width, echo=FALSE>>=
+options( width = 80 )
+@ 
+
+% Make title
+\maketitle
+
+% Typesetting commands
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+
+
+
+%%%%%%%% Main text
+
+\section{Introduction}
+
+\subsection{Interval objects}
+
+The \emph{intervals} packages defines two S4 classes which represent subsets of
+either the integers ($\Z$) or the real number line ($\R$). An instance of either
+class consists of a two-column matrix of endpoints, plus additional slots
+describing endpoint closure and whether the intervals are to be thought of as
+being over $\Z$ or $\R$. Because the classes extend \texttt{matrix}, arithmetic
+does what is expected.
+
+@ 
+<<Intervals>>=
+library( intervals )
+x <- Intervals( 1:6 )
+x
+x[2,2] <- NA
+x[3,1] <- 6
+x
+@
+
+Objects of class \texttt{Intervals} represent intervals with common endpoint
+closure. More control over endpoints is permitted with the
+\texttt{Intervals\_full} class.
+
+@ 
+<<Intervals_full>>=
+y <- as( x, "Intervals_full" )
+closed(y)[2:3,1] <- FALSE
+y
+@
+
+The \texttt{size} method gives measure --- counting measure over $\Z$ or
+Lebesgue measure over $\R$ --- for each interval represented in an object. The
+\texttt{empty} method shows which intervals are in fact empty sets, which over
+$\R$ is not the same things as having size 0.
+
+@ 
+<<size>>=
+size(x)
+empty(x)
+empty(y)
+@
+
+
+
+
+\subsection{Subsets of $\Z$ or $\R$}
+
+An \texttt{Intervals} or \texttt{Intervals\_full} object can be thought of in
+two different ways, each of which is useful in certain contexts:
+
+\begin{enumerate}
+
+  \item As a (non-unique) representation of a subset of $\Z$ or $\R$.
+
+  \item As a set of (possibly overlapping) intervals, each of which has a
+  meaningful identity.
+
+\end{enumerate}
+
+The \emph{intervals} package provides a number of basic tools for working in the
+first mode: \texttt{reduce}, \texttt{intervals\_union},
+\texttt{intervals\_complement}, and \texttt{intervals\_intersection}. Note that
+combining \texttt{x} and its complement below in order to compute a union
+require mixing endpoint closure types; coercion to \texttt{Intervals_full} is
+automatic. 
+
+@ 
+<<set_operations>>=
+z <- reduce( y )
+type(z) <- "Z"
+z
+interval_intersection( x, x + 2 )
+interval_complement( x )
+interval_union( x, interval_complement( x ) )
+@
+
+The \texttt{distance_to_nearest} function also works in the first mode. In the
+example below, we also look at performance (on a 2 GHz Intel Core 2 Duo
+Macintosh) for large data sets.
+
+@ 
+<<distance>>=
+left <- runif( 1e6, 0, 1e8 )
+right <- left + rexp( 1e6, rate = 1/10 )
+v <- Intervals( cbind( left, right ) )
+head( v )
+mean( size( v ) )
+dim( reduce( v ) )
+system.time( hist( distance_to_nearest( sample( 1e8, 1e6 ), v ) ) )
+@ %def 
+
+% This example is creating problems with approximate equality. Figure out what I
+% want to do about this, and then continue the vignette from here.
+
+
+
+
+\subsection{Sets of intervals}
+
+Rows of endpoints may be named, and names are propegated.
+
+
+
+
+\section{Notes on implementation}
+
+\begin{itemize}
+
+  \item For the moment (v.\ 0.8.1), interval endpoints are always stored using
+  R's \emph{numeric} data type. Using the \emph{integer} data type when
+  \texttt{type == "Z"} is possible --- and would eliminate issues with float
+  point and approximate equality as well as be more memory efficient. Use of R's
+  \texttt{Inf} and \texttt{-Inf}, however, is very convenient, but is not
+  possible with the \emph{integer} type. See the documentation for the
+  \emph{Intervals} class for more on this topic.
+
+\end{itemize}
+
+
+
+
+\end{document}
