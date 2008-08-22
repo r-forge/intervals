@@ -104,8 +104,3 @@
 
    - Implement sort and is_sorted, which work in set-of-intervals mode rather
      than subset of Z/R mode.
-
-   - Need type() documentation, or to make links to type-method rather than
-     type.
-
-   - Finish updated class documentation for Intervals_full.
