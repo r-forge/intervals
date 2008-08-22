@@ -104,3 +104,26 @@
 
    - Implement sort and is_sorted, which work in set-of-intervals mode rather
      than subset of Z/R mode.
+
+- (22 August 2008)
+
+   - After talking with Simon and Julien a bit, and playing with some large data
+     examples in the overview vignette that create, by chance very small and/or
+     closely spaced intervals with large absolute value, I have realized that
+     the relative difference approach to equality (i) is currently causing some
+     surprising errors/results do to unsorted "sorted" positions, and (ii)
+     probably needs to be expanded to be safe and usable.
+
+     A suggestion is to operate in two modes over the reals:
+
+     1. Assume that internal represetnations of real numbers are literaly
+        equally if and only if they are intended to be equal, and that the user
+        is aware of this. Further, promise not to break this with any function
+        in the package, i.e., don't do any math on endpoints, just combine or
+        drop as calculations require.
+
+     2. Provide a gap smoothing tool that the user can use to remove small gaps
+        in subsets of R which aren't really intended, but may have arisen from
+        round errors elsewhere. I.e., take an intervals object and brush it up
+        so that any gaps of size <= tol, or a relative difference (with respect
+        to gap endpoints) <= tol, are removed. After that, procede as in case 1.	 
