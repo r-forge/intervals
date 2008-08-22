@@ -10,6 +10,8 @@ setMethod(
               warning( "Intervals with NA endpoints removed.", call. = FALSE )
               x <- x[ !has_na, ]
             }
+            if ( any( empty( x ) ) )
+              x <- x[ !empty(x), ]
             # In order to collapse over abutting intervals
             if ( type(x) == "Z" ) x <- open_intervals( x )
             result <- .Call(
