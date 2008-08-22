@@ -72,6 +72,12 @@
 }
 
 \section{Methods}{
+  \describe{
+	 }
+}
+
+
+\section{Methods}{
   
   \describe{
     
@@ -79,41 +85,28 @@
     % Intervals_full class as well, except for coerce.
     
     \item{[}{\code{signature(x = "Intervals")}: ... }
-
-    \item{close_intervals}{\code{signature(x = "Intervals")}: ... }
-
+    \item{[}{\code{signature(x = "Intervals_full")}: ... }
+    \item{adjust_closure}{\code{signature(x = "Intervals")}: ... }
+    \item{adjust_closure}{\code{signature(x = "Intervals_full")}: ... }
     \item{closed<-}{\code{signature(x = "Intervals")}: ... }
-
+    \item{closed<-}{\code{signature(x = "Intervals_full")}: ... }
     \item{coerce}{\code{signature(from = "Intervals", to = "Intervals_full")}: ... }
-
     \item{coerce}{\code{signature(from = "Intervals_full", to = "Intervals")}: ... }
-
     \item{combine}{\code{signature(x = "Intervals")}: ... }
-
+    \item{combine}{\code{signature(x = "Intervals_full")}: ... }
     \item{empty}{\code{signature(x = "Intervals")}: ... }
-
+    \item{empty}{\code{signature(x = "Intervals_full")}: ... }
     \item{initialize}{\code{signature(.Object = "Intervals")}: ... }
-
-    \item{open_intervals}{\code{signature(x = "Intervals")}: ... }
-
+    \item{initialize}{\code{signature(.Object = "Intervals_full")}: ... }
     \item{size}{\code{signature(x = "Intervals")}: ... }
-    
-    % (4 August 2008) The following text descriptions are older, and may
-    % no longer be appropriate. I am reorganizing all code and
-    % documentation to make it easier to see exactly what's implemented
-    % and for which classes. When structure settles down, I'll bring
-    % some of this text back -- possibly in a different place, since
-    % some methods previously documented here should now be documented
-    % with the virtual class.
-    
+    \item{size}{\code{signature(x = "Intervals_full")}: ... }
+
     % \item{\code{[}:}{
     %   When used to subset rows, class is preserved; when used to subset
     %   columns, the \code{closed} and \code{type} slots are discarded and
     %   an appropriately subset version of \code{.Data} is returned. See
     %   example below.
     % }
-    % 
-    % \item{\code{closed}:}{ Accessor for \code{closed} slot. }
     % 
     % \item{\code{closed<-}:}{
     %   Replacement accessor for \code{closed} slot. See the example
@@ -130,18 +123,6 @@
     %   
     %   A coercion method is also provided for pretty character strings.
     % }
-    % 
-    % \item{\code{head}:}{ A method for \code{\link{head}}. }
-    % 
-    % \item{\code{show}:}{ For pretty display of objects. }
-    % 
-    % \item{\code{t}:}{ A method for \code{\link{t}}. }
-    % 
-    % \item{\code{tail}:}{ A method for \code{\link{tail}}. }
-    % 
-    % \item{\code{type}:}{ Accessor for \code{type} slot. }
-    % 
-    % \item{\code{type<-}:}{ Replacement accessor for \code{type} slot.  }
     
   }
   

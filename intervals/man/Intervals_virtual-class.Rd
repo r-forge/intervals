@@ -63,35 +63,26 @@
 }
 
 \section{Methods}{
-  
   \describe{
-
+    \item{close_intervals}{\code{signature(x = "Intervals_virtual")}: ... }
     \item{closed}{\code{signature(x = "Intervals_virtual")}: ... }
-
     \item{coerce}{\code{signature(from = "Intervals_virtual", to = "character")}: ... }
-
+    \item{distance_to_nearest}{\code{signature(from = "numeric", to = "Intervals_virtual")}: ... }
+    \item{distance_to_nearest}{\code{signature(from = "Intervals_virtual", to = "Intervals_virtual")}: ... }
     \item{head}{\code{signature(x = "Intervals_virtual")}: ... }
-
     \item{initialize}{\code{signature(.Object = "Intervals_virtual")}: ... }
-
     \item{interval_complement}{\code{signature(x = "Intervals_virtual")}: ... }
-
+    \item{interval_intersection}{\code{signature(x = "Intervals_virtual")}: ... }
     \item{interval_overlap}{\code{signature(query = "Intervals_virtual", target = "Intervals_virtual")}: ... }
-
     \item{interval_union}{\code{signature(x = "Intervals_virtual")}: ... }
-
+    \item{open_intervals}{\code{signature(x = "Intervals_virtual")}: ... }
+    \item{reduce}{\code{signature(x = "Intervals_virtual")}: ... }
     \item{show}{\code{signature(object = "Intervals_virtual")}: ... }
-
     \item{t}{\code{signature(x = "Intervals_virtual")}: ... }
-
     \item{tail}{\code{signature(x = "Intervals_virtual")}: ... }
-
     \item{type}{\code{signature(x = "Intervals_virtual")}: ... }
-
     \item{type<-}{\code{signature(x = "Intervals_virtual")}: ... }
-    
   }
-  
 }
 
 \keyword{classes}
