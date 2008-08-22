@@ -51,7 +51,7 @@ setMethod(
               if ( !is.matrix( .Data ) )
                 .Data <- matrix( .Data, ncol = 2 )
               if ( is.integer( .Data ) ) {
-                warning( "Converting endpoints from 'integer' to 'numeric' data type. See class documentation.", call. = FALSE )
+                # warning( "Converting endpoints from 'integer' to 'numeric' data type. See class documentation.", call. = FALSE )
                 .Data <- matrix( as.numeric( .Data ), nrow( .Data ), ncol( .Data ) )
               }
               callNextMethod( .Object, .Data, ... )
@@ -131,6 +131,17 @@ setMethod(
             else callNextMethod( .Object, ... )
           }
           )
+
+
+
+
+######## Convenience functions
+
+Intervals <- function( .Data, ... )
+  new( "Intervals", .Data, ... )
+
+Intervals_full <- function( .Data, closed, type )
+  new( "Intervals_full", .Data, ... )
 
 
 

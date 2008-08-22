@@ -2,6 +2,9 @@
 
 \docType{class}
 
+\alias{Intervals}
+\alias{Intervals_full}
+
 \alias{Intervals-class}
 \alias{Intervals_full-class}
 
@@ -27,6 +30,12 @@
   have the same endpoint closure pattern. \code{Intervals_full}
   objects are similar, but permit interval-by-interval endpoint closure
   specification.
+}
+
+\section{Objects from the Class}{
+    Objects can be created by calls of the form \code{new("Intervals",
+    ...)}, or by using the convenient functions \code{Intervals()} and
+    \code{Intervals_full()}. 
 }
 
 \section{Slots}{
@@ -70,12 +79,6 @@
   \code{Intervals_virtual}, distance 5, with explicit coerce.
   
 }
-
-\section{Methods}{
-  \describe{
-	 }
-}
-
 
 \section{Methods}{
   
