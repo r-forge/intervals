@@ -58,8 +58,6 @@ extern "C"
       }
     }
 
-    int reduce_size = start.size();
-
     if ( start.size() != end.size() )
       error("Internal error: mismatched start and end endpoint sets.");
 
