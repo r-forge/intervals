@@ -137,11 +137,11 @@ setMethod(
 
 ######## Convenience functions
 
-Intervals <- function( .Data, ... )
-  new( "Intervals", .Data, ... )
+Intervals <- function( ... )
+  new( "Intervals", ... )
 
-Intervals_full <- function( .Data, closed, type )
-  new( "Intervals_full", .Data, ... )
+Intervals_full <- function( ... )
+  new( "Intervals_full", ... )
 
 
 
