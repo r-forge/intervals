@@ -36,8 +36,7 @@
 
 \value{
   A single object of appropriate class, compactly representing the
-  union of all intervals in \code{x}. For class \code{"Intervals"}, the
-  result will have the same \code{closed} values as \code{x}.
+  union of all intervals in \code{x}.
 }
 
 \seealso{

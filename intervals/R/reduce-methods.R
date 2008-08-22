@@ -22,8 +22,6 @@ setMethod(
                             tolerance
                             )
             result <- new( class(x), result[[1]], closed = result[[2]], type = type(x) )
-            if ( type(x) == "Z" && class(x) == "Intervals" )
-              result <- adjust_closure( result, close_left = closed(x)[1], close_right = closed(x)[2] )
             return( result )
           }
           )
