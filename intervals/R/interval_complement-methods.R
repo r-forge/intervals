@@ -1,11 +1,11 @@
-setGeneric( "interval_complement", def = function(x) standardGeneric( "interval_complement" ) )
+setGeneric( "interval_complement", def = function(x, ...) standardGeneric( "interval_complement" ) )
 
 setMethod(
           "interval_complement",
           signature( "Intervals_virtual" ),
-          function(x) {
+          function(x, check_valid = TRUE) {
             # Sort and clean up
-            x <- reduce(x)
+            x <- reduce( x, check_valid )
             # When the data type of the endpoints matrix is integer,
             # complications arise from maximum/minimum representable integer
             # values. For Intervals objects, the complement will often

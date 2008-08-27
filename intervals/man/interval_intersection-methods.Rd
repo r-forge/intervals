@@ -13,14 +13,31 @@
 }
 
 \usage{
-interval_intersection(x, ...)
+\S4method{interval_intersection}{Intervals_virtual}(x, ..., check_valid = TRUE)
+
+\S4method{interval_intersection}{missing}(x, ..., check_valid = TRUE)
 }
 
 \arguments{
+
   \item{x}{ An \code{"Intervals"} or \code{"Intervals_full"} object.}
-  \item{\dots}{Optionally, additional objects of the same class as \code{x}.}
+  
+  \item{\dots}{Additional objects of the same classes permitted for \code{x}.}
+  
+  \item{check_valid}{
+    Should \code{\link{validObject}} be called before passing to
+    compiled code? Also see \code{\link{interval_overlap}}.
+  }
+
 }
 
 \value{
-  A single object of the same class as the input objects.
+  A single object representing points contained in each of the objects
+  supplied in the \code{x} and \code{...} arguments.
+}
+
+\seealso{
+  See \code{\link{interval_union}} and
+  \code{\link{interval_complement}}, which are used to produce the
+  results. 
 }

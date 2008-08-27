@@ -10,11 +10,16 @@
 }
 
 \usage{
-interval_complement(x)
+interval_complement(x, check_valid = TRUE)
 }
 
 \arguments{  
   \item{x}{An \code{Intervals} or \code{Intervals_full} object.}
+  
+  \item{check_valid}{
+    Should \code{\link{validObject}} be called before passing to
+    compiled code? Also see \code{\link{interval_overlap}}.
+  }
 }
 
 \value{
@@ -26,6 +31,8 @@ interval_complement(x)
   For objects of class \code{Intervals}, closure on \code{-Inf} or
   \code{Inf} endpoints is set to match that of all the intervals with
   finite endpoints. For objects of class \code{Intervals_full},
-  non-finite endpoints are always open.
+  non-finite endpoints are left open (although in general, this package
+  does not make a distinction between closed and open infinite
+  endpoints). 
 }
 
