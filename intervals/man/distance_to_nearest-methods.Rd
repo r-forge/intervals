@@ -12,9 +12,9 @@
 }
 
 \usage{
-\S4method{distance_to_nearest}{numeric,Intervals_virtual}(from, to)
+\S4method{distance_to_nearest}{numeric,Intervals_virtual}(from, to, check_valid = TRUE)
 
-\S4method{distance_to_nearest}{Intervals_virtual,Intervals_virtual}(from, to)
+\S4method{distance_to_nearest}{Intervals_virtual,Intervals_virtual}(from, to, check_valid = TRUE)
 }
 
 \arguments{
@@ -23,6 +23,11 @@
 
   \item{to}{An object of appropriate type.}
   
+  \item{check_valid}{
+    Should \code{\link{validObject}} be called before passing to
+    compiled code? Also see \code{\link{interval_overlap}}.
+  }
+
 }
 
 \value{

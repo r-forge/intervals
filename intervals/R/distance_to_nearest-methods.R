@@ -1,12 +1,12 @@
-setGeneric( "distance_to_nearest", function( from, to ) standardGeneric( "distance_to_nearest" ) )
+setGeneric( "distance_to_nearest", function( from, to, ... ) standardGeneric( "distance_to_nearest" ) )
 
 setMethod(
           "distance_to_nearest",
           signature( "numeric", "Intervals_virtual" ),
-          function( from, to ) {
+          function( from, to, check_valid = TRUE ) {
             if ( nrow(to) == 0 ) return( rep( as.numeric( NA ), length( from ) ) )
             # Close, collapse and sort
-            to <- reduce( if ( type(to) == "Z" ) close_intervals(to) else to )
+            to <- reduce( if ( type(to) == "Z" ) close_intervals(to) else to, check_valid )
             # Create interpolating function
             n <- nrow(to)
             gap_x <- ( to[ -1, 1 ] + to[ -n, 2 ] ) / 2
@@ -36,12 +36,16 @@ setMethod(
 setMethod(
           "distance_to_nearest",
           signature( "Intervals_virtual", "Intervals_virtual" ),
-          function( from, to ) {
-            overlapped <- sapply( interval_overlap( to, from ), length ) > 0
+          function( from, to, check_valid = TRUE ) {
+            if ( check_valid ) {
+              validObject( from )
+              validObject( to )
+            }
+            overlapped <- sapply( interval_overlap( to, from, check_valid = FALSE ), length ) > 0
             if ( type(from) == "Z" ) from <- close_intervals(from)
             result <- pmin(
-                           distance_to_nearest( from[,1], to ),
-                           distance_to_nearest( from[,2], to )
+                           distance_to_nearest( from[,1], to, check_valid = FALSE ),
+                           distance_to_nearest( from[,2], to, check_valid = FALSE )
                            )
             result[ overlapped ] <- 0
             return( result )
