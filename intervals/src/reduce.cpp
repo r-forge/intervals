@@ -24,15 +24,14 @@ const int reduce_order[2][2][2] = {
 extern "C"
 {
 
-  SEXP _reduce(SEXP e, SEXP c, SEXP full, SEXP tol) {
+  SEXP _reduce(SEXP e, SEXP c, SEXP full) {
 
     // Load data and sort
     int n = nrows(e);
     bool full_bool = *LOGICAL(full); 
     Endpoints ep ( REAL(e), LOGICAL(c), n, false, full_bool );
 
-    // Set equality tolerance and sorting order, then sort
-    Endpoint::tol = *REAL(tol);
+    // Set sorting order, then sort
     Endpoint::set_state_array( reduce_order );
     sort( ep.begin(), ep.end() );
 

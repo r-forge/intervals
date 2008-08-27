@@ -3,15 +3,6 @@
 
 
 
-//////// Default tolerance for floating point equality 
-
-// This R all.equal default on my 32-bit Macbook.
-
-double Endpoint::tol = 1.490116e-08;
-
-
-
-
 //////// Ordering for tied endpoints
 
 /*

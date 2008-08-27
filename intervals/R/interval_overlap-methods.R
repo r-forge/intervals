@@ -6,7 +6,6 @@ setMethod(
           function(
                    query,
                    target,
-                   tolerance = .Machine$double.eps^0.5,
                    check_valid = TRUE
                    )
           {
@@ -26,8 +25,7 @@ setMethod(
                             "_interval_overlap",
                             query@.Data, target@.Data,
                             closed(query), closed(target),
-                            class(query) == "Intervals_full", class(target) == "Intervals_full",
-                            tolerance
+                            class(query) == "Intervals_full", class(target) == "Intervals_full"
                             )
             names( result ) <- rownames( target )
             return( result )

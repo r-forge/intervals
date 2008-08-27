@@ -1,6 +1,6 @@
 useDynLib( "intervals" )
 
-export( "rd_equal", "Intervals", "Intervals_full" )
+export( "Intervals", "Intervals_full" )
 
 exportClasses(
               "Intervals",
@@ -19,12 +19,15 @@ exportMethods(
               "close_intervals",
               "closed", "closed<-",
               "coerce",
+              "contract",
               "combine",
               "distance_to_nearest",
               "empty",
+              "expand",
               "head",
               "initialize",
               "interval_complement",
+              "interval_difference",
               "interval_intersection",
               "interval_overlap",
               "interval_union",

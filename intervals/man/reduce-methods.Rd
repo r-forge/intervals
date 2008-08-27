@@ -14,18 +14,12 @@
 }
 
 \usage{
-\S4method{reduce}{Intervals_virtual}(x, tolerance = .Machine$double.eps^0.5, check_valid = TRUE)
+\S4method{reduce}{Intervals_virtual}( x, check_valid = TRUE )
 }
 
 \arguments{
 
   \item{x}{ An \code{"Intervals"} or \code{"Intervals_full"} object.}
-  
-  \item{tolerance}{
-    Assessing overlap with floating point endpoints requires an
-    approximate definition of equality. See comments for the
-    \code{tolerance} argument of \code{\link{interval_overlap}}. 
-  }
   
   \item{check_valid}{
     Should \code{\link{validObject}} be called before passing to

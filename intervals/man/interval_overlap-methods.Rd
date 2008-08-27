@@ -11,11 +11,7 @@
 }
 
 \usage{
-\S4method{interval_overlap}{Intervals_virtual,Intervals_virtual}(
-                 query, target,
-                 tolerance = .Machine$double.eps^0.5,
-                 check_valid = TRUE
-                 )
+\S4method{interval_overlap}{Intervals_virtual,Intervals_virtual}(query, target, check_valid = TRUE)
 }
 
 \arguments{
@@ -28,17 +24,6 @@
     \code{query}. 
   }
   
-  \item{tolerance}{
-    Assessing overlap with floating point endpoints requires an
-    approximate definition of equality. In this function, we compare
-    relative difference (difference divided by maximum absolute value)
-    to \code{tolerance} to decide if two endpoints are in fact at the
-    same position. The default tolerance here is the same as is used in
-    \code{\link{all.equal.numeric}}, although
-    \code{\link{all.equal.numeric}} uses an \emph{asymmetic} relative
-    difference, with \code{target} in the denominator, not a maximum.
-  }
-
   \item{check_valid}{
     Should \code{\link{validObject}} be called before passing to
     compiled code? This, among other things, verifies that endpoints are
@@ -50,18 +35,12 @@
 }
 
 \details{
-  Intervals which meet at endpoints (up to a relative difference of
-  \code{tolerance}) overlap only if both endpoints are closed. Thus,
-  increasing \code{tolerance} will \emph{not} automatically cause nearby
-  intervals to overlap; it will, instead, affect which endpoints pairs
-  are deemed to coincide -- and which are then assessed on the basis of
-  closure rather than position.
-
-  Intervals in \code{query} with \code{NA} endpoints are ignored, with a
-  warning; in \code{target}, such interval produce no matches. Intervals
-  in either \code{query} or \code{target} which are actually empty have
-  their endpoints set to \code{NA} before proceeding, with
-  warning, and so do not generate matches.
+  Intervals which meet at endpoints overlap only if both endpoints are
+  closed. Intervals in \code{query} with \code{NA} endpoints are
+  ignored, with a warning; in \code{target}, such interval produce no
+  matches. Intervals in either \code{query} or \code{target} which are
+  actually empty have their endpoints set to \code{NA} before
+  proceeding, with warning, and so do not generate matches.
 }
 
 \value{
@@ -128,17 +107,4 @@ empty(v)
 size(v)
 
 interval_overlap( u, v )
-
-# Approximate endpoint equality: comparison by closure
-
-eps <- .0001
-
-x <- new("Intervals", c(0,1))
-y <- x + 1
-x <- combine(x, x - c(0,eps))
-
-interval_overlap( x, y )
-interval_overlap( x, y, tolerance = 2 * eps )
-closed(y)[1] <- FALSE
-interval_overlap( x, y, tolerance = 2 * eps )
 }

@@ -67,8 +67,10 @@
     \item{close_intervals}{\code{signature(x = "Intervals_virtual")}: ... }
     \item{closed}{\code{signature(x = "Intervals_virtual")}: ... }
     \item{coerce}{\code{signature(from = "Intervals_virtual", to = "character")}: ... }
+    \item{contract}{\code{signature(x = "Intervals_virtual")}: ... }
     \item{distance_to_nearest}{\code{signature(from = "numeric", to = "Intervals_virtual")}: ... }
     \item{distance_to_nearest}{\code{signature(from = "Intervals_virtual", to = "Intervals_virtual")}: ... }
+    \item{expand}{\code{signature(x = "Intervals_virtual")}: ... }
     \item{head}{\code{signature(x = "Intervals_virtual")}: ... }
     \item{initialize}{\code{signature(.Object = "Intervals_virtual")}: ... }
     \item{interval_complement}{\code{signature(x = "Intervals_virtual")}: ... }

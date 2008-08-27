@@ -13,32 +13,30 @@
 }
 
 \usage{
-\S4method{empty}{Intervals}(x, tolerance = .Machine$double.eps^0.5)
+\S4method{empty}{Intervals}(x)
 
-\S4method{empty}{Intervals_full}(x, tolerance = .Machine$double.eps^0.5)
+\S4method{empty}{Intervals_full}(x)
 }
 
 \arguments{
-  
   \item{x}{An \code{"Intervals"} or \code{"Intervals_full"} object.}
-
-    \item{tolerance}{
-    Assessing endpoint equality with floating point endpoints requires
-    an approximation. See \code{\link{rd_equal}} in this package.
-  }
-  
 }
 
 \details{
-  Intervals are deemed to be empty when their endpoints are equal (up to
-  a relative difference of \code{tolerance}) and not both closed, or for
-  \code{type = "Z"}, when their endpoints differ by 1 and both are
-  open. The matrices \code{x} and \code{x[!empty(x),]} represent the
-  same subset of the integers or the real line.
+  Intervals are deemed to be empty when their endpoints are equal and
+  not both closed, or for \code{type = "Z"}, when their endpoints differ
+  by 1 and both are open. The matrices \code{x} and \code{x[!empty(x),]}
+  represent the same subset of the integers or the real line.
 }
 
 \value{
   A boolean vector with length equal to \code{nrow(x)}.
+}
+
+\section{Warning}{
+  Exact equality (\code{==}) comparisons are used by \code{empty}. See
+  the package vignette for a discussion of equality and floating point
+  numbers.
 }
 
 \note{
@@ -74,15 +72,5 @@ closed(s1)[2,2] <- FALSE
 closed(s1)[3,] <- FALSE
 
 empty(s1)
-
-# Floating point and tolerance. With closed endpoints over R,
-# approximate equality of endpoints still does not imply an empty
-# interval.
-
-x <- new("Intervals", c( .99, 1 ), closed = FALSE)
-empty(x)
-empty(x, tolerance = .02)
-closed(x) <- TRUE
-empty(x, tolerance = .02)
 }
 

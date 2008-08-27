@@ -3,7 +3,7 @@ setGeneric( "reduce", def = function( x, ... ) standardGeneric( "reduce" ) )
 setMethod(
           "reduce",
           signature( "Intervals_virtual" ),
-          function( x, tolerance = .Machine$double.eps^0.5, check_valid = TRUE ) {
+          function( x, check_valid = TRUE ) {
             if ( check_valid ) validObject( x )
             has_na <- is.na( x[,1] ) | is.na( x[,2] )
             if ( any( has_na ) ) {
@@ -12,16 +12,14 @@ setMethod(
             }
             if ( any( empty( x ) ) )
               x <- x[ !empty(x), ]
-            # In order to collapse over abutting intervals
+            # In order to collapse over abutting intervals over Z
             if ( type(x) == "Z" ) x <- open_intervals( x )
             result <- .Call(
                             "_reduce",
                             x@.Data,
                             closed( x ),
-                            FALSE,
-                            tolerance
+                            is( x, "Intervals_full" )
                             )
-            result <- new( class(x), result[[1]], closed = result[[2]], type = type(x) )
-            return( result )
+            new( class(x), result[[1]], closed = result[[2]], type = type(x) )
           }
           )

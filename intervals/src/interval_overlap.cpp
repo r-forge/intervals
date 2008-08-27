@@ -30,7 +30,7 @@ const int overlap_order[2][2][2] = {
 extern "C"
 {
 
-  SEXP _interval_overlap(SEXP qe, SEXP te, SEXP qc, SEXP tc, SEXP q_full, SEXP t_full, SEXP tol) {
+  SEXP _interval_overlap(SEXP qe, SEXP te, SEXP qc, SEXP tc, SEXP q_full, SEXP t_full) {
     
     // Load data, combine
     int tn = nrows(te);
@@ -38,8 +38,7 @@ extern "C"
     Endpoints t ( REAL(te), LOGICAL(tc), tn, false, *LOGICAL(t_full) );
     q.insert( q.end(), t.begin(), t.end() );
 
-    // Set equality tolerance and sorting order, then sort
-    Endpoint::tol = *REAL(tol);
+    // Set sorting order, then sort
     Endpoint::set_state_array( overlap_order );
     sort(q.begin(), q.end());
 

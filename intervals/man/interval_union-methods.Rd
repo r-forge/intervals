@@ -14,9 +14,9 @@
 }
 
 \usage{
-\S4method{interval_union}{Intervals_virtual}(x, ..., tolerance = .Machine$double.eps^0.5, check_valid = TRUE)
+\S4method{interval_union}{Intervals_virtual}(x, ..., check_valid = TRUE)
 
-\S4method{interval_union}{missing}(x, ..., tolerance = .Machine$double.eps^0.5, check_valid = TRUE)
+\S4method{interval_union}{missing}(x, ..., check_valid = TRUE)
 }
 
 \arguments{
@@ -27,12 +27,6 @@
     Optionally, additional objects which can be combined with
     \code{x}. See \code{\link{combine}} for details on mixing different
     types of objects.
-  }
-  
-  \item{tolerance}{
-    Assessing overlap with floating point endpoints requires an
-    approximate definition of equality. See comments for the
-    \code{tolerance} argument of \code{\link{interval_overlap}}. 
   }
   
   \item{check_valid}{

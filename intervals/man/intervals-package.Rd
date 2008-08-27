@@ -23,6 +23,7 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{combine}}}{Combine different interval matrix objects}
     \item{\code{\link{distance_to_nearest}}}{Compute distance to nearest position in a set of intervals}
     \item{\code{\link{empty}}}{Identify empty interval rows}
+    \item{\code{\link{expand}}}{Expand or contract sets}
     \item{\code{\link{interval_complement}}}{Compute the complement of a set of intervals}
     \item{\code{\link{interval_intersection}}}{Compute the intersection of one or more sets of intervals}
     \item{\code{\link{interval_overlap}}}{Assess which query intervals overlap which targets}
