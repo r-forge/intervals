@@ -10,7 +10,7 @@
 }
 
 \usage{
-interval_difference(x, y, check_valid = TRUE)
+\S4method{interval_difference}{Intervals_virtual,Intervals_virtual}(x, y, check_valid = TRUE)
 }
 
 \arguments{  

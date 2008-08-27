@@ -10,7 +10,7 @@
 }
 
 \usage{
-interval_complement(x, check_valid = TRUE)
+\S4method{interval_complement}{Intervals_virtual}(x, check_valid = TRUE)
 }
 
 \arguments{  

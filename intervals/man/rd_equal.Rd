@@ -49,21 +49,20 @@ rd_equal(x, y, tolerance = .Machine$double.eps^0.5)
 eps <- 1e-5
 x <- 1:2
 y <- x + c( eps, 0 )
-rd_equal(x, y)
+intervals:::rd_equal(x, y)
 
 # The relative difference for all.equal() uses the average across the
 # target vector in the denominator, while rd_equal() computes the
 # denominator coordinate-wise:
 
-rd_equal(x, y, tolerance = eps)
+intervals:::rd_equal(x, y, tolerance = eps)
 all.equal(x, y, tolerance = eps)
 
 # Handling non-finite values
 
-rd_equal(
-         c( .8, .9, NA, Inf, -Inf ),
-         c(  1,  1,  1, Inf,  Inf ),
-         tol = .1
-         )
-
+intervals:::rd_equal(
+                     c( .8, .9, NA, Inf, -Inf ),
+                     c(  1,  1,  1, Inf,  Inf ),
+                     tol = .1
+                     )
 }
