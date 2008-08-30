@@ -63,8 +63,8 @@ close_intervals( contract( reduce( expand(x, 1) ), 1 ) )
 # depends on precision.
 
 delta <- .Machine$double.eps^0.5
-y1 <- Intervals( c( .5, 1 - delta / 2 ), type = "R" )
-y2 <- Intervals( c( .25, 1, .75, 2 ), type = "R" )
+y1 <- Intervals( c( .5, 1 - delta / 2 ) )
+y2 <- Intervals( c( .25, 1, .75, 2 ) )
 
 # Nominal 
 
