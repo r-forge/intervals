@@ -28,7 +28,6 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{interval_intersection}}}{Compute the intersection of one or more sets of intervals}
     \item{\code{\link{interval_overlap}}}{Assess which query intervals overlap which targets}
     \item{\code{\link{interval_union}}}{Compute the union of intervals in one or more interval matrices}
-    \item{\code{\link{rd_equal}}}{Test approximate equality using relative difference}
     \item{\code{\link{reduce}}}{Compactly re-represent the points in a set of intervals}
     \item{\code{\link{sgd}}}{Yeast gene model information}
     \item{\code{\link{size}}}{Compute interval sizes}
