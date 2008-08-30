@@ -1,10 +1,11 @@
+@
 \documentclass[a4paper]{article}
 
 \usepackage{Sweave, amssymb, amsmath}
 
-\title{Overview the \emph{intervals} package}
+\title{Overview of the \emph{intervals} package}
 \author{Richard Bourgon}
-\date{22 August 2008}
+\date{30 August 2008}
 
 % The is for R CMD check, which finds it in spite of the "%", and also for
 % automatic creation of links in the HTML documentation for the package:
@@ -17,13 +18,17 @@
 
 
 
+
 %%%%%%%% Setup
 
-% Size for figures
-\setkeys{Gin}{width=.6\textwidth}
+% Don't reform code
+\SweaveOpts{keep.source=TRUE}
 
-% Reduce characers per line in R output
-@ 
+% Size for figures
+\setkeys{Gin}{width=.75\textwidth}
+
+% Reduce characters per line in R output
+
 <<set_width, echo=FALSE>>=
 options( width = 80 )
 @ 
@@ -43,16 +48,12 @@ options( width = 80 )
 
 \section{Introduction}
 
-\subsection{Interval objects}
-
 The \emph{intervals} packages defines two S4 classes which represent subsets of
 either the integers ($\Z$) or the real number line ($\R$). An instance of either
 class consists of a two-column matrix of endpoints, plus additional slots
 describing endpoint closure and whether the intervals are to be thought of as
-being over $\Z$ or $\R$. Because the classes extend \texttt{matrix}, arithmetic
-does what is expected.
+being over $\Z$ or $\R$.
 
-@ 
 <<Intervals>>=
 library( intervals )
 x <- Intervals( 1:6 )
@@ -66,7 +67,6 @@ Objects of class \texttt{Intervals} represent intervals with common endpoint
 closure. More control over endpoints is permitted with the
 \texttt{Intervals\_full} class.
 
-@ 
 <<Intervals_full>>=
 y <- as( x, "Intervals_full" )
 closed(y)[2:3,1] <- FALSE
@@ -75,10 +75,11 @@ y
 
 The \texttt{size} method gives measure --- counting measure over $\Z$ or
 Lebesgue measure over $\R$ --- for each interval represented in an object. The
-\texttt{empty} method shows which intervals are in fact empty sets, which over
-$\R$ is not the same things as having size 0.
+\texttt{empty} method identifies intervals that are in fact empty sets, which over
+$\R$ is not the same thing as having size 0. (Valid objects must have each right
+endpoint no greater than the corresponding left endpoint. When one or both
+endpoints are open, however, valid intervals may be empty.)
 
-@ 
 <<size>>=
 size(x)
 empty(x)
@@ -87,11 +88,10 @@ empty(y)
 
 
 
-
-\subsection{Subsets of $\Z$ or $\R$}
+\section{Interpretation of objects}
 
 An \texttt{Intervals} or \texttt{Intervals\_full} object can be thought of in
-two different ways, each of which is useful in certain contexts:
+two different modes, each of which is useful in certain contexts:
 
 \begin{enumerate}
 
@@ -102,63 +102,198 @@ two different ways, each of which is useful in certain contexts:
 
 \end{enumerate}
 
-The \emph{intervals} package provides a number of basic tools for working in the
-first mode: \texttt{reduce}, \texttt{intervals\_union},
-\texttt{intervals\_complement}, and \texttt{intervals\_intersection}. Note that
-combining \texttt{x} and its complement below in order to compute a union
-require mixing endpoint closure types; coercion to \texttt{Intervals_full} is
-automatic. 
 
-@ 
-<<set_operations>>=
-z <- reduce( y )
-type(z) <- "Z"
-z
+
+
+\subsection{As a subset of $\Z$ or $\R$}
+
+The \emph{intervals} package provides a number of basic tools for working in the
+first mode, where an object represents a subset of $\Z$ or $\R$ but the rows of
+the endpoint matrix do not have any external identity. Basic tools include
+\texttt{reduce}, which returns a sorted minimal representation equivalent to the
+original, as well as \texttt{interval\_union}, \texttt{interval\_complement}, and
+\texttt{interval\_intersection}.
+
+<<set_operations1>>=
+reduce( y )
 interval_intersection( x, x + 2 )
 interval_complement( x )
+@
+
+Note that combining \texttt{x} and its complement in order to compute a union
+requires mixing endpoint closure types; coercion to \texttt{Intervals\_full} is
+automatic.
+ 
+<<set_operations2>>=
 interval_union( x, interval_complement( x ) )
 @
 
-The \texttt{distance_to_nearest} function also works in the first mode. In the
-example below, we also look at performance (on a 2 GHz Intel Core 2 Duo
-Macintosh) for large data sets.
+The \texttt{distance\_to\_nearest} function treats its \texttt{to} argument in
+the first mode, as just a subset of $\Z$ or $\R$; it treats its
+\texttt{from} argument, however, in the second mode, returning one distance for
+every row of the \texttt{from} object. In the example below, we also look at
+performance (on a 2 GHz Intel Core 2 Duo Macintosh) for large data sets. A
+histogram of \texttt{d} is given in Figure~\ref{fig:distance}.
 
-@ 
-<<distance>>=
-left <- runif( 1e6, 0, 1e8 )
-right <- left + rexp( 1e6, rate = 1/10 )
+<<distance, fig=FALSE>>=
+B <- 100000
+left <- runif( B, 0, 1e8 )
+right <- left + rexp( B, rate = 1/10 )
 v <- Intervals( cbind( left, right ) )
 head( v )
 mean( size( v ) )
 dim( reduce( v ) )
-system.time( hist( distance_to_nearest( sample( 1e8, 1e6 ), v ) ) )
-@ %def 
+system.time( d <- distance_to_nearest( sample( 1e8, B ), v ) )
+@ 
 
-% This example is creating problems with approximate equality. Figure out what I
-% want to do about this, and then continue the vignette from here.
+\begin{figure}[!f]
+  \centering
+<<distanceplot, fig=TRUE, echo=FALSE>>=
+hist( d, main = "Distance to nearest interval" )
+@
+  \caption{Histogram of distances from a random set of points to the nearest
+  point in \texttt{v}. There is also a \texttt{distance\_to\_nearest} method for
+  comparing two sets of intervals.}
+  \label{fig:distance}
+\end{figure}
 
 
 
 
-\subsection{Sets of intervals}
+\subsection{As a set of meaningful, possibly overlapping intervals}
 
-Rows of endpoints may be named, and names are propegated.
+In some applications, each row of an object's endpoint matrix has a meaningful
+identity, and particular points from $\Z$ or $\R$ may be found in more than one
+row. To support this mode, objects may be given row names, which are propagated
+through calculations when appropriate. The \texttt{combine} methods simply stack
+objects (like \texttt{rbind}), preserving row names and retaining redundancy, if
+any.
+
+The \texttt{interval\_overlap} method works in this mode. In the next example we
+use it to identify rows of \texttt{v} which are at least partially redundant,
+i.e., which intersect at least one other row of \texttt{v}. All rows overlap
+themselves, so we look for rows that overlap at least two rows:
+
+<<overlap>>=
+rownames(v) <- sprintf( "%06i", 1:nrow(v) )
+io <- interval_overlap( v, v )
+head( io, n = 3 )
+n <- sapply( io, length )
+sum( n > 1 )
+k <- which.max( n )
+io[ k ]
+v[ k, ]
+v[ io[[ k ]], ]
+@ 
+
+The \texttt{which\_nearest} method (v.\ 0.9.0, \emph{not yet implemented}) also
+respects row identity, returning a list with one vector of indices into the
+\texttt{to} object for each row of the \texttt{from} object.
+
+
+
+
+\section{Floating point and intervals over $\R$}
+
+When \texttt{type == "R"}, interval endpoints are not truly in $\R$, but rather,
+in the subset which can be represented by floating point arithmetic. (For the
+moment, this is also true when \texttt{type == "Z"}. See
+Section~\ref{sec:notes}.) This limits the endpoint values which can be
+represented; more importantly, if computations are performed on interval
+endpoints, it means that floating point error can affect whether or not
+endpoints coincide, whether intervals which meet at or near endpoints overlap
+one another, etc.
+
+In spite of this potentially serious limitation, it is still often convenient to
+work with intervals with non-integer endpoints, including data where adjacent
+intervals exactly meet at a non-integer endpoint. To address this, the
+\emph{intervals} package takes the following approach:
+
+\begin{itemize}
+
+  \item Floating point representations of interval endpoints are assumed to be
+  \emph{exactly equal} if and only if the user intends the real values
+  corresponding to these representations to be exactly equal.
+
+  \item For cases where floating point error and approximate equality are a
+  concern, tools are provided to permit distinguishing between ambiguous and
+  unambiguous intersection, union, etc. (Note that these tools are useful for
+  other task as well. See, for instance, example code in the documentation for
+  \texttt{expand}.)
+  
+\end{itemize}
+
+In the next example, \texttt{y1} does not literally overlap \texttt{y2[1,]},
+although R's \texttt{all.equal} function asserts that the gap between them is
+smaller than the default tolerance for equivalence up to floating point
+precision.
+
+<<expand1>>=
+delta <- .Machine[[ "double.eps" ]]^0.5
+y1 <- Intervals( c( .5, 1 - delta / 2 ) )
+y2 <- Intervals( c( .25, 1, .75, 2 ) )
+
+y1
+y2
+
+all.equal( y1[1,2], y2[2,1] )
+interval_intersection( y1, y2 )
+@
+
+The \texttt{expand} and \texttt{contract} methods, used with \texttt{type =
+"relative"}, permit consideration of the maximal and minimal interval sets which
+are consistent with the nominal endpoints --- from the point of view of endpoint
+relative difference. We compute two separate intersections which bound the
+nominal intersection:
+
+<<expand2>>=
+inner <- interval_intersection(
+                               contract( y1, delta, "relative" ),
+                               contract( y2, delta, "relative" )
+                               )
+
+outer <- interval_intersection(
+                               expand( y1, delta, "relative" ),
+                               expand( y2, delta, "relative" )
+                               )
+@
+
+Finally, we identify points which may or may not be in the intersection,
+depending on whether we make a conservative, literal, or anti-conservative
+interpretation of the nominal endpoints.
+
+<<expand3>>=
+interval_difference( outer, inner )
+@
 
 
 
 
 \section{Notes on implementation}
+\label{sec:notes}
 
 \begin{itemize}
 
-  \item For the moment (v.\ 0.8.1), interval endpoints are always stored using
-  R's \emph{numeric} data type. Using the \emph{integer} data type when
-  \texttt{type == "Z"} is possible --- and would eliminate issues with float
-  point and approximate equality as well as be more memory efficient. Use of R's
-  \texttt{Inf} and \texttt{-Inf}, however, is very convenient, but is not
-  possible with the \emph{integer} type. See the documentation for the
-  \emph{Intervals} class for more on this topic.
+  \item \emph{Endpoint representation.} For the moment (v.\ 0.9.0), interval
+  endpoints are always stored using R's \emph{numeric} data type. This is
+  because use of R's \texttt{Inf} and \texttt{-Inf} --- not possible with the
+  \emph{integer} type --- is very convenient when computing complements. This
+  will likely be fixed in the future. See the documentation for the
+  \texttt{Intervals} class for more on this topic.
 
+  \item \emph{Efficiency.} All computations are accomplished by treating
+  intervals as pairs of tagged endpoints, sorting these endpoints (along with
+  their tags), and then making a single pass through the results. Computational
+  complexity for set operations is therefore $O(n \log n)$, where input object
+  $i$ contains $n_i$ rows and $n = \sum_i n_i$. The same sorting approach is
+  also used for \texttt{interval\_overlap}, although if every interval in a
+  query object of $m$ rows overlaps every intervals in a target object of $n$
+  rows, generating output alone must of necessity be $O(mn)$.
+  
+  Sorted endpoint vectors are not retained in memory. If one wishes to query a
+  particular object over and over, repeated sorting would be inefficient; in
+  practice so far, however, such repeated querying has not been needed.
+  
 \end{itemize}
 
 
