@@ -55,20 +55,15 @@ Endpoints::Endpoints( const double * pos, const int * closed, int n, bool query,
     pointer, to either an array of booleans of the same size (if full = true)
     or an array of two booleans (if full = false). Note that R uses int, not
     bool, for logicals. Intervals with R numeric NA in either slot are
-    dropped, with a warning. 
+    dropped. 
   */
   int i;
-  bool na_warning = false;
   this->reserve( 2 * n );
   for ( i = 0; i < n; i++ ) {
-    if ( ISNA( pos[i] ) || ISNA( pos[i+n] ) ) {
-      na_warning = true; 
-      continue;
-    }
+    if ( ISNA( pos[i] ) || ISNA( pos[i+n] ) ) continue;
     this->push_back( Endpoint( i, pos[i], query, true, (bool) closed[ is_full ? i : 0 ] ) );
     this->push_back( Endpoint( i, pos[i+n], query, false, (bool) closed[ is_full ? i+n : 1 ] ) );
   }
-  if ( na_warning ) warning( "Some NA endpoints encountered." );
 }
 
 void Endpoints::R_print() const {
