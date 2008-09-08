@@ -64,12 +64,11 @@
 }
 
 \examples{
-x <- new(
-         "Intervals",
-         c( 1, 5, 10, 1, 6, 20 ),
-         closed = c( TRUE, FALSE ),
-         type = "Z"
-         )
+x <- Intervals(
+               c( 1, 5, 10, 1, 6, 20 ),
+               closed = c( TRUE, FALSE ),
+               type = "Z"
+               )
 
 # Empties are dropped
 close_intervals(x)

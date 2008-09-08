@@ -53,20 +53,18 @@ use_chr <- "chr01"
 data( sgd )
 sgd <- subset( sgd, chr == use_chr )
 
-orf <- new(
-           "Intervals",
-           subset( sgd, type == "ORF", c( "start", "stop" ) ),
-           type = "Z"
-           )
+orf <- Intervals(
+                 subset( sgd, type == "ORF", c( "start", "stop" ) ),
+                 type = "Z"
+                 )
 rownames( orf ) <- subset( sgd, type == "ORF" )$feature_name
 
 W <- subset( sgd, type == "ORF", "strand" ) == "W"
 
-promoters_W <- new(
-                   "Intervals",
-                   cbind( orf[W,1] - 500, orf[W,1] - 1 ),
-                   type = "Z"
-                   )
+promoters_W <- Intervals(
+                         cbind( orf[W,1] - 500, orf[W,1] - 1 ),
+                         type = "Z"
+                         )
 
 promoters_W <- interval_intersection(
                                      promoters_W,
@@ -80,11 +78,10 @@ hist( size( promoters_W ) )
 
 # All CDS entries are completely within their corresponding ORF entry.
 
-cds_W <- new(
-           "Intervals",
-           subset( sgd, type == "CDS" & strand == "W", c( "start", "stop" ) ),
-           type = "Z"
-           )
+cds_W <- Intervals(
+                 subset( sgd, type == "CDS" & strand == "W", c( "start", "stop" ) ),
+                 type = "Z"
+                 )
 rownames( cds_W ) <- NULL
 
 interval_intersection( cds_W, interval_complement( orf[W,] ) )

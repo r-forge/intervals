@@ -51,7 +51,7 @@
 }
 
 \examples{
-z1 <- new( "Intervals", cbind( 1, 1:3 ), type = "Z" )
+z1 <- Intervals( cbind( 1, 1:3 ), type = "Z" )
 z2 <- z1; closed(z2)[1] <- FALSE
 z3 <- z1; closed(z3) <- FALSE
 
@@ -67,7 +67,7 @@ empty(r1)
 empty(r2)
 empty(r3)
 
-s1 <- new( "Intervals_full", matrix( 1, 3, 2 ), type = "Z" )
+s1 <- Intervals_full( matrix( 1, 3, 2 ), type = "Z" )
 closed(s1)[2,2] <- FALSE
 closed(s1)[3,] <- FALSE
 

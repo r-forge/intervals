@@ -60,7 +60,7 @@ combine(x, y, ...)
 }
 
 \examples{
-f1 <- new( "Intervals", 1:2, type = "Z" )
+f1 <- Intervals( 1:2, type = "Z" )
 g1 <- open_intervals( f1 + 5 )
 
 # Combining Intervals objects over Z may require closure adjustment

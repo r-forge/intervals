@@ -135,7 +135,7 @@ setMethod(
 
 
 
-######## Convenience functions
+######## Constructor functions
 
 Intervals <- function( ... )
   new( "Intervals", ... )

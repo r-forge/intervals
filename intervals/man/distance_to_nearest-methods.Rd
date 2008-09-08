@@ -41,13 +41,13 @@
 \examples{
 # Point to iterval
 
-to <- new( "Intervals", c(0,5,3,Inf) )
+to <- Intervals( c(0,5,3,Inf) )
 from <- -5:10
 plot( from, distance_to_nearest( from, to ), type = "l" ) 
 segments( to[,1], 1, pmin(to[,2], par("usr")[2]), 1, col = "red" )
 
 # Interval to interval
 
-from <- new( "Intervals", c(-Inf,-Inf,3.5,-1,1,4) )
+from <- Intervals( c(-Inf,-Inf,3.5,-1,1,4) )
 distance_to_nearest( from, to )
 }

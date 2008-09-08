@@ -59,35 +59,33 @@
 \examples{
 # Note that t contains a valid but empty interval.
 
-q <- new(
-         "Intervals",
-         matrix(
-                c(
-                  2,  8,
-                  3,  4,
-                  5, 10
-                  ),
-                ncol = 2, byrow = TRUE
-                ),
-         closed = c( TRUE, FALSE ),
-         type = "Z"
-         )
+q <- Intervals(
+               matrix(
+                      c(
+                        2,  8,
+                        3,  4,
+                        5, 10
+                        ),
+                      ncol = 2, byrow = TRUE
+                      ),
+               closed = c( TRUE, FALSE ),
+               type = "Z"
+               )
 
-t <- new(
-         "Intervals",
-         matrix(
-                c(
-                   2,  8,
-                   8,  9,
-                   6,  9,
-                  11, 12,
-                   3,  3
-                  ),
-                ncol = 2, byrow = TRUE
-                ),
-         closed = c( TRUE, FALSE ),
-         type = "Z"
-         )
+t <- Intervals(
+               matrix(
+                      c(
+                         2,  8,
+                         8,  9,
+                         6,  9,
+                        11, 12,
+                         3,  3
+                        ),
+                      ncol = 2, byrow = TRUE
+                      ),
+               closed = c( TRUE, FALSE ),
+               type = "Z"
+               )
 rownames(t) <- letters[1:nrow(t)]
 
 empty(q)
@@ -100,7 +98,7 @@ interval_overlap(q, t)
 u <- q
 type(u) <- "R"
 
-v <- new("Intervals_full", rep(3,4))
+v <- Intervals_full( rep(3,4) )
 closed(v)[2,] <- FALSE
 v
 empty(v)

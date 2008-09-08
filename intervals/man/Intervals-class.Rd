@@ -34,8 +34,8 @@
 
 \section{Objects from the Class}{
     Objects can be created by calls of the form \code{new("Intervals",
-    ...)}, or by using the convenient functions \code{Intervals()} and
-    \code{Intervals_full()}. 
+    ...)}, or better, by using the constructor functions
+    \code{\link{Intervals()}} and \code{\link{Intervals_full()}}.
 }
 
 \section{Slots}{
@@ -160,20 +160,19 @@
 
 # The "Intervals" class
 
-i <- new(
-	 "Intervals",
-	 matrix(
-	 	c(1,2,  
-	 	  3,5,
-	 	  4,6,
-	 	  8,9
-	 	  ),
-	 	byrow = TRUE,
-                ncol = 2
-	 ),
-	 closed = c( TRUE, TRUE ),
-	 type = "Z"
-	 )
+i <- Intervals(
+               matrix(
+                      c(1,2,  
+                        3,5,
+                        4,6,
+                        8,9
+                        ),
+                      byrow = TRUE,
+                      ncol = 2
+               ),
+               closed = c( TRUE, TRUE ),
+               type = "Z"
+               )
 
 # Row subsetting preserves class. Column subsetting causes coercion to
 # "matrix" class. 
