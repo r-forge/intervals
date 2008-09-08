@@ -35,8 +35,8 @@
 \section{Objects from the Class}{
     Objects can be created by calls of the form \code{new("Intervals",
     \dots)}, or better, by using the constructor functions
-    \code{\link{Intervals(\dots)}} and
-    \code{\link{Intervals_full(\dots)}}.
+    \code{\link{Intervals}(\dots)} and
+    \code{\link{Intervals_full}(\dots)}.
 }
 
 \section{Slots}{
