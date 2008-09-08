@@ -4,8 +4,7 @@ export( "Intervals", "Intervals_full" )
 
 exportClasses(
               "Intervals",
-              "Intervals_full",
-              "Intervals_virtual" # Only for development, remove later
+              "Intervals_full"
               )
 
 importFrom( "utils", "head", "tail" )
