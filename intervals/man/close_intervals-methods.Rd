@@ -35,11 +35,11 @@
     "Z"}. If \code{x@type == "R"}, an error is generated.
   }
   
-  \item{close_left}{
+  \item{close\_left}{
     Should the left endpoints be closed or open?
   }
 
-  \item{close_right}{
+  \item{close\_right}{
     Should the right endpoints be closed or open?
   }
   

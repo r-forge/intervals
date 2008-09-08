@@ -24,7 +24,7 @@
     \code{query}. 
   }
   
-  \item{check_valid}{
+  \item{check\_valid}{
     Should \code{\link{validObject}} be called before passing to
     compiled code? This, among other things, verifies that endpoints are
     of data type \code{numeric} and the \code{closed} vector/matrix is

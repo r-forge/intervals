@@ -21,7 +21,7 @@
 
 
 
-\title{Classes "Intervals" and "Intervals_full"}
+\title{Classes "Intervals" and "Intervals\_full"}
 
 \description{
   \code{Intervals} objects are two-column matrices which represent
@@ -89,8 +89,8 @@
     
     \item{[}{\code{signature(x = "Intervals")}: ... }
     \item{[}{\code{signature(x = "Intervals_full")}: ... }
-    \item{adjust_closure}{\code{signature(x = "Intervals")}: ... }
-    \item{adjust_closure}{\code{signature(x = "Intervals_full")}: ... }
+    \item{adjust\_closure}{\code{signature(x = "Intervals")}: ... }
+    \item{adjust\_closure}{\code{signature(x = "Intervals_full")}: ... }
     \item{closed<-}{\code{signature(x = "Intervals")}: ... }
     \item{closed<-}{\code{signature(x = "Intervals_full")}: ... }
     \item{coerce}{\code{signature(from = "Intervals", to = "Intervals_full")}: ... }

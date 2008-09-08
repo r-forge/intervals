@@ -17,8 +17,8 @@ Tools for working with and comparing sets of points and intervals.
   
   Index:
   \describe{
-    \item{\code{\link{Intervals-class}}}{Classes "Intervals" and "Intervals_full"}
-    \item{\code{\link{Intervals_virtual-class}}}{Class "Intervals_virtual"}
+    \item{\code{\link{Intervals-class}}}{Classes "Intervals" and "Intervals\_full"}
+    \item{\code{\link{Intervals_virtual-class}}}{Class "Intervals\_virtual"}
     \item{\code{\link{close_intervals}}}{Re-represent integer intervals with open or closed endpoints}
     \item{\code{\link{combine}}}{Combine different interval matrix objects}
     \item{\code{\link{distance_to_nearest}}}{Compute distance to nearest position in a set of intervals}
