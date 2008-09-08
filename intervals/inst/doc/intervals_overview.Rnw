@@ -68,7 +68,7 @@ x
 Objects of class \texttt{Intervals} represent collections of intervals with
 common endpoint closure, e.g., all left-closed, right-open. More control over
 endpoints is permitted with the \texttt{Intervals\_full} class. (Both classes
-are derived from \texttt{Intevals\_virtual}, which is not intended for use by
+are derived from \texttt{Intervals\_virtual}, which is not intended for use by
 package users.)
 
 @ 
@@ -259,7 +259,7 @@ interval in a collection so that the relative difference between original and
 contracted endpoints is equal to tolerance \texttt{delta}. Thus, if a relative
 difference less than or equal to \texttt{delta} is our criterion for approximate
 floating point equality, the contract object has endpoints which are
-approxiamtely equal to those of the original --- even though the contract object
+approximately equal to those of the original --- even though the contract object
 is a proper subset of the original. The \texttt{expand} methods is similar, but
 generates a proper superset.
 
