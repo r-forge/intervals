@@ -1,11 +1,8 @@
 useDynLib( "intervals" )
 
-export( "Intervals", "Intervals_full" )
+export( "Intervals", "Intervals_full", "clusters" )
 
-exportClasses(
-              "Intervals",
-              "Intervals_full"
-              )
+exportClasses( "Intervals", "Intervals_full" )
 
 importFrom( "utils", "head", "tail" )
 
