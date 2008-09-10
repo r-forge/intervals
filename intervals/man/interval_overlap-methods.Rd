@@ -12,11 +12,18 @@
 
 \usage{
 \S4method{interval_overlap}{Intervals_virtual,Intervals_virtual}(query, target, check_valid = TRUE)
+
+\S4method{interval_overlap}{numeric,Intervals_virtual}(query, target, check_valid = TRUE)
 }
 
 \arguments{
   
-  \item{query}{An \code{"Intervals"} or \code{"Intervals_full"} object.}
+  \item{query}{
+    An \code{"Intervals"} or \code{"Intervals_full"}
+    object. If a numeric vector is supplied instead, the function checks
+    to see which \emph{points} are included in the intervals of
+    \code{target}.
+  }
 
   \item{target}{
     An \code{"Intervals"} or \code{"Intervals_full"} object. The
@@ -45,15 +52,16 @@
 
 \value{
   A list, with one element for each row of \code{target}. The elements
-  are vectors of indices, indicating which \code{query} rows overlap
-  each target. A list element of length 0 indicates a target with no
-  overlapping query intervals.
+  are vectors of indices, indicating which \code{query} rows (or query
+  components, for the \code{"numeric"} method) overlap each target. A
+  list element of length 0 indicates a target with no overlapping query
+  intervals.
 }
 
 \note{
   If you want real (\code{type = "R"}) intervals that overlap in a set
   of positive measure -- not just at endpoints -- set all endpoints to
-  open (\code{closed(query) <- FALSE}). 
+  open (i.e., \code{closed(query) <- FALSE}) first. 
 }
 
 \examples{
@@ -105,4 +113,8 @@ empty(v)
 size(v)
 
 interval_overlap( u, v )
+
+# Querying points
+
+interval_overlap( c( 2, 3, 6, NA ), t )
 }
