@@ -1,6 +1,6 @@
 \name{clusters}
-\
-alias{clusters}
+
+\alias{clusters}
 
 \title{Identify clusters in a vector of positions}
 

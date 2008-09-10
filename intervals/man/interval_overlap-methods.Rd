@@ -2,6 +2,7 @@
 
 \alias{interval_overlap}
 \alias{interval_overlap,Intervals_virtual,Intervals_virtual-method}
+\alias{interval_overlap,numeric,Intervals_virtual-method}
 
 \title{Assess which query intervals overlap which targets}
 
