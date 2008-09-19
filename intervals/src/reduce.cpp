@@ -1,6 +1,6 @@
 #include <R.h>
 #include <Rinternals.h>
-#include "Endpoint.hh"
+#include "Endpoint.h"
 #include <vector>
 #include <algorithm>
 
