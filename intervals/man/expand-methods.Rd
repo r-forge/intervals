@@ -17,9 +17,9 @@
 }
 
 \usage{
-\S4method{expand}{Intervals_virtual}(x, delta = 0, type = c("relative", "absolute"))
+\S4method{expand}{Intervals_virtual}(x, delta = 0, type = c("absolute", "relative"))
 
-\S4method{contract}{Intervals_virtual}(x, delta = 0, type = c("relative", "absolute"))
+\S4method{contract}{Intervals_virtual}(x, delta = 0, type = c("absolute", "relative"))
 }
 
 

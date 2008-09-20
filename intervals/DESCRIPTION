@@ -1,5 +1,5 @@
 Package: intervals
-Version: 0.9.4
+Version: 0.9.5
 Date: 2008-09-19
 Type: Package
 Title: Tools for working with points and intervals
@@ -9,5 +9,5 @@ Depends: R (>= 2.7.0), methods
 Suggests: 
 Description:
   Tools for working with and comparing sets of points and intervals.
-License: Artistic 2.0
+License: Artistic-2.0
 LazyLoad: yes
