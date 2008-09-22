@@ -258,9 +258,9 @@ relative difference. The \texttt{contract} method, for example, contracts each
 interval in a collection so that the relative difference between original and
 contracted endpoints is equal to tolerance \texttt{delta}. Thus, if a relative
 difference less than or equal to \texttt{delta} is our criterion for approximate
-floating point equality, the contract object has endpoints which are
-approximately equal to those of the original --- even though the contract object
-is a proper subset of the original. The \texttt{expand} methods is similar, but
+floating point equality, the contracted object has endpoints which are
+approximately equal to those of the original --- even though the contracted object
+is a proper subset of the original. The \texttt{expand} method is similar, but
 generates a proper superset.
 
 @

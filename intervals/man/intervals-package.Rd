@@ -41,6 +41,11 @@ Richard Bourgon <bourgon@ebi.ac.uk>
 
 \keyword{ package }
 
+\section{Acknowledgments}{
+  Thanks to Julien Gagneur, Simon Anders, and Wolfgang Huber for
+  numerous helpful suggestions about the package content and code.
+}
+
 \seealso{
   See
   \code{\link[genomeIntervals:genomeIntervals-package]{genomeIntervals}},
