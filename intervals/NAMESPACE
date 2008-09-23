@@ -1,6 +1,6 @@
 useDynLib( "intervals" )
 
-export( "Intervals", "Intervals_full", "clusters" )
+export( "Intervals", "Intervals_full" )
 
 exportClasses( "Intervals", "Intervals_full", "Intervals_virtual" )
 
@@ -14,6 +14,7 @@ exportMethods(
               "adjust_closure",
               "close_intervals",
               "closed", "closed<-",
+              "clusters",
               "coerce",
               "contract",
               "combine",
