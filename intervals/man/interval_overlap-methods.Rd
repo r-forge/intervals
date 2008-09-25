@@ -2,7 +2,7 @@
 
 \alias{interval_overlap}
 \alias{interval_overlap,Intervals_virtual,Intervals_virtual-method}
-\alias{interval_overlap,numeric,Intervals_virtual-method}
+\alias{interval_overlap,Intervals_virtual,numeric-method}
 
 \title{Assess which query intervals overlap which targets}
 
@@ -12,12 +12,18 @@
 }
 
 \usage{
-\S4method{interval_overlap}{Intervals_virtual,Intervals_virtual}(query, target, check_valid = TRUE)
+\S4method{interval_overlap}{Intervals_virtual,Intervals_virtual}(target, query, check_valid = TRUE)
 
-\S4method{interval_overlap}{numeric,Intervals_virtual}(query, target, check_valid = TRUE)
+\S4method{interval_overlap}{Intervals_virtual,numeric}(target, query, check_valid = TRUE)
 }
 
 \arguments{
+  
+  \item{target}{
+    An \code{"Intervals"} or \code{"Intervals_full"} object. The
+    \code{target} object must have the same \code{\link{type}} as
+    \code{query}, unless \code{query} is of type \code{"numeric"}. 
+  }
   
   \item{query}{
     An \code{"Intervals"} or \code{"Intervals_full"}
@@ -25,12 +31,6 @@
     to see which \emph{points} are included in the targets.
   }
 
-  \item{target}{
-    An \code{"Intervals"} or \code{"Intervals_full"} object. The
-    \code{target} object must have the same \code{\link{type}} as
-    \code{query}, unless \code{query} is of type \code{"numeric"}. 
-  }
-  
   \item{check\_valid}{
     Should \code{\link{validObject}} be called before passing to
     compiled code? This, among other things, verifies that endpoints are
@@ -102,7 +102,7 @@ rownames(t) <- letters[1:nrow(t)]
 empty(q)
 empty(t)
 
-interval_overlap(q, t)
+interval_overlap(t, q)
 
 # Non-empty real intevals of size 0 can overlap other intervals.
 
@@ -115,14 +115,14 @@ v
 empty(v)
 size(v)
 
-interval_overlap( u, v )
+interval_overlap(v, u)
 
 # Querying points
 
-interval_overlap( c( 2, 3, 6, NA ), t )
+interval_overlap( t, c( 2, 3, 6, NA ) )
 
 # Non-integer points dropped for targets over Z
 
-interval_overlap( c( 2, 2.5, 3 ), q )
-interval_overlap( c( 2, 2.5, 3 ), u )
+interval_overlap( q, c( 2, 2.5, 3 ) )
+interval_overlap( u, c( 2, 2.5, 3 ) )
 }

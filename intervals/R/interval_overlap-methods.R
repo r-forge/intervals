@@ -1,9 +1,9 @@
-setGeneric( "interval_overlap", def = function( query, target, ... ) standardGeneric( "interval_overlap" ) )
+setGeneric( "interval_overlap", def = function( target, query, ... ) standardGeneric( "interval_overlap" ) )
 
 setMethod(
           "interval_overlap",
           signature( "Intervals_virtual", "Intervals_virtual" ),
-          function( query, target, check_valid = TRUE ) {
+          function( target, query, check_valid = TRUE ) {
             if ( check_valid && !( validObject(query) && validObject(target) ) )
               stop( "The 'query' and/or 'target' objects are invalid." )
             if ( type(query) != type(target) )
@@ -29,8 +29,8 @@ setMethod(
 
 setMethod(
           "interval_overlap",
-          signature( "numeric", "Intervals_virtual" ),
-          function( query, target, check_valid = TRUE ) {
+          signature( "Intervals_virtual", "numeric" ),
+          function( target, query, check_valid = TRUE ) {
             if ( check_valid && !validObject(target) )
               stop( "The 'target' object is invalid." )
             if ( any( empty( target ), na.rm = TRUE ) ) {

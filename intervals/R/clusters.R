@@ -6,7 +6,7 @@ setMethod(
           function( x, w, which = FALSE ) {
             if ( is.integer(x) ) x <- as.numeric(x)
             regions <- reduce( Intervals( cbind( x, x + w ), type = "R" ) )
-            clusters <- interval_overlap( x, regions )
+            clusters <- interval_overlap( regions, x )
             clusters <- clusters[ sapply( clusters, length ) > 1 ]
             if ( which ) return( clusters )
             else return( lapply( clusters, function(i) x[i] ) )
@@ -25,7 +25,7 @@ setMethod(
                                   cbind( x[,1], x[,2] + w ), closed = closed(x), type = type(x)
                                   )
                               )
-            clusters <- interval_overlap( x, regions )
+            clusters <- interval_overlap( regions, x )
             clusters <- clusters[ sapply( clusters, length ) > 1 ]
             if ( which ) return( clusters )
             else return( lapply( clusters, function(i) x[i,] ) )

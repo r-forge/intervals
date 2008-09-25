@@ -41,7 +41,7 @@ setMethod(
               validObject( from )
               validObject( to )
             }
-            overlapped <- sapply( interval_overlap( to, from, check_valid = FALSE ), length ) > 0
+            overlapped <- sapply( interval_overlap( from, to, check_valid = FALSE ), length ) > 0
             if ( type(from) == "Z" ) from <- close_intervals(from)
             result <- pmin(
                            distance_to_nearest( from[,1], to, check_valid = FALSE ),
