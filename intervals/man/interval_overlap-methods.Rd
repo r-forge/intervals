@@ -7,8 +7,8 @@
 \title{Assess which query intervals overlap which targets}
 
 \description{
-  Given two objects, a query and a target, assess which query intervals
-  overlap which targets.
+  Given two objects, a set of query intervals and a set of
+  targets, assess which query intervals, if any, overlap each target.
 }
 
 \usage{
@@ -22,14 +22,13 @@
   \item{query}{
     An \code{"Intervals"} or \code{"Intervals_full"}
     object. If a numeric vector is supplied instead, the function checks
-    to see which \emph{points} are included in the intervals of
-    \code{target}.
+    to see which \emph{points} are included in the targets.
   }
 
   \item{target}{
     An \code{"Intervals"} or \code{"Intervals_full"} object. The
     \code{target} object must have the same \code{\link{type}} as
-    \code{query}. 
+    \code{query}, unless \code{query} is of type \code{"numeric"}. 
   }
   
   \item{check\_valid}{
@@ -45,10 +44,13 @@
 \details{
   Intervals which meet at endpoints overlap only if both endpoints are
   closed. Intervals in \code{query} with \code{NA} endpoints are
-  ignored, with a warning; in \code{target}, such interval produce no
+  ignored, with a warning; in \code{target}, such intervals produce no
   matches. Intervals in either \code{query} or \code{target} which are
   actually empty have their endpoints set to \code{NA} before
-  proceeding, with warning, and so do not generate matches.
+  proceeding, with warning, and so do not generate matches. If
+  \code{query} is of type \code{"numeric"} and \code{type(target)} is
+  \code{"Z"}, then non-integer entries of \code{query} will be set to
+  \code{NA}, with warning.
 }
 
 \value{
@@ -56,7 +58,7 @@
   are vectors of indices, indicating which \code{query} rows (or query
   components, for the \code{"numeric"} method) overlap each target. A
   list element of length 0 indicates a target with no overlapping query
-  intervals.
+  elements.
 }
 
 \note{
@@ -118,4 +120,9 @@ interval_overlap( u, v )
 # Querying points
 
 interval_overlap( c( 2, 3, 6, NA ), t )
+
+# Non-integer points dropped for targets over Z
+
+interval_overlap( c( 2, 2.5, 3 ), q )
+interval_overlap( c( 2, 2.5, 3 ), u )
 }

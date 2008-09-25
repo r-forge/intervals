@@ -36,6 +36,13 @@ setMethod(
             if ( any( empty( target ), na.rm = TRUE ) ) {
               warning( "Some empty target intervals encountered. Setting to NA...", call. = FALSE )
               target[ empty(target), ] <- NA
+            }            
+            if ( type( target ) == "Z" ) {
+              non_int <- ( query %% 1 != 0 )
+              if ( any( non_int, na.rm = TRUE ) ) {
+                warning( "The 'target' object is of type 'Z'. Setting non-integer values in 'query' to NA.", call. = FALSE )
+                query[ non_int ] <- NA
+              }
             }
             result <- .Call(
                             "_interval_overlap",
