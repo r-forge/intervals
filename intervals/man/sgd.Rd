@@ -4,7 +4,7 @@
 
 \docType{data}
 
-\title{Yeast gene model information}
+\title{Yeast gene model sample data}
 
 \description{
   This data set contains a data frame describing a subset of
