@@ -45,6 +45,13 @@ options( width = 80 )
 
 
 
+%%%%%%%% TOC
+
+\tableofcontents
+
+\vspace{.25in}
+
+
 %%%%%%%% Main text
 
 \section{Introduction}
@@ -211,7 +218,7 @@ respects row identity, returning a list with one vector of indices into the
 When \texttt{type == "R"}, interval endpoints are not truly in $\R$, but rather,
 in the subset which can be represented by floating point arithmetic. (For the
 moment, this is also true when \texttt{type == "Z"}. See
-Section~\ref{sec:notes}.) This limits the endpoint values which can be
+Section~\ref{sec:representation}.) This limits the endpoint values which can be
 represented; more importantly, if computations are performed on interval
 endpoints, it means that floating point error can affect whether or not
 endpoints coincide, whether intervals which meet at or near endpoints overlap
@@ -308,17 +315,16 @@ close_intervals( contract( reduce( expand(x, w/2) ), w/2 ) )
 
 
 \section{Notes on implementation}
-\label{sec:notes}
 
-\begin{itemize}
-
-  \item \emph{Endpoint representation.} For the moment, interval endpoints are
-    always stored using R's \emph{numeric} data type. Although this is wasteful
-    from an memory and speed point of view, we do it for two reasons. First, use
-    of R's \texttt{Inf} and \texttt{-Inf} --- not possible with the
-    \emph{integer} type --- is very convenient when computing
-    complements. Second, the range of integers which can be represented using
-    the \emph{numeric} data type is considerably greater:
+\subsection{Endpoint representation} 
+\label{sec:representation}
+  
+For the moment, interval endpoints are always stored using R's \emph{numeric}
+data type. Although this is wasteful from an memory and speed point of view,
+we do it for two reasons. First, use of R's \texttt{Inf} and \texttt{-Inf} ---
+not possible with the \emph{integer} type --- is very convenient when
+computing complements. Second, the range of integers which can be represented
+using the \emph{numeric} data type is considerably greater:
 
 @ 
 <<integer_range>>=
@@ -328,21 +334,56 @@ options( digits = ceiling( log10( numeric_max ) ) )
 numeric_max
 @
 
-  \item \emph{Efficiency.} All computations are accomplished by treating
-    intervals as pairs of tagged endpoints, sorting these endpoints (along with
-    their tags), and then making a single pass through the
-    results. Computational complexity for set operations is therefore $O(n \log
-    n)$, where input object $i$ contains $n_i$ rows and $n = \sum_i n_i$. The
-    same sorting approach is also used for \texttt{interval\_overlap}, although
-    if every interval in a query object of $m$ rows overlaps every intervals in
-    a target object of $n$ rows, generating output alone must of necessity be
-    $O(mn)$.
+
+
+
+\subsection{Efficiency} 
   
-    Sorted endpoint vectors are not retained in memory. If one wishes to query a
-    particular object over and over, repeated sorting would be inefficient; in
-    practice so far, however, such repeated querying has not been needed.
+All computations are accomplished by treating intervals as pairs of tagged
+endpoints, sorting these endpoints (along with their tags), and then making a
+single pass through the results. Computational complexity for set operations is
+therefore $O(n \log n)$, where input object $i$ contains $n_i$ rows and $n =
+\sum_i n_i$. The same sorting approach is also used for
+\texttt{interval\_overlap}, although if every interval in a query object of $m$
+rows overlaps every intervals in a target object of $n$ rows, generating output
+alone must of necessity be $O(mn)$.
   
-\end{itemize}
+Sorted endpoint vectors are not retained in memory. If one wishes to query a
+particular object over and over, repeated sorting would be inefficient; in
+practice so far, however, such repeated querying has not been needed.
+
+
+
+
+\subsection{Checking validity}
+
+The code behind \texttt{interval\_overlap} and \texttt{reduce} (key methods in
+the \emph{intervals} package, which may be directly called by the user and are
+also used internally in numerous locations) is written in C++ for
+efficiency. The compiled code makes a number of assumptions about the
+\texttt{SEXP} objects passed in as arguments, but does not explicitly check
+these assumptions. Nonetheless, when the R wrappers for the compiled code are
+applied to \emph{valid} objects from the \texttt{Intervals} or
+\texttt{Intervals\_full} classes, all assumptions will always be met. This
+design decision was taken so that the requirements for individual objects and
+their contents could be gathered together in a single, natural location: the
+classes' \texttt{validity} functions.
+
+The \emph{intervals} package provides replacement methods --- e.g.,
+\texttt{type} and \texttt{closed} --- which implement error checking and
+preserve object validity. R's implementation of S4 classes, however, leaves
+object data slots exposed to the user. As a consequence, a user can directly
+manipulate the data slots of a valid \texttt{Intervals} or
+\texttt{Intervals\_full} object in a way that invalidates the object, but does
+not generate any warning or error.
+
+To prevent invalid objects from being passed to compiled code --- and
+potentially generating segmentation faults or other problems --- all wrapper
+code in this package includes a \texttt{check\_valid} argument. This argument is
+set to \texttt{TRUE} by default, so that \texttt{validObject} is called on
+relevant objects before handing them off to the compiled code. For efficiency,
+users may choose to override this extra check if they are certain they have not
+manually assigned inappropriate content to objects' data slots.
 
 
 
