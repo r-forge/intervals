@@ -14,9 +14,9 @@
 }
 
 \usage{
-\S4method{clusters}{numeric}(x, w, which = FALSE)
+\S4method{clusters}{numeric}(x, w, which = FALSE, check_valid = TRUE)
 
-\S4method{clusters}{Intervals_virtual}(x, w, which = FALSE)
+\S4method{clusters}{Intervals_virtual}(x, w, which = FALSE, check_valid = TRUE)
 }
 
 \arguments{
@@ -31,6 +31,12 @@
   \item{which}{
     Should indices into the \code{x} object be returned instead of
     actual subsets?
+  }
+
+  \item{check_valid}{
+    Should \code{\link{validObject}} be called before passing to
+    compiled code? Also see \code{\link{interval_overlap}} and
+    \code{\link{reduce}}.
   }
   
 }

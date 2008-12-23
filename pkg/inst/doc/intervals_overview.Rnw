@@ -3,6 +3,18 @@
 
 \usepackage{Sweave, amssymb, amsmath}
 
+\usepackage[
+pdftex,
+pdfpagelabels,
+plainpages=false,
+pdfborder={0 0 0},
+pdfstartview=FitH,
+bookmarks=true,
+bookmarksnumbered=true,
+bookmarksopen=true
+]
+{hyperref}
+
 \title{Overview of the \emph{intervals} package}
 \author{Richard Bourgon}
 \date{08 September 2008}
@@ -206,9 +218,25 @@ v[ k, ]
 v[ io[[ k ]], ]
 @ 
 
-The \texttt{which\_nearest} method (v.\ 0.9.0, \emph{not yet implemented}) also
+The \texttt{which\_nearest} method (v.\ 0.9.10, \emph{not yet implemented}) also
 respects row identity, returning a list with one vector of indices into the
 \texttt{to} object for each row of the \texttt{from} object.
+
+Another function which operates in this mode is \texttt{clusters}, which takes a
+set of points or intervals and identifies maximal groups which cluster together
+--- which are separated from one another by no more than a user-specified
+threshold. The following code is taken from the \texttt{clusters} documentation:
+
+@ 
+<<clusters>>=
+B <- 100
+left <- runif( B, 0, 1e4 )
+right <- left + rexp( B, rate = 1/10 )
+y <- reduce( Intervals( cbind( left, right ) ) )
+w <- 100
+c2 <- clusters( y, w )
+c2[1:3]
+@
 
 
 
