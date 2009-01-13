@@ -4,7 +4,7 @@ setMethod(
           "interval_union",
           signature( "Intervals_virtual" ),
           function( x, ..., check_valid = TRUE ) {
-            reduce( combine( x, ... ), check_valid )
+            reduce( c( x, ... ), check_valid )
           }
           )
 

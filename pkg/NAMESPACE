@@ -2,6 +2,9 @@ useDynLib( "intervals" )
 
 export( "Intervals", "Intervals_full" )
 
+S3method( c, Intervals )
+S3method( c, Intervals_full )
+
 exportClasses( "Intervals", "Intervals_full", "Intervals_virtual" )
 
 importFrom( "utils", "head", "tail" )
@@ -17,7 +20,6 @@ exportMethods(
               "clusters",
               "coerce",
               "contract",
-              "combine",
               "distance_to_nearest",
               "empty",
               "expand",

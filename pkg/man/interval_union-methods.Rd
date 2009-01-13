@@ -25,8 +25,8 @@
   
   \item{\dots}{
     Optionally, additional objects which can be combined with
-    \code{x}. See \code{\link{combine}} for details on mixing different
-    types of objects.
+    \code{x}. See \code{\link{c.Intervals}} for details on mixing
+    different types of objects.
   }
   
   \item{check\_valid}{
@@ -37,10 +37,10 @@
 }
 
 \details{
-  All supplied objects are combined using \code{\link{combine}} and then
-  then passed to \code{\link{reduce}}. The \code{missing} method is only
-  to permit use of \code{\link{do.call}} with named list, since no named
-  element will typically match \code{x}.
+  All supplied objects are combined using \code{\link[=c.Intervals]{c}}
+  and then then passed to \code{\link{reduce}}. The \code{missing}
+  method is only to permit use of \code{\link{do.call}} with named list,
+  since no named element will typically match \code{x}.
 }
 
 \value{

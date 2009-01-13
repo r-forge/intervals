@@ -65,7 +65,7 @@
 
 \section{Extends}{
   
-  Class \code{Intervals_virtual}, directly.
+  Class \code{\linkS4class{Intervals_virtual}}, directly.
 
   Class \code{\linkS4class{matrix}}, by class
   \code{Intervals_virtual}, distance 2.
@@ -81,29 +81,39 @@
   
 }
 
-\section{Methods}{
+\seealso{
+  See \code{\linkS4class{Intervals_virtual}}.
+}
+
+\section{S3 methods}{
+  
+  As of R 2.8.1, it still does not seem possible to write S4 methods for
+  \code{rbind} or \code{c}. To concatenate sets of intervals into a
+  single sets, the S3 methods \code{c.Intervals} and
+  \code{c.Intervals_full} are provided. While \code{rbind} might seem
+  more natural, its S3 dispatch is non-standard and it could not be
+  used. Both methods are documented separately.
+  
+}
+
+\section{S4 methods}{
   
   \describe{
     
-    % (4 August 2008) These all need to be duplicated for the
-    % Intervals_full class as well, except for coerce.
-    
-    \item{[}{\code{signature(x = "Intervals")}: ... }
-    \item{[}{\code{signature(x = "Intervals_full")}: ... }
-    \item{adjust\_closure}{\code{signature(x = "Intervals")}: ... }
-    \item{adjust\_closure}{\code{signature(x = "Intervals_full")}: ... }
-    \item{closed<-}{\code{signature(x = "Intervals")}: ... }
-    \item{closed<-}{\code{signature(x = "Intervals_full")}: ... }
-    \item{coerce}{\code{signature(from = "Intervals", to = "Intervals_full")}: ... }
-    \item{coerce}{\code{signature(from = "Intervals_full", to = "Intervals")}: ... }
-    \item{combine}{\code{signature(x = "Intervals")}: ... }
-    \item{combine}{\code{signature(x = "Intervals_full")}: ... }
-    \item{empty}{\code{signature(x = "Intervals")}: ... }
-    \item{empty}{\code{signature(x = "Intervals_full")}: ... }
-    \item{initialize}{\code{signature(.Object = "Intervals")}: ... }
-    \item{initialize}{\code{signature(.Object = "Intervals_full")}: ... }
-    \item{size}{\code{signature(x = "Intervals")}: ... }
-    \item{size}{\code{signature(x = "Intervals_full")}: ... }
+    \item{[}{\code{signature(x = "Intervals")} }
+    \item{[}{\code{signature(x = "Intervals_full")} }
+    \item{adjust\_closure}{\code{signature(x = "Intervals")} }
+    \item{adjust\_closure}{\code{signature(x = "Intervals_full")} }
+    \item{closed<-}{\code{signature(x = "Intervals")} }
+    \item{closed<-}{\code{signature(x = "Intervals_full")} }
+    \item{coerce}{\code{signature(from = "Intervals", to = "Intervals_full")} }
+    \item{coerce}{\code{signature(from = "Intervals_full", to = "Intervals")} }
+    \item{empty}{\code{signature(x = "Intervals")} }
+    \item{empty}{\code{signature(x = "Intervals_full")} }
+    \item{initialize}{\code{signature(.Object = "Intervals")} }
+    \item{initialize}{\code{signature(.Object = "Intervals_full")} }
+    \item{size}{\code{signature(x = "Intervals")} }
+    \item{size}{\code{signature(x = "Intervals_full")} }
 
     % \item{\code{[}:}{
     %   When used to subset rows, class is preserved; when used to subset
