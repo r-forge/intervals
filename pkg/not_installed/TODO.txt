@@ -126,4 +126,8 @@
         in subsets of R which aren't really intended, but may have arisen from
         round errors elsewhere. I.e., take an intervals object and brush it up
         so that any gaps of size <= tol, or a relative difference (with respect
-        to gap endpoints) <= tol, are removed. After that, procede as in case 1.	 
+        to gap endpoints) <= tol, are removed. After that, procede as in case 1.
+
+- (13 January 2009)
+
+  - Write/activate as.matrix for my objects.
