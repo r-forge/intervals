@@ -5,13 +5,14 @@ setMethod(
           signature( "numeric", "Intervals_virtual" ),
           function( from, to, check_valid = TRUE ) {
             if ( nrow(to) == 0 ) return( rep( as.numeric( NA ), length( from ) ) )
-            # Close, collapse and sort
-            to <- reduce( if ( type(to) == "Z" ) close_intervals(to) else to, check_valid )
+            # Collapse and sort, and close for Z.
+            to <- reduce( to, check_valid )
+            if ( type(to) == "Z" ) to <- close_intervals( to )
             # Create interpolating function
             n <- nrow(to)
             gap_x <- ( to[ -1, 1 ] + to[ -n, 2 ] ) / 2
             gap_y <- ( to[ -1, 1 ] - to[ -n, 2 ] ) / 2
-            x <- c( to, gap_x )
+            x <- c( as.vector( to ), gap_x )
             y <- c( rep( 0, n*2 ), gap_y )
             use <- !duplicated( x ) & is.finite( x )
             # Note that approxfun requires at least two distinct x values. We
