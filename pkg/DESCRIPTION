@@ -1,6 +1,6 @@
 Package: intervals
-Version: 0.10.1
-Date: 2009-01-14
+Version: 0.10.2
+Date: 2009-01-15
 Type: Package
 Title: Tools for working with points and intervals
 Author: Richard Bourgon <bourgon@ebi.ac.uk>

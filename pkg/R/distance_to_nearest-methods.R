@@ -4,12 +4,13 @@ setMethod(
           "distance_to_nearest",
           signature( "numeric", "Intervals_virtual" ),
           function( from, to, check_valid = TRUE ) {
-            if ( nrow(to) == 0 ) return( rep( as.numeric( NA ), length( from ) ) )
             # Collapse and sort, and close for Z.
             to <- reduce( to, check_valid )
             if ( type(to) == "Z" ) to <- close_intervals( to )
+            if ( nrow(to) == 0 ) return( rep( as.numeric( NA ), length( from ) ) )
             # Create interpolating function
             n <- nrow(to)
+            # gap_x is a vector of gap midpoints
             gap_x <- ( to[ -1, 1 ] + to[ -n, 2 ] ) / 2
             gap_y <- ( to[ -1, 1 ] - to[ -n, 2 ] ) / 2
             x <- c( as.vector( to ), gap_x )
@@ -22,7 +23,7 @@ setMethod(
             if( sum( use ) > 1 )
               f <- approxfun( x[ use ], y[ use ], rule = 2 )
             else
-              f <- function(x) 0
+              f <- function(x) rep( 0, length(x) )
             # Compute results
             below <- from < to[1,1]
             above <- from > to[n,2]

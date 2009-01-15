@@ -131,3 +131,6 @@
 - (13 January 2009)
 
   - Write/activate as.matrix for my objects.
+
+  - For test harness, make sure NULL and empty Intervals/Intervals_full objects
+    are handled gracefully in places where they could conceivably be used.
