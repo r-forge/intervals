@@ -91,9 +91,9 @@
   
   As of R 2.8.1, it still does not seem possible to write S4 methods for
   \code{rbind} or \code{c}. To concatenate sets of intervals into a
-  single sets, the S3 methods \code{c.Intervals} and
-  \code{c.Intervals_full} are provided. While \code{rbind} might seem
-  more natural, its S3 dispatch is non-standard and it could not be
+  single sets, the S3 methods \code{\link{c.Intervals}} and
+  \code{\link{c.Intervals_full}} are provided. While \code{rbind} might
+  seem more natural, its S3 dispatch is non-standard and it could not be
   used. Both methods are documented separately.
   
 }
@@ -201,7 +201,6 @@ i[,1:2]
 j <- as( i, "Intervals_full" )
 closed(j)[ 3:4, 2 ] <- FALSE
 closed(j)[ 4, 1 ] <- FALSE
-
 j
 
 # Rownames may be used
@@ -212,7 +211,6 @@ j
 # Assignment preserves class, coercing if necessary
 
 j[2:3] <- i[1:2,]
-
 j
 
 }

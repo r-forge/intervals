@@ -21,6 +21,7 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{Intervals_virtual-class}}}{Class \code{"Intervals_virtual"}.}
     \item{\code{\link[=c.Intervals]{c}}}{Concatenate different sets of intervals.}
     \item{\code{\link{close_intervals}}}{Re-represent integer intervals with open or closed endpoints.}
+    \item{\code{\link{closed}}}{Accessor for \code{closed} slot: closure vector/matrix.}
     \item{\code{\link{clusters}}}{Identify clusters in a collection of positions or intervals.}
     \item{\code{\link{contract}}}{Contract sets.}
     \item{\code{\link{distance_to_nearest}}}{Compute distance to nearest position in a set of intervals.}
@@ -31,9 +32,11 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{interval_intersection}}}{Compute the intersection of one or more sets of intervals.}
     \item{\code{\link{interval_overlap}}}{Assess which query intervals overlap which targets.}
     \item{\code{\link{interval_union}}}{Compute the union of intervals in one or more interval matrices.}
+    \item{\code{\link{is.na}}}{Identify interval rows with \code{NA} endpoints.}
     \item{\code{\link{reduce}}}{Compactly re-represent the points in a set of intervals.}
     \item{\code{\link{sgd}}}{Yeast gene model sample data.}
     \item{\code{\link{size}}}{Compute interval sizes.}
+    \item{\code{\link{type}}}{Accessor for \code{type} slot: Z or R.}
   }
   
   Further information is available in the following vignettes:
