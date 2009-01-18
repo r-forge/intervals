@@ -168,6 +168,58 @@ setMethod(
           }
           )
 
+# Note: row name handling for matices is completely inadequate for our purposes
+# here. Lots of obviously desirable behavior (like setting rownames(x)[i] when x
+# doesn't yet have rownames) tends to produce errors.
+
+setMethod(
+          "[<-",
+          signature( x = "Intervals", i = "ANY", j = "missing", value = "Intervals_virtual" ),
+          function( x, i, j, value ) {
+            #### Error checking
+            if ( type(x) != type(value) )
+              stop( "Types do not match (Z vs. R)." )
+            if ( is.character(i) ) i <- match( i, rownames( x ) )
+            if ( any( is.na( i ) ) )
+              stop( "Cannot assign to NA indices or row names which do not exist." )
+            n <- length( (1:nrow(x))[i] )
+            if ( n != nrow( value ) )
+              stop( "Replacement object is of the wrong size." )
+            #### Coerce up?
+            coerce_x <- FALSE
+            if ( is( value, "Intervals_full" ) ) coerce_x <- TRUE
+            else {
+              matches <- all( closed(x) == closed(value) )
+              if ( !matches ) {
+                if ( type(x) == "Z" ) value <- adjust_closure( value, closed(x)[1], closed(x)[2] )
+                else coerce_x <- TRUE
+              }
+            }
+            if ( coerce_x ) {
+              warning( "Coercion to 'Intervals_full' required.", call. = FALSE )
+              x <- as( x, "Intervals_full" )
+              x[ i, ] <- value
+              return(x)
+            }            
+            #### Data
+            x@.Data[i,] <- value@.Data
+            #### Rownames
+            has_names_x <- !is.null( rownames(x) )
+            has_names_value <- !is.null( rownames(value) )
+            if ( has_names_x ) {
+              if ( has_names_value ) rownames(x)[i] <- rownames(value)
+              else rownames(x)[i] <- ""
+            }
+            else {
+              if ( has_names_value ) {
+                rownames(x) <- rep( "", nrow(x) )
+                rownames(x)[i] <- rownames(value)
+              }
+            }
+            return(x)
+          }
+          )
+
 setMethod(
           "[",
           signature( "Intervals_full" ),
@@ -185,6 +237,42 @@ setMethod(
               return( x )
             }
             else return( x@.Data[i,j] )
+          }
+          )
+
+setMethod(
+          "[<-",
+          signature( x = "Intervals_full", i = "ANY", j = "missing", value = "Intervals_virtual" ),
+          function( x, i, j, value ) {
+            #### Error checking
+            if ( type(x) != type(value) )
+              stop( "Types do not match (Z vs. R)." )
+            if ( is.character(i) ) i <- match( i, rownames( x ) )
+            if ( any( is.na( i ) ) )
+              stop( "Cannot assign to NA indices or row names which do not exist." )
+            n <- length( (1:nrow(x))[i] )
+            if ( n != nrow( value ) )
+              stop( "Replacement object is of the wrong size." )            
+            #### Data
+            x@.Data[i,] <- value@.Data
+            if ( is( value, "Intervals" ) )
+              x@closed[i,] <- matrix( value@closed, n, 2, byrow = TRUE )
+            else
+              x@closed[i,] <- value@closed
+            #### Rownames
+            has_names_x <- !is.null( rownames(x) )
+            has_names_value <- !is.null( rownames(value) )
+            if ( has_names_x ) {
+              if ( has_names_value ) rownames(x)[i] <- rownames(value)
+              else rownames(x)[i] <- ""
+            }
+            else {
+              if ( has_names_value ) {
+                rownames(x) <- rep( "", nrow(x) )
+                rownames(x)[i] <- rownames(value)
+              }
+            }
+            return(x)
           }
           )
 

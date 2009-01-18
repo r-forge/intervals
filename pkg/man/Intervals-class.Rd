@@ -10,6 +10,8 @@
 
 \alias{[,Intervals-method}
 \alias{[,Intervals_full-method}
+\alias{[<-,Intervals,ANY,missing,Intervals_virtual-method}
+\alias{[<-,Intervals_full,ANY,missing,Intervals_virtual-method}
 \alias{closed<-}
 \alias{closed<-,Intervals-method}
 \alias{closed<-,Intervals_full-method}
@@ -100,20 +102,22 @@
   
   \describe{
     
-    \item{[}{\code{signature(x = "Intervals")} }
-    \item{[}{\code{signature(x = "Intervals_full")} }
-    \item{adjust\_closure}{\code{signature(x = "Intervals")} }
-    \item{adjust\_closure}{\code{signature(x = "Intervals_full")} }
-    \item{closed<-}{\code{signature(x = "Intervals")} }
-    \item{closed<-}{\code{signature(x = "Intervals_full")} }
-    \item{coerce}{\code{signature(from = "Intervals", to = "Intervals_full")} }
-    \item{coerce}{\code{signature(from = "Intervals_full", to = "Intervals")} }
-    \item{empty}{\code{signature(x = "Intervals")} }
-    \item{empty}{\code{signature(x = "Intervals_full")} }
-    \item{initialize}{\code{signature(.Object = "Intervals")} }
-    \item{initialize}{\code{signature(.Object = "Intervals_full")} }
-    \item{size}{\code{signature(x = "Intervals")} }
-    \item{size}{\code{signature(x = "Intervals_full")} }
+    \item{[}{\code{ signature(x = "Intervals")} }
+    \item{[}{\code{ signature(x = "Intervals_full")} }
+    \item{[<-}{\code{ signature(x = "Intervals", i = "ANY", j = "missing", value = "Intervals_virtual")} }
+    \item{[<-}{\code{ signature(x = "Intervals_full", i = "ANY", j = "missing", value = "Intervals_virtual")} }
+    \item{adjust\_closure}{\code{ signature(x = "Intervals")} }
+    \item{adjust\_closure}{\code{ signature(x = "Intervals_full")} }
+    \item{closed<-}{\code{ signature(x = "Intervals")} }
+    \item{closed<-}{\code{ signature(x = "Intervals_full")} }
+    \item{coerce}{\code{ signature(from = "Intervals", to = "Intervals_full")} }
+    \item{coerce}{\code{ signature(from = "Intervals_full", to = "Intervals")} }
+    \item{empty}{\code{ signature(x = "Intervals")} }
+    \item{empty}{\code{ signature(x = "Intervals_full")} }
+    \item{initialize}{\code{ signature(.Object = "Intervals")} }
+    \item{initialize}{\code{ signature(.Object = "Intervals_full")} }
+    \item{size}{\code{ signature(x = "Intervals")} }
+    \item{size}{\code{ signature(x = "Intervals_full")} }
 
     % \item{\code{[}:}{
     %   When used to subset rows, class is preserved; when used to subset
@@ -203,6 +207,12 @@ j
 # Rownames may be used
 
 rownames(j) <- c( "apple", "banana", "cherry", "date" )
+j
+
+# Assignment preserves class, coercing if necessary
+
+j[2:3] <- i[1:2,]
+
 j
 
 }

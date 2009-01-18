@@ -14,6 +14,7 @@ importFrom( "utils", "head", "tail" )
 
 exportMethods(
               "[",
+              "[<-",
               "adjust_closure",
               "close_intervals",
               "closed", "closed<-",
