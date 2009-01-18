@@ -70,8 +70,8 @@ setClass(
          contains = "Intervals_virtual",
          validity = function( object ) {
            # Check 'closed' slot
-           if ( length( object@closed ) != 2 )
-             return( "The 'closed' slot should be a logical of length 2." )
+           if ( length( object@closed ) != 2 || any( is.na( object@closed ) ) )
+             return( "The 'closed' slot should be a logical of length 2. NA values are not permitted." )
            return( TRUE )
          }
          )
@@ -101,8 +101,12 @@ setClass(
          contains = "Intervals_virtual",
          validity = function( object ) {
            # Check 'closed' slot
-           if ( !is.logical( object@closed ) || dim( object@.Data ) != dim( object@closed ) )
-             return( "The 'closed' slot should be a logical matrix with the same dimensions as the main endpoints matrix." )
+           if (
+               !is.logical( object@closed ) ||
+               dim( object@.Data ) != dim( object@closed ) ||
+               any( is.na( object@closed ) )
+               )
+             return( "The 'closed' slot should be a logical matrix with the same dimensions as the main endpoints matrix. NA values are not permitted." )
            return( TRUE )
          }
          )
