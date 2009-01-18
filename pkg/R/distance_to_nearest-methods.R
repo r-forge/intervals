@@ -24,10 +24,12 @@ setMethod(
               f <- approxfun( x[ use ], y[ use ], rule = 2 )
             else
               f <- function(x) rep( 0, length(x) )
-            # Compute results
-            below <- from < to[1,1]
-            above <- from > to[n,2]
-            result <- f( from )
+            # Compute results. Note that is.na( NaN ) is TRUE.
+            result <- rep( as.numeric( NA ), length( from ) )
+            use <- !is.na( from ) 
+            below <- from < to[1,1] & use
+            above <- from > to[n,2] & use
+            result[ use ] <- f( from[ use ] )
             result[ below ] <- to[1,1] - from[ below ]
             result[ above ] <- from[ above ] - to[n,2]    
             names( result ) <- names( from )
