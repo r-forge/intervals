@@ -133,4 +133,28 @@
   - Write/activate as.matrix for my objects.
 
   - For test harness, make sure NULL and empty Intervals/Intervals_full objects
-    are handled gracefully in places where they could conceivably be used.
+    are handled gracefully in places where they could conceivably be
+    used. Things which must be tested:
+
+    - Objects with NA entries. 
+
+    - Objects with empty entries.
+
+    - Objects with no intervals.
+
+    - Objects with just one interval.
+
+  - Bugs
+
+    - 'a <- new( "Intervals_full", NA )' produces logicals in the endpoints, but
+      this is not caught by validity checking. Trying to work with the object
+      produces errors later. See comment below on validity checking...
+
+  - With R 2.8.1, validity checking does not seem to be happening for newly
+    created objects. I should always be passing final control on to the "ANY"
+    method for "initialize", which calls validObject(). Look into this...
+
+  - Rather than have lots of check_valid arguments everywhere, have my package
+    create a global option which the user can set. Even better, do this and then
+    keep the method-level arguments, so the user can turn it off by default but
+    then still activate it in certain cases.
