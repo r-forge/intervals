@@ -7,10 +7,12 @@
 
 \description{
   In general, \code{\linkS4class{Intervals}} and
-  \code{\linkS4class{Intervals_full}} objects may be redundant, and the
-  intervals they contain may be in arbitrary order. The \code{reduce}
-  function re-represents the underlying subsets of the integers or the
-  real line in the unique, minimal form.
+  \code{\linkS4class{Intervals_full}} objects may be redundant, the
+  intervals they contain may be in arbitrary order, and they may contain
+  non-informative intervals for which one or both endpoints are
+  \code{NA}. The \code{reduce} function re-represents the underlying
+  subsets of the integers or the real line in the unique, minimal form,
+  removing intervals with \code{NA} endpoints (with warning).
 }
 
 \usage{
@@ -30,10 +32,11 @@
 
 \value{
   A single object of appropriate class, compactly representing the
-  union of all intervals in \code{x}.
+  union of all intervals in \code{x}. All intervals in \code{reduce(x)}
+  have numeric (i.e., not \code{NA}) endpoints.
 }
 
 \seealso{
- See \code{\link{interval_union}}, which is really just a wrapper for
- \code{reduce}. 
+ See \code{\link{interval_union}}, which is really just concatenates its
+ arguments and then calls \code{reduce}.
 }
