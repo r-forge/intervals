@@ -9,11 +9,11 @@ setMethod(
             if ( type(query) != type(target) )
               stop( "Both 'query' and 'target' should have the same type." )
             if ( any( empty( query ), na.rm = TRUE ) ) {
-              warning( "Some empty query intervals encountered. Setting to NA...", call. = FALSE )
+              warning( "Some empty 'query' intervals encountered. Setting to NA...", call. = FALSE )
               query[ empty(query), ] <- NA
             }
             if ( any( empty( target ), na.rm = TRUE ) ) {
-              warning( "Some empty target intervals encountered. Setting to NA...", call. = FALSE )
+              warning( "Some empty 'target' intervals encountered. Setting to NA...", call. = FALSE )
               target[ empty(target), ] <- NA
             }
             result <- .Call(
@@ -34,7 +34,7 @@ setMethod(
             if ( check_valid && !validObject(target) )
               stop( "The 'target' object is invalid." )
             if ( any( empty( target ), na.rm = TRUE ) ) {
-              warning( "Some empty target intervals encountered. Setting to NA...", call. = FALSE )
+              warning( "Some empty 'target' intervals encountered. Setting to NA...", call. = FALSE )
               target[ empty(target), ] <- NA
             }            
             if ( type( target ) == "Z" ) {
