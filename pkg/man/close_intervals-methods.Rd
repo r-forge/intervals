@@ -35,11 +35,11 @@
     "Z"}. If \code{x@type == "R"}, an error is generated.
   }
   
-  \item{close\_left}{
+  \item{close_left}{
     Should the left endpoints be closed or open?
   }
 
-  \item{close\_right}{
+  \item{close_right}{
     Should the right endpoints be closed or open?
   }
   
@@ -61,6 +61,12 @@
   second endpoint is less than their first.) The \code{close_intervals}
   method would, in such cases, create an invalid result; to prevent
   this, empty intervals are detected and removed, with a warning.
+  
+  This package does not make a distinction between closed and open
+  infinite endpoints: an interval with an infinite endpoint extends to
+  (plus or minus) infinity regardless of the closure state. For example,
+  \code{\link{distance_to_nearest}} will return a \code{0} when
+  \code{Inf} is compared to both \code{[0, Inf)} and \code{[0, Inf]}.
 }
 
 \examples{
