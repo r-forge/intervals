@@ -24,7 +24,7 @@ setMethod(
               stop( "Only applicable to type 'Z'." )
             if ( any( empty(x), na.rm = TRUE ) ) {
               warning( "Empty intervals encountered and removed.", call. = FALSE )
-              x <- x[ !empty(x), ]
+              x <- x[ is.na(x) | !empty(x), ]
             }
             if ( !closed(x)[1] && close_left ) x[,1] <- x[,1] + 1
             if ( closed(x)[1] && !close_left ) x[,1] <- x[,1] - 1
@@ -43,7 +43,7 @@ setMethod(
               stop( "Only applicable to type 'Z'." )
             if ( any( empty(x), na.rm = TRUE ) ) {
               warning( "Empty intervals encountered and removed.", call. = FALSE )
-              x <- x[ !empty(x), ]
+              x <- x[ is.na(x) | !empty(x), ]
             }
             # Left side
             if ( close_left ) x[ !closed(x)[,1], 1 ] <- x[ !closed(x)[,1], 1 ] + 1
