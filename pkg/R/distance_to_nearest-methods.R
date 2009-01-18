@@ -45,6 +45,10 @@ setMethod(
               validObject( from )
               validObject( to )
             }
+            if ( any( empty( from ), na.rm = TRUE ) ) {
+              warning( "Some empty 'from' intervals encountered. Setting to NA...", call. = FALSE )
+              from[ empty(from), ] <- NA
+            }
             overlapped <- sapply( interval_overlap( from, to, check_valid = FALSE ), length ) > 0
             if ( type(from) == "Z" ) from <- close_intervals(from)
             result <- pmin(

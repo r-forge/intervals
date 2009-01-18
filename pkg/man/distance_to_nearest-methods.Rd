@@ -31,7 +31,10 @@
 }
 
 \value{
-  A vector of distances, with one entry per point or interval in \code{from}.
+  A vector of distances, with one entry per point or interval in
+  \code{from}. Any intervals in \code{from} which are either empty (see
+  \code{\link{empty}}) or have \code{NA} endpoints produce a \code{NA}
+  result. 
 }
 
 \note{
@@ -39,7 +42,7 @@
 }
 
 \examples{
-# Point to iterval
+# Point to interval
 
 to <- Intervals( c(0,5,3,Inf) )
 from <- -5:10
