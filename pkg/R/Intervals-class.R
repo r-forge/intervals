@@ -159,6 +159,8 @@ setMethod(
             if ( missing(i) ) i <- rep( TRUE, nrow(x) )
             if ( missing(j) ) {
               # Preserve class. Note that both [i,] and [i] syntax subset rows.
+              if ( any( is.na( i ) ) )
+                warning( "NA indices encountered.", call. = FALSE )
               x@.Data <- x@.Data[i,,drop=FALSE]
               return( x )
             }
@@ -174,8 +176,12 @@ setMethod(
             if ( missing(j) ) {
               # Preserve class. Note that both [i,] and [i] syntax subset rows.
               if ( is.character(i) ) i <- match( i, rownames( x ) )
+              if ( any( is.na( i ) ) )
+                warning( "NA indices encountered.", call. = FALSE )
               x@.Data <- x@.Data[i,,drop=FALSE]
               x@closed <- x@closed[i,,drop=FALSE]
+              # We may have NAs in closed if present in i, if any(is.na(i)) == TRUE
+              x@closed[ is.na(x@closed) ] <- TRUE
               return( x )
             }
             else return( x@.Data[i,j] )
