@@ -30,6 +30,7 @@ exportMethods(
               "interval_intersection",
               "interval_overlap",
               "interval_union",
+              "is.na",
               "open_intervals",
               "reduce",
               "show",
