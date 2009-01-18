@@ -21,7 +21,7 @@
     \code{type} slot matching that of \code{x}.
   }
   
-  \item{check\_valid}{
+  \item{check_valid}{
     Should \code{\link{validObject}} be called on \code{x} and \code{y}
     before passing to compiled code? Also see
     \code{\link{interval_overlap}}.

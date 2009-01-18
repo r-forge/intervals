@@ -29,7 +29,7 @@
     different types of objects.
   }
   
-  \item{check\_valid}{
+  \item{check_valid}{
     Should \code{\link{validObject}} be called before passing to
     compiled code? Also see \code{\link{interval_overlap}}.
   }

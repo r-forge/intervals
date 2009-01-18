@@ -31,7 +31,7 @@
     to see which \emph{points} are included in the targets.
   }
 
-  \item{check\_valid}{
+  \item{check_valid}{
     Should \code{\link{validObject}} be called before passing to
     compiled code? This, among other things, verifies that endpoints are
     of data type \code{numeric} and the \code{closed} vector/matrix is
