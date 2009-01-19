@@ -107,3 +107,34 @@ A <- matrix( 0, 2, 2 )
 rownames(A) <- c("1","2")
 z <- x; z[1:2,] <- A
 z
+
+
+
+
+######## distance_to_nearest() behavior
+
+a <- Intervals_full( c(2,5), FALSE )
+b <- Intervals_full( c(1,5,2,10), matrix(c(TRUE,FALSE,FALSE,TRUE),2,2) )
+
+a
+b
+
+distance_to_nearest(a,b)
+
+type(a) <- "Z"
+type(b) <- "Z"
+
+distance_to_nearest(a,b)
+
+a <- as( a, "Intervals" )
+b <- as( open_intervals( b ), "Intervals" )
+
+a
+b
+
+distance_to_nearest(a,b)
+
+type(a) <- "R"
+type(b) <- "R"
+
+distance_to_nearest(a,b)
