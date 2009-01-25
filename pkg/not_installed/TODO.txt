@@ -166,3 +166,8 @@
     into thousands of smaller ones -- one per gene model -- took a very long
     time. Is this a property of how split() works? Of all of the S4 overhead for
     a large number of objects? Do some profiling here and get this sorted out...
+
+  - On CRAN, I'm seeing some warnings when run on the devel version of R for
+    Windows: something is not closing connections properly. It might be a
+    problem with R on Windoes itself, or lazy use of gzfile() or something
+    similar on my part. Have a look around.
