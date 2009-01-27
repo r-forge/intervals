@@ -66,7 +66,7 @@
   infinite endpoints: an interval with an infinite endpoint extends to
   (plus or minus) infinity regardless of the closure state. For example,
   \code{\link{distance_to_nearest}} will return a \code{0} when
-  \code{Inf} is compared to both \code{[0, Inf)} and \code{[0, Inf]}.
+  \code{Inf} is compared to both \code{"[0, Inf)"} and \code{"[0, Inf]"}.
 }
 
 \examples{

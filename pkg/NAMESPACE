@@ -1,16 +1,29 @@
+######## Compiled code
+
 useDynLib( "intervals" )
+
+
+
+
+######## Imports
+
+# Class, method, and regular imports from the methods package are not listed
+# here, since we depend on the package.
+
+importFrom( "stats", "approxfun" )
+importFrom( "utils", "head", "tail" )
+
+
+
+
+######## Exports
 
 export( "Intervals", "Intervals_full" )
 
-S3method( c, Intervals )
-S3method( c, Intervals_full )
+S3method( "c", "Intervals" )
+S3method( "c", "Intervals_full" )
 
 exportClasses( "Intervals", "Intervals_full", "Intervals_virtual" )
-
-importFrom( "utils", "head", "tail" )
-
-# Note that "initialize" methods do not seem necessary here, nor in
-# documentation.
 
 exportMethods(
               "[",

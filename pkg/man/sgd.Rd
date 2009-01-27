@@ -9,7 +9,7 @@
 \description{
   This data set contains a data frame describing a subset of
   the chromosome feature data represented in Fall 2007 version of
-  \code{saccharomyces_cerevisiae.gff}, available for download from the
+  \file{saccharomyces\_cerevisiae.gff}, available for download from the
   \emph{Saccharomyces} Genome Database (\url{http://www.yeastgenome.org}). 
 }
 
@@ -20,17 +20,17 @@
   \describe{
     \item{\code{SGDID}}{SGD feature ID.}
     \item{\code{type}}{
-      Only four feature types have been retatined: \code{CDS},
-      \code{five_prime_UTR_intron}, \code{intron}, and \code{ORF}. Note
-      that \emph{ORF} correspond to a whole gene while \code{CDS}, to an
+      Only four feature types have been retatined: \code{"CDS"},
+      \code{"five_prime_UTR_intron"}, \code{"intron"}, and \code{"ORF"}. Note
+      that \code{"ORF"} correspond to a whole gene while \code{"CDS"}, to an
       exon. \emph{S. cerevisae} does not, however, have many
       multi-exonic genes.
     }
     \item{\code{feature_name}}{A character vector}
     \item{\code{parent_feature_name}}{
       The \code{feature_name} of the a larger element to which the
-      current feature belongs. All retained \code{CDS} entries, for
-      example, belong to an \code{ORF} entry.
+      current feature belongs. All retained \code{"CDS"} entries, for
+      example, belong to an \code{"ORF"} entry.
     }
     \item{\code{chr}}{
       The chromosome on which the feature occurs.

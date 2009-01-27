@@ -31,10 +31,10 @@
   
   \item{type}{
     Should adjustment be based on relative or absolute difference.  When
-    \code{type = "relative"} intervals are expanded/contracted to
+    \code{type == "relative"} intervals are expanded/contracted to
     include/exclude points for which a relative difference with respect
     to the nominal value is less than or equal to \code{delta}. (See the
-    note below.) When \code{type = "absolute"}, absolute rather than
+    note below.) When \code{type == "absolute"}, absolute rather than
     relative difference is used, i.e., all intervals are expanded or
     contracted by the same amount.
   }

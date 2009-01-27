@@ -34,7 +34,7 @@
   \item{check_valid}{
     Should \code{\link{validObject}} be called before passing to
     compiled code? This, among other things, verifies that endpoints are
-    of data type \code{numeric} and the \code{closed} vector/matrix is
+    of data type \code{"numeric"} and the \code{closed} vector/matrix is
     appropriately sized and of the correct data type. (Compiled code
     does no further checking.)
   }
@@ -62,7 +62,7 @@
 }
 
 \note{
-  If you want real (\code{type = "R"}) intervals that overlap in a set
+  If you want real (\code{type == "R"}) intervals that overlap in a set
   of positive measure -- not just at endpoints -- set all endpoints to
   open (i.e., \code{closed(query) <- FALSE}) first. 
 }

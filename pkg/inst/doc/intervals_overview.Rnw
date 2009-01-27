@@ -196,7 +196,7 @@ hist( d, main = "Distance to nearest interval" )
 In some applications, each row of an object's endpoint matrix has a meaningful
 identity, and particular points from $\Z$ or $\R$ may be found in more than one
 row. To support this mode, objects may be given row names, which are propagated
-through calculations when appropriate. The \texttt{combine} methods simply stack
+through calculations when appropriate. The \texttt{c} methods simply stack
 objects (like \texttt{rbind}), preserving row names and retaining redundancy, if
 any.
 

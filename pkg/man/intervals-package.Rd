@@ -58,6 +58,6 @@ Richard Bourgon <bourgon@ebi.ac.uk>
 }
 
 \seealso{
-  See the \code{genomeIntervals} package in Bioconductor, which extends
+  See the \pkg{genomeIntervals} package in Bioconductor, which extends
   the functionality of this package.
 }

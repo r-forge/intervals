@@ -25,18 +25,18 @@
   
   All objects are expected to have the same value in the \code{type}
   slot. If the \code{closed} slots differ for
-  \code{\linkS4class{Intervals}} objects and \code{type == "Z"}, the
+  \code{"\linkS4class{Intervals}"} objects and \code{type == "Z"}, the
   objects will be adjusted to have \code{closed} values matching that of
   \code{x}; if \code{type == "R"}, however, then all objects must first
-  be coerced to class \code{\linkS4class{Intervals_full}}, with a
+  be coerced to class \code{"\linkS4class{Intervals_full}"}, with a
   warning. This coercion also occurs when a mixture of object types is
   passed in. A \code{NULL} in any argument is ignored.
   
 }
 
 \value{
-  A single \code{\linkS4class{Intervals}} or
-  \code{\linkS4class{Intervals_full}} object. Input objects are
+  A single \code{"\linkS4class{Intervals}"} or
+  \code{"\linkS4class{Intervals_full}"} object. Input objects are
   concatenated in their order of appearance in the the argument list.
   
   If any input argument is not a set of intervals, \code{list(...)} is

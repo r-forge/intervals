@@ -14,7 +14,7 @@
 }
 
 \arguments{  
-  \item{x}{An \code{Intervals} or \code{Intervals_full} object.}
+  \item{x}{An \code{"Intervals"} or \code{"Intervals_full"} object.}
   
   \item{check_valid}{
     Should \code{\link{validObject}} be called before passing to
@@ -28,9 +28,9 @@
 }
 
 \note{
-  For objects of class \code{Intervals}, closure on \code{-Inf} or
+  For objects of class \code{"Intervals"}, closure on \code{-Inf} or
   \code{Inf} endpoints is set to match that of all the intervals with
-  finite endpoints. For objects of class \code{Intervals_full},
+  finite endpoints. For objects of class \code{"Intervals_full"},
   non-finite endpoints are left open (although in general, this package
   does not make a distinction between closed and open infinite
   endpoints). 

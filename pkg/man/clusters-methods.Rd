@@ -62,7 +62,7 @@
 
 \value{
   A list whose components are the clusters. Each component is thus a
-  subset of \code{x}, or, if \code{which = TRUE}, a vector of
+  subset of \code{x}, or, if \code{which == TRUE}, a vector of
   indices into the \code{x} object. (The indices correspond to row
   numbers when \code{x} is of class \code{"Intervals_virtual"}.)
 }

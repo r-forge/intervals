@@ -6,8 +6,8 @@
 \title{Compactly re-represent the points in a set of intervals}
 
 \description{
-  In general, \code{\linkS4class{Intervals}} and
-  \code{\linkS4class{Intervals_full}} objects may be redundant, the
+  In general, \code{"\linkS4class{Intervals}"} and
+  \code{"\linkS4class{Intervals_full}"} objects may be redundant, the
   intervals they contain may be in arbitrary order, and they may contain
   non-informative intervals for which one or both endpoints are
   \code{NA}. The \code{reduce} function re-represents the underlying

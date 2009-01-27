@@ -24,7 +24,7 @@
 
 \details{
   Intervals are deemed to be empty when their endpoints are equal and
-  not both closed, or for \code{type = "Z"}, when their endpoints differ
+  not both closed, or for \code{type == "Z"}, when their endpoints differ
   by 1 and both are open. The matrices \code{x} and \code{x[!empty(x),]}
   represent the same subset of the integers or the real line.
 }

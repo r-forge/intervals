@@ -14,10 +14,10 @@
 }
 
 \arguments{  
-  \item{x}{An \code{Intervals} or \code{Intervals_full} object.}
+  \item{x}{An \code{"Intervals"} or \code{"Intervals_full"} object.}
   
   \item{y}{
-    An \code{Intervals} or \code{Intervals_full} object, with a
+    An \code{"Intervals"} or \code{"Intervals_full"} object, with a
     \code{type} slot matching that of \code{x}.
   }
   
