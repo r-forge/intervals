@@ -27,7 +27,10 @@
 
   \item{x}{ An \code{"Intervals"} or \code{"Intervals_full"} object.}
   
-  \item{delta}{A non-negative adjustement value.}
+  \item{delta}{
+    A non-negative adjustement value. A vector is permitted,
+    and its entries will be recycled if necessary.
+  }
   
   \item{type}{
     Should adjustment be based on relative or absolute difference.  When

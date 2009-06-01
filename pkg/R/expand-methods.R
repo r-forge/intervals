@@ -1,6 +1,9 @@
 # Not exported
 adjust <- function( x, delta, type, direction = 1 ) {
   signs <- rep( c( direction, -direction ), c( nrow(x), nrow(x) ) )
+  if ( nrow(x) %% length(delta) != 0 )
+    warning( "Length of 'delta' does not evenly divide number of intervals.", call. = FALSE )
+  delta <- rep( delta, length = nrow( x ) )
   switch(
          type,
          relative = x * ( 1 - delta ) ^ ( sign(x) * signs ),
@@ -19,9 +22,9 @@ setMethod(
                    type = c( "absolute", "relative" )
                    )
           {
-            if ( delta < 0 ) stop( "The 'delta' argument should be non-negative." )
+            if ( any( delta < 0 ) ) stop( "The 'delta' argument should not contain negative values." )
             type = match.arg( type )
-            if ( type(x) == "Z" && ( type == "relative" || delta %% 1 != 0 ) )
+            if ( type(x) == "Z" && ( type == "relative" || any( delta %% 1 != 0 ) ) )
               stop( "Only absolute, integer-valued expansion permitted for type 'Z'." )
             x@.Data <- adjust( x, delta, type, 1 )
             return( x )
@@ -39,9 +42,9 @@ setMethod(
                    type = c( "absolute", "relative" )
                    )
           {
-            if ( delta < 0 ) stop( "The 'delta' argument should be non-negative." )
+            if ( any( delta < 0 ) ) stop( "The 'delta' argument should not contain negative values." )
             type = match.arg( type )
-            if ( type(x) == "Z" && ( type == "relative" || delta %% 1 != 0 ) )
+            if ( type(x) == "Z" && ( type == "relative" || any( delta %% 1 != 0 ) ) )
               stop( "Only absolute, integer-valued contraction permitted for type 'Z'." )
             x@.Data <- adjust( x, delta, type, -1 )
             drop <- x[,1] > x[,2] | empty(x)
