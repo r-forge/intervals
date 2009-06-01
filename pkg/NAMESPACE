@@ -51,5 +51,6 @@ exportMethods(
               "size",
               "t",
               "tail",
-              "type", "type<-"
+              "type", "type<-",
+              "which_nearest"
               )

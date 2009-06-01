@@ -89,6 +89,8 @@
     \item{tail}{ \code{signature(x = "Intervals_virtual")} }
     \item{type}{ \code{signature(x = "Intervals_virtual")} }
     \item{type<-}{ \code{signature(x = "Intervals_virtual")} }
+    \item{which\_nearest}{ \code{signature(from = "numeric", to = "Intervals_virtual")} }
+    \item{which\_nearest}{ \code{signature(from = "Intervals_virtual", to = "Intervals_virtual")} }
   }
 }
 

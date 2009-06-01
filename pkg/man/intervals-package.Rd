@@ -37,6 +37,7 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{sgd}}}{Yeast gene model sample data.}
     \item{\code{\link{size}}}{Compute interval sizes.}
     \item{\code{\link{type}}}{Accessor for \code{type} slot: Z or R.}
+    \item{\code{\link{which_nearest}}}{Identify nearest member(s) in a set of intervals.}
   }
   
   Further information is available in the following vignettes:
