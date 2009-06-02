@@ -12,9 +12,7 @@
 }
 
 \usage{
-\S4method{distance_to_nearest}{numeric,Intervals_virtual}(from, to, check_valid = TRUE)
-
-\S4method{distance_to_nearest}{Intervals_virtual,Intervals_virtual}(from, to, check_valid = TRUE)
+\S4method{distance_to_nearest}{Intervals_virtual_or_numeric,Intervals_virtual_or_numeric}(from, to, check_valid = TRUE)
 }
 
 \arguments{
@@ -38,15 +36,12 @@
 }
 
 \note{
-  Distances are computed efficiently using \code{\link{approxfun}}.
+  This function is now just a wrapper for \code{\link{which_nearest}}.
 }
 
 \seealso{
-  See \code{\link{which_nearest}}, which (v. 0.11.0) implements a new
-  algorithm for computing distance to the nearest interval in the
-  \code{to} set, and which also returns indices for the interval or
-  intervals (in case of ties) at that distance. After testing, the new
-  code will replace the older code found here.
+  See \code{\link{which_nearest}}, which also returns indices for the
+  interval or intervals (in case of ties) at the distance reported.
 }
 
 \examples{

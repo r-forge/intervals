@@ -12,11 +12,7 @@
 }
 
 \usage{
-\S4method{interval_overlap}{Intervals_virtual,Intervals_virtual}(from, to, check_valid = TRUE)
-
-\S4method{interval_overlap}{Intervals_virtual,numeric}(from, to, check_valid = TRUE)
-
-\S4method{interval_overlap}{numeric,Intervals_virtual}(from, to, check_valid = TRUE)
+\S4method{interval_overlap}{Intervals_virtual_or_numeric,Intervals_virtual_or_numeric}(from, to, check_valid = TRUE)
 }
 
 \arguments{
@@ -64,10 +60,17 @@
   If you want real (\code{type == "R"}) intervals that overlap in a set
   of positive measure --- not just at endpoints --- set all endpoints to
   open (i.e., \code{close(from) <- FALSE; closed(to) <- FALSE}) first.
+  
+  This function is now just a wrapper for \code{\link{which_nearest}}.
+}
+
+\seealso{
+  See \code{\link{which_nearest}} for details on nearby as well as
+  overlapping intervals in \code{to}.
 }
 
 \examples{
-# Note that t contains a valid but empty interval.
+# Note that 'from' contains a valid but empty interval.
 
 to <- Intervals(
                matrix(

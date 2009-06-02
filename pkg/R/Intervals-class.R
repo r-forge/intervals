@@ -336,3 +336,10 @@ setMethod(
             }
           }
           )
+
+
+
+
+######## Union
+
+setClassUnion( "Intervals_virtual_or_numeric", c( "Intervals_virtual", "numeric" ) )
