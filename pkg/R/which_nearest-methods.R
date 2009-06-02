@@ -40,12 +40,6 @@ setMethod(
           "which_nearest",
           signature( "numeric", "Intervals_virtual" ),
           function( from, to, check_valid = TRUE ) {
-            if ( check_valid && !validObject(to) )
-              stop( "The 'to' object is invalid." )
-            if ( any( empty( to ), na.rm = TRUE ) ) {
-              warning( "Some empty 'to' intervals encountered. Setting to NA...", call. = FALSE )
-              to[ empty(to), ] <- NA
-            }            
             if ( type( to ) == "Z" ) {
               non_int <- ( from %% 1 != 0 )
               if ( any( non_int, na.rm = TRUE ) )
@@ -54,7 +48,24 @@ setMethod(
             which_nearest(
                           new( class( to ), cbind( from, from ), closed = TRUE ),
                           to,
-                          check_valid = FALSE
+                          check_valid = check_valid
+                          )                          
+          }
+          )
+
+setMethod(
+          "which_nearest",
+          signature( "Intervals_virtual", "numeric" ),
+          function( from, to, check_valid = TRUE ) {
+            if ( type( from ) == "Z" ) {
+              non_int <- ( to %% 1 != 0 )
+              if ( any( non_int, na.rm = TRUE ) )
+                stop( "The 'from' object is of type 'Z'. Non-integral values are not permitted in 'to'.", call. = FALSE )
+            }
+            which_nearest(
+                          from,
+                          new( class( from ), cbind( to, to ), closed = TRUE ),
+                          check_valid = check_valid
                           )                          
           }
           )

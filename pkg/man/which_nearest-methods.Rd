@@ -15,6 +15,8 @@
 \usage{
 \S4method{which_nearest}{numeric,Intervals_virtual}(from, to, check_valid = TRUE)
 
+\S4method{which_nearest}{Intervals_virtual,numeric}(from, to, check_valid = TRUE)
+
 \S4method{which_nearest}{Intervals_virtual,Intervals_virtual}(from, to, check_valid = TRUE)
 }
 
