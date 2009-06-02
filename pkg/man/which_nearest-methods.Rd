@@ -49,6 +49,13 @@
   \code{\link{distance_to_nearest}} function. For the moment, they will
   co-exist for testing purposes, but this function's code will
   eventually replace the older code.
+
+  Note that a naive way of implementing \code{which_nearest} would be to
+  use the simpler, old implementation of \code{distance_to_nearest}, use
+  \code{expand} to grow all intervals by the correspnoding amount, and
+  then use \code{interval_overlap} to identify target. This approach,
+  however, will miss a small fraction of targets due to floating point
+  issues.
 }
 
 \examples{
