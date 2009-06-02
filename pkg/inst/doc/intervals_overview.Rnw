@@ -17,7 +17,7 @@ bookmarksopen=true
 
 \title{Overview of the \emph{intervals} package}
 \author{Richard Bourgon}
-\date{08 September 2008}
+\date{06 June 2009}
 
 % The is for R CMD check, which finds it in spite of the "%", and also for
 % automatic creation of links in the HTML documentation for the package:
@@ -34,10 +34,14 @@ bookmarksopen=true
 %%%%%%%% Setup
 
 % Don't reform code
-\SweaveOpts{keep.source=TRUE}
+\SweaveOpts{keep.source=TRUE, eps=FALSE}
 
 % Size for figures
-\setkeys{Gin}{width=.75\textwidth}
+\setkeys{Gin}{width=.7\textwidth}
+
+% Fonts
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{xleftmargin=1cm,fontshape=sl,fontsize=\small}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{xleftmargin=1cm,fontsize=\small}
 
 % Reduce characters per line in R output
 
@@ -218,9 +222,11 @@ v[ k, ]
 v[ io[[ k ]], ]
 @ 
 
-The \texttt{which\_nearest} method (v.\ 0.9.10, \emph{not yet implemented}) also
-respects row identity, returning a list with one vector of indices into the
-\texttt{to} object for each row of the \texttt{from} object.
+The \texttt{which\_nearest} method also respects row identity, for both its
+\texttt{to} and \texttt{from} arguments. In addition to computing the distance
+from each \texttt{from} interval to the nearest point in \texttt{to}, it also
+returns the row index of the \texttt{to} interval (or intervals, in case of
+ties) located at the indicated distance.
 
 Another function which operates in this mode is \texttt{clusters}, which takes a
 set of points or intervals and identifies maximal groups which cluster together
