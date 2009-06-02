@@ -46,7 +46,7 @@ setMethod(
                 stop( "The 'to' object is of type 'Z'. Non-integral values are not permitted in 'from'.", call. = FALSE )
             }
             which_nearest(
-                          new( class( to ), cbind( from, from ), closed = TRUE ),
+                          new( class( to ), cbind( from, from ), closed = TRUE, type = type( to ) ),
                           to,
                           check_valid = check_valid
                           )                          
@@ -64,8 +64,20 @@ setMethod(
             }
             which_nearest(
                           from,
-                          new( class( from ), cbind( to, to ), closed = TRUE ),
+                          new( class( from ), cbind( to, to ), closed = TRUE, type = type( from ) ),
                           check_valid = check_valid
                           )                          
+          }
+          )
+
+setMethod(
+          "which_nearest",
+          signature( "numeric", "numeric" ),
+          function( from, to, check_valid = TRUE ) {
+            which_nearest(
+                          Intervals( cbind( from, from ) ),
+                          Intervals( cbind( to, to ) ),
+                          check_valid = FALSE
+                          )        
           }
           )
