@@ -1,8 +1,7 @@
 \name{distance_to_nearest}
 
 \alias{distance_to_nearest}
-\alias{distance_to_nearest,numeric,Intervals_virtual-method}
-\alias{distance_to_nearest,Intervals_virtual,Intervals_virtual-method}
+\alias{distance_to_nearest,Intervals_virtual_or_numeric,Intervals_virtual_or_numeric-method}
 
 \title{Compute distance to nearest position in a set of intervals}
 

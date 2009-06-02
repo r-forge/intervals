@@ -3,6 +3,8 @@
 \alias{which_nearest}
 \alias{which_nearest,numeric,Intervals_virtual-method}
 \alias{which_nearest,Intervals_virtual,Intervals_virtual-method}
+\alias{which_nearest,Intervals_virtual,numeric-method}
+\alias{which_nearest,numeric,numeric-method}
 
 \title{Identify nearest member(s) in a set of intervals}
 
@@ -18,6 +20,8 @@
 \S4method{which_nearest}{Intervals_virtual,numeric}(from, to, check_valid = TRUE)
 
 \S4method{which_nearest}{Intervals_virtual,Intervals_virtual}(from, to, check_valid = TRUE)
+
+\S4method{which_nearest}{numeric,numeric}(from, to, check_valid = TRUE)
 }
 
 \arguments{

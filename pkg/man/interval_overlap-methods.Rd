@@ -1,8 +1,7 @@
 \name{interval_overlap}
 
 \alias{interval_overlap}
-\alias{interval_overlap,Intervals_virtual,Intervals_virtual-method}
-\alias{interval_overlap,Intervals_virtual,numeric-method}
+\alias{interval_overlap,Intervals_virtual_or_numeric,Intervals_virtual_or_numeric-method}
 
 \title{Assess overlap from one set of intervals to another}
 
@@ -99,7 +98,7 @@ from <- Intervals(
                closed = c( TRUE, FALSE ),
                type = "Z"
                )
-rownames(from) <- letters[1:nrow(t)]
+rownames(from) <- letters[1:nrow(from)]
 
 empty(to)
 empty(from)
@@ -122,9 +121,4 @@ interval_overlap(v, u)
 # Working with points
 
 interval_overlap( from, c( 2, 3, 6, NA ) )
-
-# Non-integer points cannot be checked again objects of type "Z".
-
-interval_overlap( to, c( 2, 2.5, 3 ) )
-interval_overlap( u, c( 2, 2.5, 3 ) )
 }
