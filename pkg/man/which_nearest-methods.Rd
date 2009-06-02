@@ -32,43 +32,64 @@
 }
 
 \value{
-  A list, with one element per interval in the \code{from} argument,
-  giving the row index or indices (in case of ties) of the nearest
-  member (or members) of \code{to}. \code{NA} entries in \code{from}
-  produce an empty vector of indices, as do cases when \code{to}
-  contains no non-empty intervals.
+  A data frame with three columns: \code{distance_to_nearest},
+  \code{which_nearest}, and \code{which_overlap}. The last two are
+  actually lists, since there may be zero, one, or more
+  nearest/overlapping intervals in the \code{to} object for any given
+  interval in \code{from}.
 
-  CHECK NA BEHAVIOR!
-  
-  % A vector of distances, with one entry per point or interval in
-  % \code{from}. Any intervals in \code{from} which are either empty (see
-  % \code{\link{empty}}) or have \code{NA} endpoints produce a \code{NA}
-  % result. 
+  Empty intervals in \code{to}, or intervals with \code{NA} endpoints,
+  produce a \code{NA} distance result, and no nearest or overlapping
+  hits. 
 }
 
 \note{
-  Code simply expands each interval in \code{from} by the distance to
-  its nearest neighbor or neighbors, and then uses
-  \code{\link{interval_overlap}} to identify the relevant intervals in
-  \code{to}. 
+  (v. 0.11.0) The code used for the \code{distance_to_nearest} column
+  here is completely distinct from that used for the original
+  \code{\link{distance_to_nearest}} function. For the moment, they will
+  co-exist for testing purposes, but this function's code will
+  eventually replace the older code.
 }
 
 \examples{
 # Point to interval. Empty rows, or those with NA endpoints, do not
-# generate hits.
+# generate hits. Note that distance_to_nearest can be 0 but without
+# overlap, depending on endpoint closure.
 
-to <- Intervals_full( c(-1,0,NA,5, -1,3,10,Inf) )
+to <- Intervals_full( c(-1,0,NA,5,-1,3,10,Inf) )
 closed(to)[1,] <- FALSE
+closed(to)[2,2] <- FALSE
 from <- c( NA, -3:5 )
 
 to
+cbind( from, which_nearest( from, to ) )
 
-data.frame( from = from, nearest = I( which_nearest( from, to ) ) )
+# Completely empty to object
 
 which_nearest( from, to[1,] )
 
 # Interval to interval
 
 from <- Intervals( c(-Inf,-Inf,3.5,-1,1,4) )
+from
+which_nearest( from, to )
+
+# Checking behavior with ties
+
+from <- Intervals_full( c(2,2,4,4,3,3,5,5) )
+closed( from )[2:3,] <- FALSE
+to <- Intervals_full( c(0,0,6,6,1,1,7,8) )
+closed( to )[2:3,] <- FALSE
+
+from
+to
+which_nearest( from, to )
+
+from <- Intervals_full( c(1,3,6,2,4,7) )
+to <- Intervals_full( c(4,4,5,5) )
+closed( to )[1,] <- FALSE
+
+from
+to
 which_nearest( from, to )
 }
