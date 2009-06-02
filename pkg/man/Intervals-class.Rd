@@ -23,7 +23,7 @@
 
 
 
-\title{Classes "Intervals" and "Intervals\_full"}
+\title{Classes "Intervals" and "Intervals_full"}
 
 \description{
   \code{"Intervals"} objects are two-column matrices which represent

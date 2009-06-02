@@ -19,7 +19,7 @@
 \alias{type<-}
 \alias{type<-,Intervals_virtual-method}
 
-\title{Class "Intervals\_virtual"}
+\title{Class "Intervals_virtual"}
 
 \description{
   A virtual class from which the \code{"Intervals"} and
