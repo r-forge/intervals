@@ -41,6 +41,14 @@
   Distances are computed efficiently using \code{\link{approxfun}}.
 }
 
+\seealso{
+  See \code{\link{which_nearest}}, which (v. 0.11.0) implements a new
+  algorithm for computing distance to the nearest interval in the
+  \code{to} set, and which also returns indices for the interval or
+  intervals (in case of ties) at that distance. After testing, the new
+  code will replace the older code found here.
+}
+
 \examples{
 # Point to interval
 
