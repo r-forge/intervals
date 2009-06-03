@@ -391,7 +391,7 @@ practice so far, however, such repeated querying has not been needed.
 
 \subsection{Checking validity}
 
-The code behind \texttt{interval\_overlap} and \texttt{reduce} (key methods in
+The code behind \texttt{which\_nearest} and \texttt{reduce} (key methods in
 the \emph{intervals} package, which may be directly called by the user and are
 also used internally in numerous locations) is written in C++ for
 efficiency. The compiled code makes a number of assumptions about the
