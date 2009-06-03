@@ -2,6 +2,8 @@
 
 \alias{interval_overlap}
 \alias{interval_overlap,Intervals_virtual_or_numeric,Intervals_virtual_or_numeric-method}
+\alias{interval_overlap,missing,ANY-method}
+\alias{interval_overlap,ANY,missing-method}
 
 \title{Assess overlap from one set of intervals to another}
 
