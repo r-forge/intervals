@@ -9,3 +9,22 @@ setMethod(
             return( result )
           }
           )
+
+argument_error <- paste(
+                        "The 'from' and 'to' arguments are required. Note that the",
+                        "  interval_overlap argument names changed at v. 0.11.1.",
+                        "  See documentation.",
+                        sep = "\n"
+                        )                       
+
+setMethod(
+          "interval_overlap",
+          signature( from = "missing", to = "ANY" ),
+          function( from, to, check_valid, ... ) stop( argument_error )
+          )
+
+setMethod(
+          "interval_overlap",
+          signature( from = "ANY", to = "missing" ),
+          function( from, to, check_valid, ... ) stop( argument_error )
+          )

@@ -18,12 +18,14 @@
   
   \item{from}{
     An \code{"Intervals"} or \code{"Intervals_full"} object, or a
-    vector of class \code{"numeric"}. 
+    vector of class \code{"numeric"}. \emph{Note!} Prior to v. 0.11.1,
+    this argument was called \code{target}.
   }
   
   \item{to}{
     An \code{"Intervals"} or \code{"Intervals_full"} object, or a
-    vector of class \code{"numeric"}. 
+    vector of class \code{"numeric"}. \emph{Note!} Prior to v. 0.11.1,
+    this argument was called \code{query}.
   }
 
   \item{check_valid}{
