@@ -82,7 +82,7 @@ extern "C"
     std::vector< std::set<int> > indices ( tn );
     
     // For distance_to_nearest and which_nearest
-    double q_check_pos;
+    double q_check_pos = std::numeric_limits<double>::infinity();
     std::set<int> q_pending, t_pending;
     std::vector<double> delta ( tn );
     std::vector< std::set<int> > which ( tn );
