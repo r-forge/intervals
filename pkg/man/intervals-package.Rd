@@ -33,6 +33,7 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{interval_overlap}}}{Assess which query intervals overlap which targets.}
     \item{\code{\link{interval_union}}}{Compute the union of intervals in one or more interval matrices.}
     \item{\code{\link{is.na}}}{Identify interval rows with \code{NA} endpoints.}
+    \item{\code{\link[=plot.Intervals]{plot}}}{S3 plotting methods for intervals objects.}
     \item{\code{\link{reduce}}}{Compactly re-represent the points in a set of intervals.}
     \item{\code{\link{sgd}}}{Yeast gene model sample data.}
     \item{\code{\link{size}}}{Compute interval sizes.}
