@@ -97,7 +97,10 @@ package users.)
 @ 
 <<Intervals_full>>=
 y <- as( x, "Intervals_full" )
+y <- c( y, Intervals_full( c(2,3,5,7) ) )
 closed(y)[2:3,1] <- FALSE
+closed(y)[4,2] <- FALSE
+rownames(y) <- letters[1:5]
 y
 @
 
@@ -114,6 +117,20 @@ size(x)
 empty(x)
 empty(y)
 @
+
+\begin{figure}[!tb]
+  \centering
+@
+<<plotting, fig=TRUE, echo=FALSE>>=
+plot( y )
+@
+\caption{The \texttt{Intervals\_full} object \texttt{y}, plotted with
+\texttt{plot(y)}. The second row contains an \texttt{NA} endpoint, and is not
+shown in the plot. The empty interval is plotted as a hollow point. By default,
+vertical placement avoids overlaps but is compact. }
+\label{fig:plotting}
+\end{figure}
+
 
 
 
