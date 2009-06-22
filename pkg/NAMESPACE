@@ -26,7 +26,12 @@ S3method( "c", "Intervals_full" )
 S3method( "plot", "Intervals" )
 S3method( "plot", "Intervals_full" )
 
-exportClasses( "Intervals", "Intervals_full", "Intervals_virtual" )
+exportClasses(
+              "Intervals",
+              "Intervals_full",
+              "Intervals_virtual",
+              "Intervals_virtual_or_numeric"
+              )
 
 exportMethods(
               "[",
