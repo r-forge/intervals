@@ -1,62 +1,11 @@
-- (6 April 2008) If we force an integer data type for "Z" interval matrices,
-  perhaps this will keep users from inserting invalid endpoints into an existing
-  object. Although perhaps not... R will just update the matrix data type on the
-  fly, and will probably not call the validity function for the containing
-  object. 
-
-  (5 May 2008) An alternative here -- one which is probably more natural -- is
-  to just determine endpoint type on the basis of the data types of the
-  matrices. One or more real-valued matrices causes real-line
-  computation. Possibly provide a utility L(), to make numeric matrices
-  integral, generating a warning if rounding is required. Also add a switch to
-  all functions which behaves in the same way.
-
-  It should be the case that we ALWAYS use the type() accessor for checking and
-  setting matrix types -- except in class definitions, initialize methods, and
-  the definition of the type() accessors themselves. If so, it will be simple to
-  drop the explicit slot and do as described in the preceeding paragraphs.
-
 - (7 May 2008) In the end, I should probably leave accessors intact but NOT use
   replacement methods in my own code -- since these create efficiency problems
   due to copying.
-
-- (30 May 2008) Consider replacing coerce methods with setAs. In particular,
-  it's disappointing to see that as.matrix doesn't work currently.
-
-- (1 June 2008) PSEUDO-CODE FOR R all.equal.numeric
-
-    - Set tolerance = .Machine$double.eps^0.5.
-
-    - Only check non-NA pairs for which == fails.
-
-    - Set xy to the mean absolute difference (along the vectors).
-
-    - Set xn to the mean absolute target.
-
-    - If xn > tolerance, make a relative comparison and set xy to
-      xy/xn. Otherwise, make an absolute comparison and leave xy as it is.
-
-    - Return equality iff xy <= tolerance.
-
-  Note: dropping entries for which == holds is important, as it affects the means
-  below. We will, however most likely apply our procedure to single pairs of
-  numbers, so it won't matter: if == holds, then the relative difference is 0 in
-  any case. An important issue: R's relative difference is abs( tar - cur )  /
-  tar. The traditional definition, however, is abs( tar - cur ) / max( tar, cur
-  ). On the other hand, the comp.lang.c FAQ first uses R's version, then the
-  traditional relative difference.
-
-  THIS IS NOW FINISHED FOR BOTH INTERVAL_UNION AND INTERVAL_OVERLAP.
 
 - (10 June 2008) More functions to implement (based largely on the e-mail from
   Julien on 12 February 2008):
 
     - The subset version of interval_overlap: interval_included.
-
-    - A set difference.
-
-    - Distance to nearest and which nearest. These might return functions rather
-      than/in addition to just values.
 
     - Another class for points? Or do we just let the user do this on their own,
       with closed-endpoint real intervals of size 0? Probably best not to bother
@@ -90,15 +39,7 @@
 
 - (21 August 2008)
 
-   - Be very clear in the documentation/vignette that objects can be thought of
-     either as a set of possibly non-disjoint intervals -- whose composition is
-     respected by things link interval_overlap, which_nearest, empty, size,
-     etc. -- or as representations of subsets of the integers or the real line
-     -- a conceptualization more consistent with distance_to_nearest,
-     interval_union, interval_intersection, interval_complement, sets. In fact,
-     I need to make a vignette.
-
-   - From Julien, it would be good to have one-sided distance_to_nearest,
+  - From Julien, it would be good to have one-sided distance_to_nearest,
      which_nearest, etc. Due to discontinuity, these are a bit trickier to
      implement. 
 
@@ -130,9 +71,7 @@
 
 - (13 January 2009)
 
-  - Write/activate as.matrix for my objects.
-
-  - For test harness, make sure NULL and empty Intervals/Intervals_full objects
+ - For test harness, make sure NULL and empty Intervals/Intervals_full objects
     are handled gracefully in places where they could conceivably be
     used. Things which must be tested:
 
@@ -169,16 +108,3 @@
 
     (Possibly related to use of factors? The split() code seems to have a hard
     time with these in some circumstances.)
-
-  - On CRAN, I'm seeing some warnings when run on the devel version of R for
-    Windows: something is not closing connections properly. It might be a
-    problem with R on Windows itself, or lazy use of gzfile() or something
-    similar on my part. Have a look around.
-
-- (03 June 209)
-
-  - A minor modification of the reduce.cpp code (including a different sort
-    order for endpoints -- with openings always following closings) would permit
-    returning the number of currently "open" intervals when a new interval is
-    opened. This would then permit a nice plotting method, with staggering in
-    the vertical direction only when necessary.
