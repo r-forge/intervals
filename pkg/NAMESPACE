@@ -10,7 +10,6 @@ useDynLib( "intervals" )
 # Class, method, and regular imports from the methods package are not listed
 # here, since we depend on the package.
 
-importFrom( "stats", "approxfun" )
 importFrom( "utils", "head", "tail" )
 
 
@@ -19,6 +18,9 @@ importFrom( "utils", "head", "tail" )
 ######## Exports
 
 export( "Intervals", "Intervals_full" )
+
+S3method( "as.matrix", "Intervals" )
+S3method( "as.matrix", "Intervals_full" )
 
 S3method( "c", "Intervals" )
 S3method( "c", "Intervals_full" )
