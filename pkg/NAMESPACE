@@ -51,6 +51,7 @@ exportMethods(
               "initialize",
               "interval_complement",
               "interval_difference",
+              "interval_included",
               "interval_intersection",
               "interval_overlap",
               "interval_union",

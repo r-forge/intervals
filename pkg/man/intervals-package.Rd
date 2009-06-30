@@ -19,6 +19,8 @@ Tools for working with and comparing sets of points and intervals.
   \describe{
     \item{\code{\link{Intervals-class}}}{Classes \code{"Intervals"} and \code{"Intervals_full"}.}
     \item{\code{\link{Intervals_virtual-class}}}{Class \code{"Intervals_virtual"}.}
+    \item{\code{\link{Intervals_virtual_or_numeric-class}}}{Class union \code{"Intervals_virtual_or_numeric"}.}
+    \item{\code{\link[=as.matrix.Intervals]{as.matrix}}}{Coerce endpoints to a matrix.}
     \item{\code{\link[=c.Intervals]{c}}}{Concatenate different sets of intervals.}
     \item{\code{\link{close_intervals}}}{Re-represent integer intervals with open or closed endpoints.}
     \item{\code{\link{closed}}}{Accessor for \code{closed} slot: closure vector/matrix.}
@@ -29,6 +31,7 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{expand}}}{Expand sets.}
     \item{\code{\link{interval_complement}}}{Compute the complement of a set of intervals.}
     \item{\code{\link{interval_difference}}}{Compute set difference.}
+    \item{\code{\link{interval_included}}}{Assess inclusion of one set of intervals with respect to another.}
     \item{\code{\link{interval_intersection}}}{Compute the intersection of one or more sets of intervals.}
     \item{\code{\link{interval_overlap}}}{Assess which query intervals overlap which targets.}
     \item{\code{\link{interval_union}}}{Compute the union of intervals in one or more interval matrices.}
