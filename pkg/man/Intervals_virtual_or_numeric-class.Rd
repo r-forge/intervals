@@ -1,4 +1,4 @@
-\name{Intervals_virtual-class}
+\name{Intervals_virtual_or_numeric-class}
 
 \docType{class}
 
