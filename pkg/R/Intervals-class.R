@@ -80,10 +80,15 @@ setMethod(
           "initialize",
           signature( "Intervals" ),
           function( .Object, .Data, closed, ... ) {
-            if ( missing( closed ) ) callNextMethod( .Object, .Data, ... )
+            if ( missing( .Data ) )
+              callNextMethod( .Object, ... )
             else {
-              if ( length( closed ) == 1 ) closed <- c( closed, closed )
-              callNextMethod( .Object, .Data, closed = closed, ... )
+              if ( missing( closed ) )
+                callNextMethod( .Object, .Data, ... )
+              else {
+                if ( length( closed ) == 1 ) closed <- c( closed, closed )
+                callNextMethod( .Object, .Data, closed = closed, ... )
+              }
             }
           }
           )
@@ -115,7 +120,9 @@ setMethod(
           "initialize",
           signature( "Intervals_full" ),
           function( .Object, .Data, closed, ... ) {
-            if ( !missing( .Data ) ) {
+            if ( missing( .Data ) )
+              callNextMethod( .Object, ... )
+            else {
               if ( !is.matrix( .Data ) )
                 .Data <- matrix( .Data, ncol = 2 )
               if ( missing( closed ) )
@@ -132,7 +139,6 @@ setMethod(
               }
               callNextMethod( .Object, .Data, closed = closed, ... )
             }
-            else callNextMethod( .Object, ... )
           }
           )
 
