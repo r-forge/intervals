@@ -66,6 +66,6 @@ plot.Intervals_full <- function(
     axis( 1 )
 }  
 
-plot.Intervals <- function( x, y, ... ) {
-  plot( as( x, "Intervals_full" ), y, ... )
+plot.Intervals <- function( x, ... ) {
+  plot( as( x, "Intervals_full" ), ... )
 }
