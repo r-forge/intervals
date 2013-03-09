@@ -20,7 +20,7 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{Intervals-class}}}{Classes \code{"Intervals"} and \code{"Intervals_full"}.}
     \item{\code{\link{Intervals_virtual-class}}}{Class \code{"Intervals_virtual"}.}
     \item{\code{\link{Intervals_virtual_or_numeric-class}}}{Class union \code{"Intervals_virtual_or_numeric"}.}
-    \item{\code{\link[=as.matrix.Intervals]{as.matrix}}}{Coerce endpoints to a matrix.}
+    \item{\code{\link[=as.matrix.Intervals_virtual]{as.matrix}}}{Coerce endpoints to a matrix.}
     \item{\code{\link[=c.Intervals]{c}}}{Concatenate different sets of intervals.}
     \item{\code{\link{close_intervals}}}{Re-represent integer intervals with open or closed endpoints.}
     \item{\code{\link{closed}}}{Accessor for \code{closed} slot: closure vector/matrix.}
@@ -40,6 +40,7 @@ Tools for working with and comparing sets of points and intervals.
     \item{\code{\link{reduce}}}{Compactly re-represent the points in a set of intervals.}
     \item{\code{\link{sgd}}}{Yeast gene model sample data.}
     \item{\code{\link{size}}}{Compute interval sizes.}
+    \item{\code{\link[=split.Intervals_virtual]{split}}}{Split an intervals object according to a factor.}
     \item{\code{\link{type}}}{Accessor for \code{type} slot: Z or R.}
     \item{\code{\link{which_nearest}}}{Identify nearest member(s) in a set of intervals.}
   }

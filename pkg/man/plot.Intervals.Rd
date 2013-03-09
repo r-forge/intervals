@@ -3,6 +3,10 @@
 \alias{plot}
 \alias{plot.Intervals}
 \alias{plot.Intervals_full}
+\alias{plot,Intervals,missing-method}
+\alias{plot,Intervals_full,missing-method}
+\alias{plot,Intervals,ANY-method}
+\alias{plot,Intervals_full,ANY-method}
 
 \title{Plotting methods for interval objects}
 
@@ -13,7 +17,6 @@
 
 \usage{
 \S3method{plot}{Intervals}(x, y, ...)
-
 \S3method{plot}{Intervals_full}(
      x, y = NULL,
      axes = TRUE,
@@ -26,6 +29,11 @@
      names_cex = 1,
      ...
      )
+
+\S4method{plot}{Intervals,missing}(x, y, ...)
+\S4method{plot}{Intervals_full,missing}(x, y, ...)
+\S4method{plot}{Intervals,ANY}(x, y, ...)
+\S4method{plot}{Intervals_full,ANY}(x, y, ...)
 }
 
 \arguments{

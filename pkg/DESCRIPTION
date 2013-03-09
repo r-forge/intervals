@@ -1,10 +1,10 @@
 Package: intervals
-Version: 0.13.3
-Date: 2010-08-11
+Version: 0.14.0
+Date: 2013-03-06
 Type: Package
 Title: Tools for working with points and intervals
-Author: Richard Bourgon <bourgon@ebi.ac.uk>
-Maintainer: Richard Bourgon <bourgon@ebi.ac.uk>
+Author: Richard Bourgon <bourgon.richard@gene.com>
+Maintainer: Richard Bourgon <bourgon.richard@gene.com>
 Depends: R (>= 2.9.0), methods
 Suggests: 
 Description:

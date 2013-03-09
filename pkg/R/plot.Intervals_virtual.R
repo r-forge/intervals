@@ -69,3 +69,10 @@ plot.Intervals_full <- function(
 plot.Intervals <- function( x, y = NULL, ... ) {
   plot( as( x, "Intervals_full" ), y, ... )
 }
+
+setMethod( "plot", c( "Intervals", "missing" ), function( x, y, ... ) plot.Intervals( x, ... ) )
+setMethod( "plot", c( "Intervals", "ANY" ), function( x, y, ... ) plot.Intervals( x, y, ... ) )
+
+setMethod( "plot", c( "Intervals_full", "missing" ), function( x, y, ... ) plot.Intervals_full( x, ... ) )
+setMethod( "plot", c( "Intervals_full", "ANY" ),  function( x, y, ... ) plot.Intervals_full( x, y, ... ) )
+
